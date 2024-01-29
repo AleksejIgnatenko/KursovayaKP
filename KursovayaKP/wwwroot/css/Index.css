@@ -1,0 +1,27 @@
+﻿.cube-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.img-home-page {
+    display: flex;
+    justify-content: center;
+}
+
+.image-wrapper {
+    flex: 1;
+    position: relative;
+    text-align: center;
+}
+
+.image-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    z-index: 2;
+}
