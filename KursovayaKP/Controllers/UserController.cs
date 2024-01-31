@@ -16,7 +16,8 @@ namespace KursovayaKP.Controllers
             return View();
         }
 
-        [HttpPost]
+		//Вход в аккаунт
+		[HttpPost]
         public IActionResult Check_Sign_In(UserModel userModel)
         {
 /*            if (ModelState.IsValid)
@@ -26,12 +27,17 @@ namespace KursovayaKP.Controllers
             return View("Sign_In");
         }
 
+        //Регистрация
         [HttpPost]
         public IActionResult Check_registration(UserModel userModel)
         {
             if (ModelState.IsValid)
             {
-                // Обработка успешной валидации
+                // Add cookies
+                Response.Cookies.Append("UserName", userModel.UserName);
+                Response.Cookies.Append("Email", userModel.Email);
+                Response.Cookies.Append("Role", userModel.Role);
+
                 return RedirectToAction("Index", "Home");
             }
 

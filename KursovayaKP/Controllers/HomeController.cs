@@ -28,5 +28,16 @@ namespace KursovayaKP.Controllers
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
+
+		// Delete cookies
+		public IActionResult Delete_cookies()
+		{
+
+			Response.Cookies.Delete("UserName");
+			Response.Cookies.Delete("Email");
+			Response.Cookies.Delete("Role");
+
+			return RedirectToAction("Index", "Home");
+		}
 	}
 }

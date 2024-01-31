@@ -13,7 +13,7 @@
 <body>
     <div class="fullscreen-container">
         <div class="login-container">
-            <h1 class="header">Login</h1>
+            <h1 class="header">Регистрация</h1>
             <form class="form" asp-controller="User" asp-action="Check_registration" method="post">
                 <div class="input-group">
                     <label for="username">Имя</label>
@@ -38,8 +38,10 @@
                     <input type="password" id="repeat_password" name="repeat_password" placeholder="Введите пароль еще раз" required asp-for="Repeat_password">
                     <span asp-validation-for="Repeat_password" style="color: red; font-size: 12px; display: block; height: 12px;"></span>
                 </div>
-
-                <button class="button">Login</button>
+                <button class="button">Зарегистрировться</button>
+                <div class="text-center">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Sign_In">Вход в аккаунт</a>
+                </div>
             </form>
         </div>
     </div>
