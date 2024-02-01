@@ -31,7 +31,7 @@
 							@if (Context.Request.Cookies.ContainsKey("UserName"))
 							{
 								string userName = Context.Request.Cookies["UserName"];
-								<a class="nav-link text-dark ml-auto" asp-controller="Home" asp-action="Delete_cookies">@userName</a>
+								<a class="nav-link text-dark ml-auto" asp-controller="User" asp-action="Personal_office">@userName</a>
 								<li class="nav-item" style="display: none;">
 									<a class="nav-link text-dark ml-auto" asp-area="" asp-controller="User" asp-action="Sign_In">Вход</a>
 								</li>

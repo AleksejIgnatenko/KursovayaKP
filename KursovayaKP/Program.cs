@@ -1,4 +1,13 @@
+using KursovayaKP.Tables;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Get the connection string from the configuration file
+string connection = builder.Configuration.GetConnectionString("DefaultConnection") ?? string.Empty;
+
+// Add the ApplicationContext as a service in the application
+builder.Services.AddDbContext<DBUser>(options => options.UseSqlServer(connection));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
