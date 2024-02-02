@@ -25,7 +25,27 @@ namespace KursovayaKP.Controllers
 			return View();
 		}
 
-		public IActionResult Privacy()
+		public IActionResult TrafficRegulations()
+		{
+			return View();
+		}
+
+		public IActionResult RoadSigns()
+		{
+			return View();
+		}
+
+        public IActionResult MedicalCare()
+        {
+            return View();
+        }
+
+        public IActionResult CarDevice()
+        {
+            return View();
+        }
+
+        public IActionResult Privacy()
 		{
 			return View();
 		}
