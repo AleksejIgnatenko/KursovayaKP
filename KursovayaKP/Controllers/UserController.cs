@@ -6,29 +6,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KursovayaKP.Controllers
 {
-    public class UserController : Controller
-    {
+	public class UserController : Controller
+	{
 		private readonly DbContextOptions<DBUser> _dbOptions;
+		private readonly ILogger<UserController> _logger;
 
-		public UserController(DbContextOptions<DBUser> dbOptions)
+		public UserController(DbContextOptions<DBUser> dbOptions, ILogger<UserController> logger)
 		{
 			_dbOptions = dbOptions;
+			_logger = logger;
 		}
 
 		public IActionResult Sign_In()
-        {
-            return View();
-        }
+		{
+			return View();
+		}
 
-        public IActionResult Registration()
-        {
-            return View();
-        }
+		public IActionResult Registration()
+		{
+			return View();
+		}
 
-        public IActionResult Personal_office()
-        {
-            return View();
-        }
+		public IActionResult Personal_office()
+		{
+			return View();
+		}
 
 		//Регистрация
 		[HttpPost]
@@ -37,6 +39,7 @@ namespace KursovayaKP.Controllers
 			if (ModelState.IsValid)
 			{
 				userModel.Password = UserModel.HashPassword(userModel.Password);
+
 
 				using (var db = new DBUser(_dbOptions)) // Создаем экземпляр DBUser
 				{
@@ -67,11 +70,11 @@ namespace KursovayaKP.Controllers
 		[HttpPost]
 		public IActionResult Check_Sign_In(UserModel userModel)
 		{
-/*			if (ModelState.IsValid)
-			{*/
-				using (var db = new DBUser(_dbOptions))
+			using (var db = new DBUser(_dbOptions))
+			{
+				// Проверяем наличие пользователя с введенным email и паролем
+				try
 				{
-					// Проверяем наличие пользователя с введенным email и паролем
 					var user = db.Users.FirstOrDefault(u => u.Email == userModel.Email && u.Password == UserModel.HashPassword(userModel.Password));
 					if (user != null)
 					{
@@ -88,7 +91,12 @@ namespace KursovayaKP.Controllers
 						ModelState.AddModelError("Password", "Неверный Email или пароль");
 					}
 				}
-			//}
+				catch (Exception ex)
+				{
+					// Обработка исключения, возникшего при работе с базой данных
+					_logger.LogError(ex, "Ошибка при выполнении запроса к базе данных");
+				}
+			}
 
 			// Валидация не удалась или данные пользователя не совпадают, возвращаем модель с ошибками
 			return View("Sign_In", userModel);

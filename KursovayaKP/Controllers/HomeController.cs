@@ -15,6 +15,13 @@ namespace KursovayaKP.Controllers
 
 		public IActionResult Index()
 		{
+			var role = HttpContext.Request.Cookies["Role"];
+
+			if (role == "Admin")
+			{
+				return RedirectToAction("TestAdmin", "Admin");
+			}
+
 			return View();
 		}
 

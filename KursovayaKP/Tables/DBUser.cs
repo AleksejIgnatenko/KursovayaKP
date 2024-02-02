@@ -5,6 +5,7 @@ namespace KursovayaKP.Tables
 {
 	public class DBUser : DbContext
 	{
+		private readonly ILogger<UserModel>? _logger;
 		public DbSet<UserModel> Users { get; set; }
 
 		// Создаем базу данных при первом обращении
@@ -22,17 +23,27 @@ namespace KursovayaKP.Tables
 		// Добавление пользователя
 		public bool AddUser(UserModel user)
 		{
-			// Проверяем наличие пользователя с такой же почтой
-			var existingUser = Users.FirstOrDefault(u => u.Email == user.Email);
-			if (existingUser != null)
+			try
 			{
-				// Пользователь с такой почтой уже существует
+				// Проверяем наличие пользователя с такой же почтой
+				var existingUser = Users.FirstOrDefault(u => u.Email == user.Email);
+				if (existingUser != null)
+				{
+					// Пользователь с такой почтой уже существует
+					return false;
+				}
+
+				Users.Add(user);
+				SaveChanges();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				// Обработка исключения, возникшего при работе с базой данных
+				// Записываем ошибку в лог
+				_logger.LogError(ex, "Ошибка при добавлении пользователя в базу данных");
 				return false;
 			}
-
-			Users.Add(user);
-			SaveChanges();
-			return true;
 		}
 
 		//Заполнение таблицыпри при создании
