@@ -3,19 +3,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KursovayaKP.Tables
 {
-	public class DBUser : DbContext
+	public class DBUser : Tables
 	{
 		private readonly ILogger<UserModel>? _logger;
-		public DbSet<UserModel> Users { get; set; }
 
-		// Создаем базу данных при первом обращении
-		public DBUser(DbContextOptions<DBUser> options) : base(options)
-		{
-			Database.EnsureCreated();   
-		}
+        public DBUser(DbContextOptions<DBUser> options) : base(options)
+        {
+        }
 
-		//Получение всех пользователей
-		public List<UserModel> GetAllUsers()
+
+        //Получение всех пользователей
+        public List<UserModel> GetAllUsers()
 		{
 			return Users.ToList();
 		}
@@ -46,8 +44,8 @@ namespace KursovayaKP.Tables
 			}
 		}
 
-		//Заполнение таблицыпри при создании
-		/*		protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //Заполнение таблицыпри при создании
+        /*		protected override void OnModelCreating(ModelBuilder modelBuilder)
 				{
 					modelBuilder.Entity<UserModel>().HasData(
 						new UserModel { UserName = "Tom", Email = "Login1", Password = "1" },
@@ -55,5 +53,5 @@ namespace KursovayaKP.Tables
 						new UserModel { UserName = "Sam", Email = "Login3", Password = "3" }
 					);
 				}*/
-	}
+    }
 }

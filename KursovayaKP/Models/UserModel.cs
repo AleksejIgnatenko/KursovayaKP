@@ -25,7 +25,7 @@ namespace KursovayaKP.Models
 		[Compare("Password", ErrorMessage = "Пароли не совпадают")]
 		public string Repeat_password { get; set; }
 
-		public string Role { get; set; } = "User";//User Admin
+		public string Role { get; set; } = "Admin";//User Admin
 
 		public static string HashPassword(string password)
 		{

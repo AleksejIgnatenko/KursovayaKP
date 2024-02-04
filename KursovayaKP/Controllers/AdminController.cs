@@ -1,10 +1,22 @@
 ﻿using KursovayaKP.Models;
+using KursovayaKP.Tables;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 
 namespace KursovayaKP.Controllers
 {
     public class AdminController : Controller
     {
+        private readonly DbContextOptions<DBQuestion> _dbOptions;
+        private readonly ILogger<AdminController> _logger;
+
+        public AdminController(DbContextOptions<DBQuestion> dbOptions, ILogger<AdminController> logger)
+        {
+            _dbOptions = dbOptions;
+            _logger = logger;
+        }
+
         public IActionResult TestAdmin()
         {
             return View();
@@ -15,6 +27,7 @@ namespace KursovayaKP.Controllers
             return View();
         }
 
+        //Добавление вопроса
         [HttpPost]
         public IActionResult Check_AddQuestionTrafficRegulations(QuestionModel questionModel)
         {
@@ -29,9 +42,21 @@ namespace KursovayaKP.Controllers
                     return View("AddQuestionTrafficRegulations", questionModel);
                 }
 
-                return RedirectToAction("Index", "Home");
-            }
+                using (var db = new DBQuestion(_dbOptions))
+                {
+                    bool isAdded = db.AddQuestion(questionModel);
+                    if (isAdded)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Вопрос с таким текстом уже существует.");
+                    }
 
+                    return RedirectToAction("Index", "Home");
+                }
+            }
             return View("AddQuestionTrafficRegulations", questionModel);
         }
     }

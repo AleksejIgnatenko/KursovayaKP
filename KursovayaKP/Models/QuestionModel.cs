@@ -1,28 +1,33 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KursovayaKP.Models
 {
 	public class QuestionModel
 	{
-		[Required]
-		public string QuestionText { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
-        [Url(ErrorMessage = "Неверный формат ссылки")]
+        [Required(ErrorMessage = "Заполните поле")]
+        public string QuestionText { get; set; }
+
+        [Url(ErrorMessage = "Неверный формат ссылки")] 
         public string? LinkPhoto { get; set; }
 
-        [Required]
-		public string Answer1 { get; set; }
+        [Required(ErrorMessage = "Заполните поле")]
+        public string Answer1 { get; set; }
 
-		[Required]
-		public string Answer2 { get; set; }
+        [Required(ErrorMessage = "Заполните поле")]
+        public string Answer2 { get; set; }
 
-		[Required]
-		public string Answer3 { get; set; }
+        [Required(ErrorMessage = "Заполните поле")]
+        public string Answer3 { get; set; }
 
-		[Required]
-		public string Answer4 { get; set; }
+        [Required(ErrorMessage = "Заполните поле")]
+        public string Answer4 { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Заполните поле")]
         public string CorrectAnswer { get; set; }
     }
 }
