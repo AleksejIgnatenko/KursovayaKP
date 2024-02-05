@@ -6,7 +6,9 @@ namespace KursovayaKP.Tables
     public class Tables : DbContext
     {
         public DbSet<UserModel> Users { get; set; }
-        public DbSet<QuestionModel> Questions { get; set; }
+        public DbSet<QuestionsTrafficRegulationsModel> QuestionsTrafficRegulations { get; set; }
+
+
 
         // Создаем базу данных при первом обращении
         public Tables(DbContextOptions<DBUser> options) : base(options)
@@ -15,7 +17,7 @@ namespace KursovayaKP.Tables
         }
 
         // Создаем базу данных при первом обращении
-        public Tables(DbContextOptions<DBQuestion> options) : base(options)
+        public Tables(DbContextOptions<TableQuestionTrafficRegulations> options) : base(options)
         {
             Database.EnsureCreated();
         }

@@ -8,10 +8,10 @@ namespace KursovayaKP.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly DbContextOptions<DBQuestion> _dbOptions;
+        private readonly DbContextOptions<TableQuestionTrafficRegulations> _dbOptions;
         private readonly ILogger<AdminController> _logger;
 
-        public AdminController(DbContextOptions<DBQuestion> dbOptions, ILogger<AdminController> logger)
+        public AdminController(DbContextOptions<TableQuestionTrafficRegulations> dbOptions, ILogger<AdminController> logger)
         {
             _dbOptions = dbOptions;
             _logger = logger;
@@ -29,7 +29,7 @@ namespace KursovayaKP.Controllers
 
         //Добавление вопроса
         [HttpPost]
-        public IActionResult Check_AddQuestionTrafficRegulations(QuestionModel questionModel)
+        public IActionResult Check_AddQuestionTrafficRegulations(QuestionsTrafficRegulationsModel questionModel)
         {
             if (ModelState.IsValid)
             {
@@ -42,7 +42,7 @@ namespace KursovayaKP.Controllers
                     return View("AddQuestionTrafficRegulations", questionModel);
                 }
 
-                using (var db = new DBQuestion(_dbOptions))
+                using (var db = new TableQuestionTrafficRegulations(_dbOptions))
                 {
                     bool isAdded = db.AddQuestion(questionModel);
                     if (isAdded)

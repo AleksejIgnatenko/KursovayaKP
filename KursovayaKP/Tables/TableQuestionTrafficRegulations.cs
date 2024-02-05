@@ -3,20 +3,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KursovayaKP.Tables
 {
-    public class DBQuestion
+    public class TableQuestionTrafficRegulations : Tables
     {
-        private readonly ILogger<QuestionModel>? _logger;
-
-/*        public DBQuestion(DbContextOptions<DBQuestion> options) : base(options)
+        private readonly ILogger<TableQuestionTrafficRegulations>? _logger;
+        public TableQuestionTrafficRegulations(DbContextOptions<TableQuestionTrafficRegulations> options) : base(options)
         {
 
-        }*/
+        }
 
-/*        public bool AddQuestion(QuestionModel question)
+        public bool AddQuestion(QuestionsTrafficRegulationsModel question)
         {
             try
             {
-                Questions.Add(question);
+                QuestionsTrafficRegulations.Add(question);
                 SaveChanges();
                 return true;
             }
@@ -27,6 +26,6 @@ namespace KursovayaKP.Tables
                 _logger.LogError(ex, "Ошибка при добавлении вопроса в базу данных");
                 return false;
             }
-        }*/
+        }
     }
 }

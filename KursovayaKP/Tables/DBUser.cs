@@ -44,8 +44,8 @@ namespace KursovayaKP.Tables
 			}
 		}
 
-        //Заполнение таблицыпри при создании
-        /*		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		//Заполнение таблицыпри при создании
+		/*		protected override void OnModelCreating(ModelBuilder modelBuilder)
 				{
 					modelBuilder.Entity<UserModel>().HasData(
 						new UserModel { UserName = "Tom", Email = "Login1", Password = "1" },
@@ -53,5 +53,5 @@ namespace KursovayaKP.Tables
 						new UserModel { UserName = "Sam", Email = "Login3", Password = "3" }
 					);
 				}*/
-    }
+	}
 }

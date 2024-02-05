@@ -10,7 +10,7 @@ string connection = builder.Configuration.GetConnectionString("DefaultConnection
 builder.Services.AddDbContext<DBUser>(options => options.UseSqlServer(connection));
 
 // Add the ApplicationContext as a service in the application
-builder.Services.AddDbContext<DBQuestion>(options => options.UseSqlServer(connection));
+builder.Services.AddDbContext<TableQuestionTrafficRegulations>(options => options.UseSqlServer(connection));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace KursovayaKP.Models
 {
@@ -37,5 +38,5 @@ namespace KursovayaKP.Models
 				return Convert.ToBase64String(hashBytes);
 			}
 		}
-	}
+    }
 }
