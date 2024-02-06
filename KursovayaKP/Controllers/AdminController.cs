@@ -1,5 +1,5 @@
-﻿using KursovayaKP.Models;
-using KursovayaKP.Tables;
+﻿using KursovayaKP.Models.QuestionTableModelDB;
+using KursovayaKP.Tables.TablesQuestionsDB;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +17,7 @@ namespace KursovayaKP.Controllers
             _logger = logger;
         }
 
-        public IActionResult TestAdmin()
+        public IActionResult AdminIndex()
         {
             return View();
         }

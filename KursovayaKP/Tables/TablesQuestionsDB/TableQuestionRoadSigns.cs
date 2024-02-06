@@ -1,22 +1,21 @@
-﻿using KursovayaKP.Models;
+﻿using KursovayaKP.Models.QuestionTableModelDB;
 using Microsoft.EntityFrameworkCore;
 
-namespace KursovayaKP.Tables
+namespace KursovayaKP.Tables.TablesQuestionsDB
 {
-    public class DBQuestion
+    public class TableQuestionRoadSigns : TablesDB
     {
-        private readonly ILogger<QuestionModel>? _logger;
-
-/*        public DBQuestion(DbContextOptions<DBQuestion> options) : base(options)
+        private readonly ILogger<TableQuestionRoadSigns>? _logger;
+        public TableQuestionRoadSigns(DbContextOptions<TableQuestionRoadSigns> options) : base(options)
         {
 
-        }*/
+        }
 
-/*        public bool AddQuestion(QuestionModel question)
+        public bool AddQuestion(QuestionRoadSignsModel question)
         {
             try
             {
-                Questions.Add(question);
+                QuestionRoadSigns.Add(question);
                 SaveChanges();
                 return true;
             }
@@ -27,6 +26,6 @@ namespace KursovayaKP.Tables
                 _logger.LogError(ex, "Ошибка при добавлении вопроса в базу данных");
                 return false;
             }
-        }*/
+        }
     }
 }

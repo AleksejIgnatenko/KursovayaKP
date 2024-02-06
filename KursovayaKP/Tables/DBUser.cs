@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KursovayaKP.Tables
 {
-	public class DBUser : Tables
+	public class DBUser : TablesDB
 	{
 		private readonly ILogger<UserModel>? _logger;
 

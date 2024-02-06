@@ -1,21 +1,21 @@
-﻿using KursovayaKP.Models;
+﻿using KursovayaKP.Models.QuestionTableModelDB;
 using Microsoft.EntityFrameworkCore;
 
-namespace KursovayaKP.Tables
+namespace KursovayaKP.Tables.TablesQuestionsDB
 {
-    public class TableQuestionTrafficRegulations : Tables
+    public class TableQuestionMedicalCare : TablesDB
     {
-        private readonly ILogger<TableQuestionTrafficRegulations>? _logger;
-        public TableQuestionTrafficRegulations(DbContextOptions<TableQuestionTrafficRegulations> options) : base(options)
+        private readonly ILogger<TableQuestionMedicalCare>? _logger;
+        public TableQuestionMedicalCare(DbContextOptions<TableQuestionMedicalCare> options) : base(options)
         {
 
         }
 
-        public bool AddQuestion(QuestionsTrafficRegulationsModel question)
+        public bool AddQuestion(QuestionMedicalCareModel question)
         {
             try
             {
-                QuestionsTrafficRegulations.Add(question);
+                QuestionMedicalCare.Add(question);
                 SaveChanges();
                 return true;
             }

@@ -19,7 +19,7 @@ namespace KursovayaKP.Controllers
 
 			if (role == "Admin")
 			{
-				return RedirectToAction("TestAdmin", "Admin");
+				return RedirectToAction("AdminIndex", "Admin");
 			}
 
 			return View();
