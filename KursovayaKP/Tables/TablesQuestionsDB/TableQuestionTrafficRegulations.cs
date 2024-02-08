@@ -1,4 +1,5 @@
-﻿using KursovayaKP.Models.QuestionTableModelDB;
+﻿using KursovayaKP.Models;
+using KursovayaKP.Models.QuestionTableModelDB;
 using Microsoft.EntityFrameworkCore;
 
 namespace KursovayaKP.Tables.TablesQuestionsDB
@@ -26,6 +27,13 @@ namespace KursovayaKP.Tables.TablesQuestionsDB
                 _logger.LogError(ex, "Ошибка при добавлении вопроса в базу данных");
                 return false;
             }
+        }
+
+        //Получение всех вопросов
+        public List<QuestionsTrafficRegulationsModel> GetAllQuestionsTrafficRegulations()
+        {
+            return QuestionsTrafficRegulations.ToList();
+
         }
     }
 }

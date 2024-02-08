@@ -1,16 +1,22 @@
 using KursovayaKP.Models;
+using KursovayaKP.Models.QuestionTableModelDB;
+using KursovayaKP.Tables.TablesQuestionsDB;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System.Diagnostics;
 
 namespace KursovayaKP.Controllers
 {
 	public class HomeController : Controller
 	{
-		private readonly ILogger<HomeController> _logger;
+        private readonly DbContextOptions<TableQuestionTrafficRegulations> _dbOptionsTrafficRegulations;
+        private readonly ILogger<HomeController> _logger;
 
-		public HomeController(ILogger<HomeController> logger)
+		public HomeController(DbContextOptions<TableQuestionTrafficRegulations> dbOptionsTrafficRegulations, ILogger<HomeController> logger)
 		{
-			_logger = logger;
+            _dbOptionsTrafficRegulations = dbOptionsTrafficRegulations;
+            _logger = logger;
 		}
 
 		public IActionResult Index()
@@ -44,13 +50,21 @@ namespace KursovayaKP.Controllers
         {
             return View();
         }
+        public IActionResult TestTrafficRegulations()
+        {
+            TableQuestionTrafficRegulations tableQuestionTrafficRegulations = new TableQuestionTrafficRegulations(_dbOptionsTrafficRegulations);
+            List<QuestionsTrafficRegulationsModel> allQuestions = tableQuestionTrafficRegulations.GetAllQuestionsTrafficRegulations();// Retrieve questions from the table
+            //List<TableQuestionTrafficRegulations> selectedQuestions = GetRandomQuestions(allQuestions, numberOfQuestionsToDisplay); // Select random questions from the list
+            return View("~/Views/Home/tests/TestTrafficRegulations.cshtml", allQuestions);
+        }
+
 
         public IActionResult Privacy()
 		{
 			return View();
 		}
 
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

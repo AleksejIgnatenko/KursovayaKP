@@ -1,0 +1,16 @@
+﻿@using KursovayaKP.Models.QuestionTableModelDB;
+@model List<QuestionsTrafficRegulationsModel>
+
+<h1>Test Traffic Regulations</h1>
+
+@foreach (var question in Model)
+{
+    <div>
+        <h3>@question.QuestionText</h3>
+        <h3>@question.Answer1</h3>
+        <h3>@question.Answer2</h3>
+        <h3>@question.Answer3</h3>
+        <h3>@question.Answer4</h3>
+        <!-- Display any additional question details or answer choices -->
+    </div>
+}

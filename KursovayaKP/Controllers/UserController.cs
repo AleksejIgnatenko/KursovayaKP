@@ -48,8 +48,8 @@ namespace KursovayaKP.Controllers
 					if (userAdded)
 					{
 						// Add cookies
+						Response.Cookies.Append("ID", userModel.Id.ToString());
 						Response.Cookies.Append("UserName", userModel.UserName);
-						Response.Cookies.Append("Email", userModel.Email);
 						Response.Cookies.Append("Role", userModel.Role);
 
 						return RedirectToAction("Index", "Home");

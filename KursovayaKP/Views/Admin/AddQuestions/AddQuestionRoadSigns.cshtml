@@ -1,6 +1,6 @@
 ﻿@model QuestionModel
 @{
-    ViewData["Title"] = "Регистрация";
+    ViewData["Title"] = $"Добавление вопроса к разделу \"{"Дорожные знаки"}\"";
 }
 
 @section Styles {
@@ -13,8 +13,8 @@
 <body>
     <div class="fullscreen-container">
         <div class="addquestion-container">
-            <h1 class="header">Добавление вопроса ПДД</h1>
-            <form class="form" asp-controller="Admin" asp-action="Check_AddQuestionTrafficRegulations" method="post">
+            <h1 class="header">Добавление вопроса по теме "Дорожные знаки"</h1>
+            <form class="form" asp-controller="Admin" asp-action="Check_AddQuestionRoadSigns" method="post">
                 <div class="input-group">
                     <label for="questionText">Вопрос</label>
                     <input type="text" id="questionText" name="questionText" placeholder="Введите вопрос" required asp-for="QuestionText">
@@ -59,7 +59,7 @@
 
                 <button class="button">Добавить вопрос</button>
                 <div class="text-center">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="TrafficRegulations">Назад</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="RoadSigns">Назад</a>
                 </div>
             </form>
         </div>

@@ -11,6 +11,8 @@ string connection = builder.Configuration.GetConnectionString("DefaultConnection
 builder.Services.AddDbContext<DBUser>(options => options.UseSqlServer(connection));
 builder.Services.AddDbContext<TableQuestionTrafficRegulations>(options => options.UseSqlServer(connection));
 builder.Services.AddDbContext<TableQuestionRoadSigns>(options => options.UseSqlServer(connection));
+builder.Services.AddDbContext<TableQuestionMedicalCare>(options => options.UseSqlServer(connection));
+builder.Services.AddDbContext<TableQuestionCarDevice>(options => options.UseSqlServer(connection));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
