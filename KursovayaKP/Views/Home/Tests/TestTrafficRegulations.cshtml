@@ -1,16 +1,43 @@
 ﻿@using KursovayaKP.Models.QuestionTableModelDB;
 @model List<QuestionsTrafficRegulationsModel>
 
+@{
+    ViewData["Title"] = $"Тест по теме ПДД";
+}
+
+@section Styles {
+@*     <link rel="stylesheet" href="~/css/AddQuestion.css" asp-append-version="true" /> *@
+    <script src="~/js/TestsTrafficRegulation.js" asp-append-version="true"></script>
+}
+
 <h1>Test Traffic Regulations</h1>
 
-@foreach (var question in Model)
-{
-    <div>
-        <h3>@question.QuestionText</h3>
-        <h3>@question.Answer1</h3>
-        <h3>@question.Answer2</h3>
-        <h3>@question.Answer3</h3>
-        <h3>@question.Answer4</h3>
-        <!-- Display any additional question details or answer choices -->
-    </div>
-}
+<div id="question-container">
+    @foreach (var question in Model)
+    {
+        <div class="question" style="display: none;">
+            <form class="form" asp-controller="Home" asp-action="CheckTestTrafficRegulation" method="post">
+            <h3>Вопрос №@question.Id</h3>
+            <h3>@question.QuestionText</h3>
+            @if (!string.IsNullOrEmpty(question.LinkPhoto))
+            {
+                <img src="@question.LinkPhoto" style="max-width: 1000px" />
+            }
+                <div>
+                    <input type="radio" id="answer1" name="answer" value="@question.Answer1">
+                    <label for="answer1">@question.Answer1</label><br>
+                    <input type="radio" id="answer2" name="answer" value="@question.Answer2">
+                    <label for="answer2">@question.Answer2</label><br>
+                    <input type="radio" id="answer3" name="answer" value="@question.Answer3">
+                    <label for="answer3">@question.Answer3</label><br>
+                    <input type="radio" id="answer4" name="answer" value="@question.Answer4">
+                    <label for="answer4">@question.Answer4</label><br>
+                </div>
+            </form>
+        </div>
+    }
+</div>
+
+<button onclick="showNextQuestion()">Следующий вопрос</button>
+
+<script src="TestsTrafficRegulation.js"></script>

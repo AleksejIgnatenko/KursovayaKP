@@ -50,24 +50,35 @@ namespace KursovayaKP.Controllers
         {
             return View();
         }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
         public IActionResult TestTrafficRegulations()
         {
             TableQuestionTrafficRegulations tableQuestionTrafficRegulations = new TableQuestionTrafficRegulations(_dbOptionsTrafficRegulations);
-            List<QuestionsTrafficRegulationsModel> allQuestions = tableQuestionTrafficRegulations.GetAllQuestionsTrafficRegulations();// Retrieve questions from the table
-            //List<TableQuestionTrafficRegulations> selectedQuestions = GetRandomQuestions(allQuestions, numberOfQuestionsToDisplay); // Select random questions from the list
-            return View("~/Views/Home/tests/TestTrafficRegulations.cshtml", allQuestions);
+            List<QuestionsTrafficRegulationsModel> allQuestions = tableQuestionTrafficRegulations.GetAllQuestionsTrafficRegulations(); // Retrieve questions from the table
+            List<QuestionsTrafficRegulationsModel> selectedQuestions = allQuestions.OrderBy(x => Guid.NewGuid()).Take(10).ToList(); // Select random questions from the list
+            return View("~/Views/Home/tests/TestTrafficRegulations.cshtml", selectedQuestions);
         }
 
 
-        public IActionResult Privacy()
-		{
-			return View();
-		}
+        // Проверка ответов теста ПДД
+        int counter = 0;
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-		public IActionResult Error()
-		{
-			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-		}
-	}
+/*        [HttpPost]
+        public IActionResult CheckTestTrafficRegulation(int questionID, string answer)
+        {
+            Console.WriteLine(questionID);
+            return View("~/Views/Home/tests/TestTrafficRegulations.cshtml");
+        }*/
+    }
 }
