@@ -51,6 +51,11 @@ namespace KursovayaKP.Controllers
             return View();
         }
 
+/*        public IActionResult CheckingAnswer()
+        {
+            return View("~/Views/Home/Tests/CheckingAnswer.cshtml", selectedQuestions);
+        }*/
+
         public IActionResult Privacy()
         {
             return View();
@@ -67,18 +72,16 @@ namespace KursovayaKP.Controllers
             TableQuestionTrafficRegulations tableQuestionTrafficRegulations = new TableQuestionTrafficRegulations(_dbOptionsTrafficRegulations);
             List<QuestionsTrafficRegulationsModel> allQuestions = tableQuestionTrafficRegulations.GetAllQuestionsTrafficRegulations(); // Retrieve questions from the table
             List<QuestionsTrafficRegulationsModel> selectedQuestions = allQuestions.OrderBy(x => Guid.NewGuid()).Take(10).ToList(); // Select random questions from the list
-            return View("~/Views/Home/tests/TestTrafficRegulations.cshtml", selectedQuestions);
+            return View("~/Views/Home/Tests/TestTrafficRegulations.cshtml", selectedQuestions);
         }
 
 
         // Проверка ответов теста ПДД
-        int counter = 0;
-
-/*        [HttpPost]
+        [HttpPost]
         public IActionResult CheckTestTrafficRegulation(int questionID, string answer)
         {
             Console.WriteLine(questionID);
             return View("~/Views/Home/tests/TestTrafficRegulations.cshtml");
-        }*/
+        }
     }
 }

@@ -1,0 +1,7 @@
+﻿.question.incorrect {
+    background-color: #ffcccc;
+}
+
+    .question.incorrect label {
+        color: red;
+    }

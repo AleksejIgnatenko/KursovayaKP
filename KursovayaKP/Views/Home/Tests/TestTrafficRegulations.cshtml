@@ -2,12 +2,12 @@
 @model List<QuestionsTrafficRegulationsModel>
 
 @{
-    ViewData["Title"] = $"Тест по теме ПДД";
+	ViewData["Title"] = $"Тест по теме ПДД";
 }
 
 @section Styles {
-@*     <link rel="stylesheet" href="~/css/AddQuestion.css" asp-append-version="true" /> *@
-    <script src="~/js/TestsTrafficRegulation.js" asp-append-version="true"></script>
+	<link rel="stylesheet" href="~/css/Tests.css" asp-append-version="true" />
+	<script src="~/js/TestsTrafficRegulation.js" asp-append-version="true"></script>
 }
 
 <h1>Test Traffic Regulations</h1>
@@ -15,14 +15,14 @@
 <div id="question-container">
     @foreach (var question in Model)
     {
-        <div class="question" style="display: none;">
-            <form class="form" asp-controller="Home" asp-action="CheckTestTrafficRegulation" method="post">
-            <h3>Вопрос №@question.Id</h3>
-            <h3>@question.QuestionText</h3>
-            @if (!string.IsNullOrEmpty(question.LinkPhoto))
-            {
-                <img src="@question.LinkPhoto" style="max-width: 1000px" />
-            }
+        <div class="question" data-question-id="@question.Id" data-correct-answer="@question.CorrectAnswer">
+            <form>
+                <h3>Вопрос №@question.Id</h3>
+                <h3>@question.QuestionText</h3>
+                @if (!string.IsNullOrEmpty(question.LinkPhoto))
+                {
+                    <img src="@question.LinkPhoto" style="max-width: 1000px" />
+                }
                 <div>
                     <input type="radio" id="answer1" name="answer" value="@question.Answer1">
                     <label for="answer1">@question.Answer1</label><br>
@@ -38,6 +38,6 @@
     }
 </div>
 
-<button onclick="showNextQuestion()">Следующий вопрос</button>
+<button onclick="checkAnswers()">Отправить</button>
 
 <script src="TestsTrafficRegulation.js"></script>
