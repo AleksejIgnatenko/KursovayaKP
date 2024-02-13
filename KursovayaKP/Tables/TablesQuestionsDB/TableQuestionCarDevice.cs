@@ -1,4 +1,5 @@
-﻿using KursovayaKP.Models.QuestionTableModelDB;
+﻿using KursovayaKP.Models;
+using KursovayaKP.Models.QuestionTableModelDB;
 using Microsoft.EntityFrameworkCore;
 
 namespace KursovayaKP.Tables.TablesQuestionsDB
@@ -8,7 +9,6 @@ namespace KursovayaKP.Tables.TablesQuestionsDB
         private readonly ILogger<TableQuestionCarDevice>? _logger;
         public TableQuestionCarDevice(DbContextOptions<TableQuestionCarDevice> options) : base(options)
         {
-
         }
 
         public bool AddQuestion(QuestionCarDeviceModel question)

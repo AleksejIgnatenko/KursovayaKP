@@ -29,7 +29,7 @@ namespace KursovayaKP.Models
 
 		public string Role { get; set; } = "Admin";//User Admin
 
-		public static string HashPassword(string password)
+        public static string HashPassword(string password)
 		{
 			using (SHA512 sha512 = SHA512.Create())
 			{

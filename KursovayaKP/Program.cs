@@ -1,5 +1,7 @@
+using KursovayaKP.Models.AnswerTableModelDB;
 using KursovayaKP.Tables;
 using KursovayaKP.Tables.TablesQuestionsDB;
+using KursovayaKP.Tables.TablesAnswerDB;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,7 @@ builder.Services.AddDbContext<TableQuestionTrafficRegulations>(options => option
 builder.Services.AddDbContext<TableQuestionRoadSigns>(options => options.UseSqlServer(connection));
 builder.Services.AddDbContext<TableQuestionMedicalCare>(options => options.UseSqlServer(connection));
 builder.Services.AddDbContext<TableQuestionCarDevice>(options => options.UseSqlServer(connection));
+builder.Services.AddDbContext<TableAnswerUserTestTrafficRegulations>(options => options.UseSqlServer(connection));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
