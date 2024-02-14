@@ -76,12 +76,21 @@ namespace KursovayaKP.Controllers
         }
 
 
-        // Проверка ответов теста ПДД
+        // Сохранение ответов пользователей
+        // Метод, принимающий результаты теста
         [HttpPost]
-        public IActionResult CheckTestTrafficRegulation(int questionID, string answer)
+        public ActionResult SubmitAnswers(string userId, int score)
         {
-            Console.WriteLine(questionID);
-            return View("~/Views/Home/tests/TestTrafficRegulations.cshtml");
+            Console.WriteLine(userId + " " + score);
+
+            // Создаем объект с результатом
+            var result = new
+            {
+                message = "Результаты теста сохранены успешно."
+            };
+
+            // Возвращаем результат в формате JSON
+            return Json(result);
         }
     }
 }

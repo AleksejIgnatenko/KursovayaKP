@@ -67,6 +67,42 @@ async function checkAnswers() {
         await new Promise(resolve => setTimeout(resolve, 500));
     }
 
+    // Получаем идентификатор пользователя из куки
+    var userId = getCookieValue('ID');
+
+    // Отправляем данные на сервер вместе с идентификатором пользователя
+    var data = {
+        userId: userId,
+        score: score,
+    };
+
+    console.log(data);
+
+    // Выполняем AJAX-запрос на сервер
+    $.ajax({
+        url: '/Home/SubmitAnswers',
+        type: 'POST',
+        contentType: 'application/x-www-form-urlencoded',
+        data: { userId: userId, score: score },
+        success: function (result) {
+            // Обрабатываем успешный ответ
+        },
+        error: function (error) {
+            // Обрабатываем ошибку
+        }
+    });
     // Показываем уведомление после выделения неправильных вопросов
     alert('Ваш результат: ' + score + ' из ' + questions.length);
+}
+
+// Функция для получения значения куки по имени
+function getCookieValue(name) {
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        if (cookie.startsWith(name + '=')) {
+            return cookie.substring(name.length + 1);
+        }
+    }
+    return null;
 }

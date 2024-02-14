@@ -78,9 +78,9 @@ namespace KursovayaKP.Controllers
 					var user = db.Users.FirstOrDefault(u => u.Email == userModel.Email && u.Password == UserModel.HashPassword(userModel.Password));
 					if (user != null)
 					{
-						// Данные пользователя совпадают, устанавливаем куки и выполняем перенаправление
-						Response.Cookies.Append("UserName", user.UserName);
-						Response.Cookies.Append("Email", user.Email);
+                        // Данные пользователя совпадают, устанавливаем куки и выполняем перенаправление
+                        Response.Cookies.Append("ID", user.Id.ToString());
+                        Response.Cookies.Append("UserName", user.UserName);
 						Response.Cookies.Append("Role", user.Role);
 
 						return RedirectToAction("Index", "Home");

@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KursovayaKP.Tables.TablesAnswerDB
 {
-    public class TableAnswerUserTestTrafficRegulations : TablesDB
+    public class TableAnswerUserTestTrafficRegulations //: TablesDB
     {
-        private readonly ILogger<TableQuestionCarDevice>? _logger;
+/*        private readonly ILogger<TableAnswerUserTestTrafficRegulations>? _logger;
         public TableAnswerUserTestTrafficRegulations(DbContextOptions<TableAnswerUserTestTrafficRegulations> options) : base(options)
         {
 
-        }
+        }*/
     }
 }

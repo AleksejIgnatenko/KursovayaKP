@@ -1,4 +1,7 @@
-﻿using KursovayaKP.Models.QuestionTableModelDB;
+﻿using KursovayaKP.Models;
+using KursovayaKP.Models.QuestionTableModelDB;
+using KursovayaKP.Tables;
+using KursovayaKP.Tables.TablesAnswerDB;
 using KursovayaKP.Tables.TablesQuestionsDB;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -12,14 +15,16 @@ namespace KursovayaKP.Controllers
         private readonly DbContextOptions<TableQuestionRoadSigns> _dbOptionsRoadSigns;
         private readonly DbContextOptions<TableQuestionMedicalCare> _dbOptionsMedicalCare;
         private readonly DbContextOptions<TableQuestionCarDevice> _dbOptionsCarDevice;
+        private readonly DbContextOptions<TableAnswerUserTest> _dbOptionsAnswerUserTest;
         private readonly ILogger<AdminController> _logger;
 
-        public AdminController(DbContextOptions<TableQuestionTrafficRegulations> dbOptionsTrafficRegulations, DbContextOptions<TableQuestionRoadSigns> dbOptionsRoadSigns, DbContextOptions<TableQuestionMedicalCare> dbOptionsMedicalCare, DbContextOptions<TableQuestionCarDevice> dbOptionsCarDevice, ILogger<AdminController> logger)
+        public AdminController(DbContextOptions<TableQuestionTrafficRegulations> dbOptionsTrafficRegulations, DbContextOptions<TableQuestionRoadSigns> dbOptionsRoadSigns, DbContextOptions<TableQuestionMedicalCare> dbOptionsMedicalCare, DbContextOptions<TableQuestionCarDevice> dbOptionsCarDevice, DbContextOptions<TableAnswerUserTest> dbOptionsAnswerUserTest, ILogger<AdminController> logger)
         {
             _dbOptionsTrafficRegulations = dbOptionsTrafficRegulations;
             _dbOptionsRoadSigns = dbOptionsRoadSigns;
             _dbOptionsMedicalCare = dbOptionsMedicalCare;
             _dbOptionsCarDevice = dbOptionsCarDevice;
+            _dbOptionsAnswerUserTest = dbOptionsAnswerUserTest;
             _logger = logger;
         }
 
@@ -150,7 +155,7 @@ namespace KursovayaKP.Controllers
             return View("AddQuestionMedicalCare", questionModel);
         }
 
-        //Добавление вопроса Медецинская помощь
+        //Добавление вопроса устройство авто
         [HttpPost]
         public IActionResult Check_AddQuestionCarDevice(QuestionCarDeviceModel questionModel)
         {
@@ -183,5 +188,6 @@ namespace KursovayaKP.Controllers
             }
             return View("AddQuestionCarDevice", questionModel);
         }
+
     }
 }
