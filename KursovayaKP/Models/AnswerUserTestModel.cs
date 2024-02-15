@@ -8,8 +8,16 @@ namespace KursovayaKP.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
         public int Id { get; set; }
+
+        [Required]
         public int UserId { get; set; }
+
+        [Required] 
+        public string NameTest { get; set; }
+
+        [Required]
         public int ResultTest { get; set; }
     }
 }

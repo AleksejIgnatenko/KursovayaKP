@@ -1,7 +1,6 @@
 ﻿using KursovayaKP.Models;
 using KursovayaKP.Models.QuestionTableModelDB;
 using KursovayaKP.Tables;
-using KursovayaKP.Tables.TablesAnswerDB;
 using KursovayaKP.Tables.TablesQuestionsDB;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -68,20 +67,28 @@ namespace KursovayaKP.Controllers
                     return View("AddQuestionTrafficRegulations", questionModel);
                 }
 
-                using (var db = new TableQuestionTrafficRegulations(_dbOptionsTrafficRegulations))
+                try
                 {
-                    bool isAdded = db.AddQuestion(questionModel);
-                    if (isAdded)
+                    using (var db = new TableQuestionTrafficRegulations(_dbOptionsTrafficRegulations))
                     {
-                        ModelState.Clear(); // Очистить состояние модели
+                        bool isAdded = db.AddQuestion(questionModel);
+                        if (isAdded)
+                        {
+                            ModelState.Clear(); // Очистить состояние модели
+                            return View("~/Views/Admin/AddQuestions/AddQuestionTrafficRegulations.cshtml");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Вопрос с таким текстом уже существует.");
+                        }
+
                         return View("~/Views/Admin/AddQuestions/AddQuestionTrafficRegulations.cshtml");
                     }
-                    else
-                    {
-                        ModelState.AddModelError("", "Вопрос с таким текстом уже существует.");
-                    }
-
-                    return View("~/Views/Admin/AddQuestions/AddQuestionTrafficRegulations.cshtml");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Ошибка добавления вопроса в БД");
+                    return Json("Ошибка добавления вопроса в БД");
                 }
             }
             return View("AddQuestionTrafficRegulations", questionModel);
@@ -102,20 +109,28 @@ namespace KursovayaKP.Controllers
                     return View("AddQuestionRoadSigns", questionModel);
                 }
 
-                using (var db = new TableQuestionRoadSigns(_dbOptionsRoadSigns))
+                try
                 {
-                    bool isAdded = db.AddQuestion(questionModel);
-                    if (isAdded)
+                    using (var db = new TableQuestionRoadSigns(_dbOptionsRoadSigns))
                     {
-                        ModelState.Clear(); // Очистить состояние модели
+                        bool isAdded = db.AddQuestion(questionModel);
+                        if (isAdded)
+                        {
+                            ModelState.Clear(); // Очистить состояние модели
+                            return View("~/Views/Admin/AddQuestions/AddQuestionRoadSigns.cshtml");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Вопрос с таким текстом уже существует.");
+                        }
+
                         return View("~/Views/Admin/AddQuestions/AddQuestionRoadSigns.cshtml");
                     }
-                    else
-                    {
-                        ModelState.AddModelError("", "Вопрос с таким текстом уже существует.");
-                    }
-
-                    return View("~/Views/Admin/AddQuestions/AddQuestionRoadSigns.cshtml");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Ошибка добавления вопроса в БД");
+                    return Json("Ошибка добавления вопроса в БД");
                 }
             }
             return View("AddQuestionRoadSigns", questionModel);
@@ -136,20 +151,27 @@ namespace KursovayaKP.Controllers
                     return View("AddQuestionMedicalCare", questionModel);
                 }
 
-                using (var db = new TableQuestionMedicalCare(_dbOptionsMedicalCare))
+                try
                 {
-                    bool isAdded = db.AddQuestion(questionModel);
-                    if (isAdded)
+                    using (var db = new TableQuestionMedicalCare(_dbOptionsMedicalCare))
                     {
-                        ModelState.Clear(); // Очистить состояние модели
+                        bool isAdded = db.AddQuestion(questionModel);
+                        if (isAdded)
+                        {
+                            ModelState.Clear(); // Очистить состояние модели
+                            return View("~/Views/Admin/AddQuestions/AddQuestionMedicalCare.cshtml");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Вопрос с таким текстом уже существует.");
+                        }
+
                         return View("~/Views/Admin/AddQuestions/AddQuestionMedicalCare.cshtml");
                     }
-                    else
-                    {
-                        ModelState.AddModelError("", "Вопрос с таким текстом уже существует.");
-                    }
-
-                    return View("~/Views/Admin/AddQuestions/AddQuestionMedicalCare.cshtml");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Ошибка добавления вопроса в БД");
                 }
             }
             return View("AddQuestionMedicalCare", questionModel);
@@ -170,20 +192,27 @@ namespace KursovayaKP.Controllers
                     return View("AddQuestionCarDevice", questionModel);
                 }
 
-                using (var db = new TableQuestionCarDevice(_dbOptionsCarDevice))
+                try
                 {
-                    bool isAdded = db.AddQuestion(questionModel);
-                    if (isAdded)
+                    using (var db = new TableQuestionCarDevice(_dbOptionsCarDevice))
                     {
-                        ModelState.Clear(); // Очистить состояние модели
+                        bool isAdded = db.AddQuestion(questionModel);
+                        if (isAdded)
+                        {
+                            ModelState.Clear(); // Очистить состояние модели
+                            return View("~/Views/Admin/AddQuestions/AddQuestionCarDevice.cshtml");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Вопрос с таким текстом уже существует.");
+                        }
+
                         return View("~/Views/Admin/AddQuestions/AddQuestionCarDevice.cshtml");
                     }
-                    else
-                    {
-                        ModelState.AddModelError("", "Вопрос с таким текстом уже существует.");
-                    }
-
-                    return View("~/Views/Admin/AddQuestions/AddQuestionCarDevice.cshtml");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Ошибка добавления вопроса в БД");
                 }
             }
             return View("AddQuestionCarDevice", questionModel);

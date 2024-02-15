@@ -1,7 +1,5 @@
 ﻿using KursovayaKP.Models;
-using KursovayaKP.Models.AnswerTableModelDB;
 using KursovayaKP.Models.QuestionTableModelDB;
-using KursovayaKP.Tables.TablesAnswerDB;
 using KursovayaKP.Tables.TablesQuestionsDB;
 using Microsoft.EntityFrameworkCore;
 

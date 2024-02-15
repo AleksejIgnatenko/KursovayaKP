@@ -1,7 +1,5 @@
-using KursovayaKP.Models.AnswerTableModelDB;
 using KursovayaKP.Tables;
 using KursovayaKP.Tables.TablesQuestionsDB;
-using KursovayaKP.Tables.TablesAnswerDB;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

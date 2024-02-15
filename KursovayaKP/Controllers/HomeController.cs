@@ -1,5 +1,6 @@
 using KursovayaKP.Models;
 using KursovayaKP.Models.QuestionTableModelDB;
+using KursovayaKP.Tables;
 using KursovayaKP.Tables.TablesQuestionsDB;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,38 +9,46 @@ using System.Diagnostics;
 
 namespace KursovayaKP.Controllers
 {
-	public class HomeController : Controller
-	{
+    public class HomeController : Controller
+    {
         private readonly DbContextOptions<TableQuestionTrafficRegulations> _dbOptionsTrafficRegulations;
-        private readonly ILogger<HomeController> _logger;
+        private readonly DbContextOptions<TableQuestionRoadSigns> _dbOptionsRoadSigns;
+        private readonly DbContextOptions<TableQuestionMedicalCare> _dbOptionsMedicalCare;
+        private readonly DbContextOptions<TableQuestionCarDevice> _dbOptionsCarDevice;
+        private readonly DbContextOptions<TableAnswerUserTest> _dbOptionsAnswerUserTest;
+        private readonly ILogger<AdminController> _logger;
 
-		public HomeController(DbContextOptions<TableQuestionTrafficRegulations> dbOptionsTrafficRegulations, ILogger<HomeController> logger)
-		{
+        public HomeController(DbContextOptions<TableQuestionTrafficRegulations> dbOptionsTrafficRegulations, DbContextOptions<TableQuestionRoadSigns> dbOptionsRoadSigns, DbContextOptions<TableQuestionMedicalCare> dbOptionsMedicalCare, DbContextOptions<TableQuestionCarDevice> dbOptionsCarDevice, DbContextOptions<TableAnswerUserTest> dbOptionsAnswerUserTest, ILogger<AdminController> logger)
+        {
             _dbOptionsTrafficRegulations = dbOptionsTrafficRegulations;
+            _dbOptionsRoadSigns = dbOptionsRoadSigns;
+            _dbOptionsMedicalCare = dbOptionsMedicalCare;
+            _dbOptionsCarDevice = dbOptionsCarDevice;
+            _dbOptionsAnswerUserTest = dbOptionsAnswerUserTest;
             _logger = logger;
-		}
+        }
 
-		public IActionResult Index()
-		{
-			var role = HttpContext.Request.Cookies["Role"];
+        public IActionResult Index()
+        {
+            var role = HttpContext.Request.Cookies["Role"];
 
-			if (role == "Admin")
-			{
-				return RedirectToAction("AdminIndex", "Admin");
-			}
+            if (role == "Admin")
+            {
+                return RedirectToAction("AdminIndex", "Admin");
+            }
 
-			return View();
-		}
+            return View();
+        }
 
-		public IActionResult TrafficRegulations()
-		{
-			return View();
-		}
+        public IActionResult TrafficRegulations()
+        {
+            return View();
+        }
 
-		public IActionResult RoadSigns()
-		{
-			return View();
-		}
+        public IActionResult RoadSigns()
+        {
+            return View();
+        }
 
         public IActionResult MedicalCare()
         {
@@ -51,10 +60,10 @@ namespace KursovayaKP.Controllers
             return View();
         }
 
-/*        public IActionResult CheckingAnswer()
-        {
-            return View("~/Views/Home/Tests/CheckingAnswer.cshtml", selectedQuestions);
-        }*/
+        /*        public IActionResult CheckingAnswer()
+                {
+                    return View("~/Views/Home/Tests/CheckingAnswer.cshtml", selectedQuestions);
+                }*/
 
         public IActionResult Privacy()
         {
@@ -69,28 +78,54 @@ namespace KursovayaKP.Controllers
 
         public IActionResult TestTrafficRegulations()
         {
-            TableQuestionTrafficRegulations tableQuestionTrafficRegulations = new TableQuestionTrafficRegulations(_dbOptionsTrafficRegulations);
-            List<QuestionsTrafficRegulationsModel> allQuestions = tableQuestionTrafficRegulations.GetAllQuestionsTrafficRegulations(); // Retrieve questions from the table
-            List<QuestionsTrafficRegulationsModel> selectedQuestions = allQuestions.OrderBy(x => Guid.NewGuid()).Take(10).ToList(); // Select random questions from the list
-            return View("~/Views/Home/Tests/TestTrafficRegulations.cshtml", selectedQuestions);
+            try
+            {
+                TableQuestionTrafficRegulations tableQuestionTrafficRegulations = new TableQuestionTrafficRegulations(_dbOptionsTrafficRegulations);
+                List<QuestionsTrafficRegulationsModel> allQuestions = tableQuestionTrafficRegulations.GetAllQuestionsTrafficRegulations(); // Retrieve questions from the table
+                List<QuestionsTrafficRegulationsModel> selectedQuestions = allQuestions.OrderBy(x => Guid.NewGuid()).Take(10).ToList(); // Select random questions from the list
+                return View("~/Views/Home/Tests/TestTrafficRegulations.cshtml", selectedQuestions);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка получения теста");
+                return Json("Ошибка получения теста");
+            }
         }
 
 
         // Сохранение ответов пользователей
         // Метод, принимающий результаты теста
         [HttpPost]
-        public ActionResult SubmitAnswers(string userId, int score)
+        public ActionResult SubmitAnswers(int userId, string nameTest,int resultTest)
         {
-            Console.WriteLine(userId + " " + score);
+            Console.WriteLine(userId + " " + resultTest);
 
-            // Создаем объект с результатом
-            var result = new
+            AnswerUserTestModel answerUserTestModel = new AnswerUserTestModel
             {
-                message = "Результаты теста сохранены успешно."
+                UserId = userId,
+                NameTest = nameTest,
+                ResultTest = resultTest
             };
 
-            // Возвращаем результат в формате JSON
-            return Json(result);
+            // Проверка валидности объекта
+            if (TryValidateModel(answerUserTestModel))
+            {
+                try
+                {
+                    using (var db = new TableAnswerUserTest(_dbOptionsAnswerUserTest))
+                    {
+                        bool isAdded = db.AddAnswer(answerUserTestModel);
+                        // Возвращаем результат в формате JSON
+                        return Json("Результаты тестасохранены");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Ошибка при добавлении ответа пользователя в БД");
+                    return Json("Ошибка при добавлении ответа пользователя в БД");
+                }
+            }
+            return Json("Некорректные данные");
         }
     }
 }

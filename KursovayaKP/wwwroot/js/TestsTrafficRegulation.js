@@ -36,7 +36,7 @@
 //Сначала выделяется красынм а потом уведомление о количестве баллов
 async function checkAnswers() {
     var questions = document.getElementsByClassName('question');
-    var score = 0;
+    var resultTest = 0;
     var incorrectQuestions = [];
 
     for (var i = 0; i < questions.length; i++) {
@@ -47,7 +47,7 @@ async function checkAnswers() {
         var answerLabels = question.querySelectorAll('label');
 
         if (selectedAnswer && selectedAnswer.value === correctAnswer) {
-            score++;
+            resultTest++;
         } else {
             // Добавляем класс 'incorrect' к вопросу и его меткам (labels) для стилизации
             question.classList.add('incorrect');
@@ -70,10 +70,11 @@ async function checkAnswers() {
     // Получаем идентификатор пользователя из куки
     var userId = getCookieValue('ID');
 
-    // Отправляем данные на сервер вместе с идентификатором пользователя
+    // Отправляем данные на сервер вместе с идентификатором пользователя и названием теста
     var data = {
-        userId: userId,
-        score: score,
+        userId: parseInt(userId),
+        nameTest: 'ПДД',
+        resultTest: resultTest,
     };
 
     console.log(data);
@@ -83,7 +84,7 @@ async function checkAnswers() {
         url: '/Home/SubmitAnswers',
         type: 'POST',
         contentType: 'application/x-www-form-urlencoded',
-        data: { userId: userId, score: score },
+        data: data, // Используем объект 'data' напрямую
         success: function (result) {
             // Обрабатываем успешный ответ
         },
@@ -92,7 +93,7 @@ async function checkAnswers() {
         }
     });
     // Показываем уведомление после выделения неправильных вопросов
-    alert('Ваш результат: ' + score + ' из ' + questions.length);
+    alert('Ваш результат: ' + resultTest + ' из ' + questions.length);
 }
 
 // Функция для получения значения куки по имени
