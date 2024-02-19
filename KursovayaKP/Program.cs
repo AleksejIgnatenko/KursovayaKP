@@ -1,5 +1,5 @@
-using KursovayaKP.Tables;
-using KursovayaKP.Tables.TablesQuestionsDB;
+using KursovayaKP.Models;
+using KursovayaKP.Models.TablesDBModel;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,12 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 string connection = builder.Configuration.GetConnectionString("DefaultConnection") ?? string.Empty;
 
 // Add the ApplicationContext as a service in the application
-builder.Services.AddDbContext<DBUser>(options => options.UseSqlServer(connection));
-builder.Services.AddDbContext<TableQuestionTrafficRegulations>(options => options.UseSqlServer(connection));
-builder.Services.AddDbContext<TableQuestionRoadSigns>(options => options.UseSqlServer(connection));
-builder.Services.AddDbContext<TableQuestionMedicalCare>(options => options.UseSqlServer(connection));
-builder.Services.AddDbContext<TableQuestionCarDevice>(options => options.UseSqlServer(connection));
-//builder.Services.AddDbContext<TableAnswerUserTestTrafficRegulations>(options => options.UseSqlServer(connection));
+builder.Services.AddDbContext<UserTable>(options => options.UseSqlServer(connection));
+builder.Services.AddDbContext<QuestionTable>(options => options.UseSqlServer(connection));
 builder.Services.AddDbContext<TableAnswerUserTest>(options => options.UseSqlServer(connection));
 
 // Add services to the container.

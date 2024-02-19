@@ -1,21 +1,20 @@
-﻿using KursovayaKP.Models.QuestionTableModelDB;
+﻿using KursovayaKP.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace KursovayaKP.Tables.TablesQuestionsDB
+namespace KursovayaKP.Models.TablesDBModel
 {
-    public class TableQuestionRoadSigns : TablesDB
+    public class TableAnswerUserTest : TablesDB
     {
-        private readonly ILogger<TableQuestionRoadSigns>? _logger;
-        public TableQuestionRoadSigns(DbContextOptions<TableQuestionRoadSigns> options) : base(options)
+        private readonly ILogger<TableAnswerUserTest>? _logger;
+        public TableAnswerUserTest(DbContextOptions<TableAnswerUserTest> options) : base(options)
         {
-
         }
 
-        public bool AddQuestion(QuestionRoadSignsModel question)
+        public bool AddAnswer(AnswerUserTestModel answer)
         {
             try
             {
-                QuestionRoadSigns.Add(question);
+                AnswerUserTest.Add(answer);
                 SaveChanges();
                 return true;
             }

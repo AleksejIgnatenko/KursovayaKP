@@ -1,5 +1,5 @@
 ﻿using KursovayaKP.Models;
-using KursovayaKP.Tables;
+using KursovayaKP.Models.TablesDBModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -8,10 +8,10 @@ namespace KursovayaKP.Controllers
 {
     public class UserController : Controller
     {
-        private readonly DbContextOptions<DBUser> _dbOptionsUser;
+        private readonly DbContextOptions<UserTable> _dbOptionsUser;
         private readonly ILogger<UserController> _logger;
 
-        public UserController(DbContextOptions<DBUser> dbOptionsUser, ILogger<UserController> logger)
+        public UserController(DbContextOptions<UserTable> dbOptionsUser, ILogger<UserController> logger)
         {
             _dbOptionsUser = dbOptionsUser;
             _logger = logger;
@@ -43,7 +43,7 @@ namespace KursovayaKP.Controllers
 
                 try
                 {
-                    using (var db = new DBUser(_dbOptionsUser)) // Создаем экземпляр DBUser
+                    using (var db = new UserTable(_dbOptionsUser)) // Создаем экземпляр DBUser
                     {
                         bool userAdded = db.AddUser(userModel); // Добавляем пользователя в базу данных
 
@@ -80,7 +80,7 @@ namespace KursovayaKP.Controllers
             // Проверяем наличие пользователя с введенным email и паролем
             try
             {
-                using (var db = new DBUser(_dbOptionsUser))
+                using (var db = new UserTable(_dbOptionsUser))
                 {
                     var user = db.Users.FirstOrDefault(u => u.Email == userModel.Email && u.Password == UserModel.HashPassword(userModel.Password));
                     if (user != null)

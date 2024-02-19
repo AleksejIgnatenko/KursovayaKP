@@ -1,7 +1,5 @@
 using KursovayaKP.Models;
-using KursovayaKP.Models.QuestionTableModelDB;
-using KursovayaKP.Tables;
-using KursovayaKP.Tables.TablesQuestionsDB;
+using KursovayaKP.Models.TablesDBModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -11,19 +9,13 @@ namespace KursovayaKP.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly DbContextOptions<TableQuestionTrafficRegulations> _dbOptionsTrafficRegulations;
-        private readonly DbContextOptions<TableQuestionRoadSigns> _dbOptionsRoadSigns;
-        private readonly DbContextOptions<TableQuestionMedicalCare> _dbOptionsMedicalCare;
-        private readonly DbContextOptions<TableQuestionCarDevice> _dbOptionsCarDevice;
+        private readonly DbContextOptions<QuestionTable> _dbOptionsQuestionTable;
         private readonly DbContextOptions<TableAnswerUserTest> _dbOptionsAnswerUserTest;
         private readonly ILogger<AdminController> _logger;
 
-        public HomeController(DbContextOptions<TableQuestionTrafficRegulations> dbOptionsTrafficRegulations, DbContextOptions<TableQuestionRoadSigns> dbOptionsRoadSigns, DbContextOptions<TableQuestionMedicalCare> dbOptionsMedicalCare, DbContextOptions<TableQuestionCarDevice> dbOptionsCarDevice, DbContextOptions<TableAnswerUserTest> dbOptionsAnswerUserTest, ILogger<AdminController> logger)
+        public HomeController(DbContextOptions<QuestionTable> dbOptionsQuestionTable, DbContextOptions<TableAnswerUserTest> dbOptionsAnswerUserTest, ILogger<AdminController> logger)
         {
-            _dbOptionsTrafficRegulations = dbOptionsTrafficRegulations;
-            _dbOptionsRoadSigns = dbOptionsRoadSigns;
-            _dbOptionsMedicalCare = dbOptionsMedicalCare;
-            _dbOptionsCarDevice = dbOptionsCarDevice;
+            _dbOptionsQuestionTable = dbOptionsQuestionTable;
             _dbOptionsAnswerUserTest = dbOptionsAnswerUserTest;
             _logger = logger;
         }
@@ -76,7 +68,7 @@ namespace KursovayaKP.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult TestTrafficRegulations()
+/*        public IActionResult TestTrafficRegulations()
         {
             try
             {
@@ -90,7 +82,7 @@ namespace KursovayaKP.Controllers
                 _logger.LogError(ex, "Ошибка получения теста");
                 return Json("Ошибка получения теста");
             }
-        }
+        }*/
 
 
         // Сохранение ответов пользователей
