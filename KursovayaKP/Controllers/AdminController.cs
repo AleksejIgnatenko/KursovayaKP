@@ -47,9 +47,29 @@ namespace KursovayaKP.Controllers
         [HttpPost]
         public IActionResult AddQuestionTrafficRegulations(QuestionModel questionModel)
         {
-            questionModel.Topic = "TrafficRegulations";
-            Console.WriteLine(questionModel.Topic);
+            questionModel.Topic = QuestionModel.Section.TrafficRegulations.ToString();
             return CheckingAddQuestion(questionModel, "~/Views/Admin/AddQuestions/AddQuestionTrafficRegulations.cshtml", "~/Views/Admin/AddQuestions/AddQuestionTrafficRegulations.cshtml");
+        }
+
+        [HttpPost]
+        public IActionResult AddQuestionRoadSigns(QuestionModel questionModel)
+        {
+            questionModel.Topic = QuestionModel.Section.RoadSigns.ToString();
+            return CheckingAddQuestion(questionModel, "~/Views/Admin/AddQuestions/AddQuestionRoadSigns.cshtml", "~/Views/Admin/AddQuestions/AddQuestionRoadSigns.cshtml");
+        }
+
+        [HttpPost]
+        public IActionResult AddQuestionMedicalCare(QuestionModel questionModel)
+        {
+            questionModel.Topic = QuestionModel.Section.MedicalCare.ToString();
+            return CheckingAddQuestion(questionModel, "~/Views/Admin/AddQuestions/AddQuestionMedicalCare.cshtml", "~/Views/Admin/AddQuestions/AddQuestionMedicalCare.cshtml");
+        }
+
+        [HttpPost]
+        public IActionResult AddQuestionCarDevice(QuestionModel questionModel)
+        {
+            questionModel.Topic = QuestionModel.Section.CarDevice.ToString();
+            return CheckingAddQuestion(questionModel, "~/Views/Admin/AddQuestions/AddQuestionCarDevice.cshtml", "~/Views/Admin/AddQuestions/AddQuestionCarDevice.cshtml");
         }
 
         public IActionResult CheckingAddQuestion(QuestionModel questionModel, string errorPage, string addingQuestionCorrectly)

@@ -73,7 +73,7 @@ async function checkAnswers() {
     // Отправляем данные на сервер вместе с идентификатором пользователя и названием теста
     var data = {
         userId: parseInt(userId),
-        nameTest: 'ПДД',
+        path: window.location.pathname, // Добавляем путь как значение свойства nameTest
         resultTest: resultTest,
     };
 
@@ -84,7 +84,7 @@ async function checkAnswers() {
         url: '/Home/SubmitAnswers',
         type: 'POST',
         contentType: 'application/x-www-form-urlencoded',
-        data: data, // Используем объект 'data' напрямую
+        data: data,
         success: function (result) {
             // Обрабатываем успешный ответ
         },
@@ -92,6 +92,12 @@ async function checkAnswers() {
             // Обрабатываем ошибку
         }
     });
+
+    //Скрыть кнопку "Отправить"
+    document.querySelector(".button").style.display = "none";
+    //Показать кнопку "Пройти тест еще раз"
+    document.querySelector("#restartTestButton").style.display = "block";
+
     // Показываем уведомление после выделения неправильных вопросов
     alert('Ваш результат: ' + resultTest + ' из ' + questions.length);
 }
@@ -106,4 +112,12 @@ function getCookieValue(name) {
         }
     }
     return null;
+}
+
+// Перезагрузка страницы
+function restartTest() {
+    location.reload();
+    setTimeout(function () {
+        window.location.href = '#title';
+    }, 500);
 }

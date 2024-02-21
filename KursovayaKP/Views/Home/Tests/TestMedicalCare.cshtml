@@ -2,15 +2,15 @@
 @model List<QuestionModel>
 
 @{
-	ViewData["Title"] = $"Тест по теме \"{"ПДД"}\"";
+    ViewData["Title"] = $"Тест по теме \"{"Первая медецинская помощь"}\"";
 }
 
 @section Styles {
-	<link rel="stylesheet" href="~/css/Tests.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Tests.css" asp-append-version="true" />
     <script src="~/js/Tests.js" asp-append-version="true"></script>
 }
 
-<h1 id="title">Test Traffic Regulations</h1>
+<h1>Test Traffic Regulations</h1>
 
 <div id="question-container">
     @foreach (var question in Model)
@@ -39,4 +39,3 @@
 </div>
 
 <button class="button" onclick="checkAnswers()">Отправить</button>
-<button id="restartTestButton" class="button" onclick="restartTest()" style="display: none">Пройти тест еще раз</button>

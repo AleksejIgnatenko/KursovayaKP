@@ -52,11 +52,6 @@ namespace KursovayaKP.Controllers
             return View();
         }
 
-        /*        public IActionResult CheckingAnswer()
-                {
-                    return View("~/Views/Home/Tests/CheckingAnswer.cshtml", selectedQuestions);
-                }*/
-
         public IActionResult Privacy()
         {
             return View();
@@ -68,13 +63,13 @@ namespace KursovayaKP.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-/*        public IActionResult TestTrafficRegulations()
+        public IActionResult TestTrafficRegulations()
         {
             try
             {
-                TableQuestionTrafficRegulations tableQuestionTrafficRegulations = new TableQuestionTrafficRegulations(_dbOptionsTrafficRegulations);
-                List<QuestionsTrafficRegulationsModel> allQuestions = tableQuestionTrafficRegulations.GetAllQuestionsTrafficRegulations(); // Retrieve questions from the table
-                List<QuestionsTrafficRegulationsModel> selectedQuestions = allQuestions.OrderBy(x => Guid.NewGuid()).Take(10).ToList(); // Select random questions from the list
+                QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
+                List<QuestionModel> allQuestions = questionTable.GetAllQuestionsTrafficRegulations(); // Retrieve questions from the table
+                List<QuestionModel> selectedQuestions = allQuestions.Where(q => q.Topic == QuestionModel.Section.TrafficRegulations.ToString()).OrderBy(x => Guid.NewGuid()).Take(10).ToList(); // Select random questions from the list
                 return View("~/Views/Home/Tests/TestTrafficRegulations.cshtml", selectedQuestions);
             }
             catch (Exception ex)
@@ -82,22 +77,93 @@ namespace KursovayaKP.Controllers
                 _logger.LogError(ex, "Ошибка получения теста");
                 return Json("Ошибка получения теста");
             }
-        }*/
+        }
+
+        public IActionResult TestRoadSigns()
+        {
+            try
+            {
+                QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
+                List<QuestionModel> allQuestions = questionTable.GetAllQuestionsTrafficRegulations(); // Retrieve questions from the table
+                List<QuestionModel> selectedQuestions = allQuestions.Where(q => q.Topic == QuestionModel.Section.RoadSigns.ToString()).OrderBy(x => Guid.NewGuid()).Take(10).ToList(); // Select random questions from the list
+                return View("~/Views/Home/Tests/TestRoadSigns.cshtml", selectedQuestions);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка получения теста");
+                return Json("Ошибка получения теста");
+            }
+        }
+
+        public IActionResult TestMedicalCare()
+        {
+            try
+            {
+                QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
+                List<QuestionModel> allQuestions = questionTable.GetAllQuestionsTrafficRegulations(); // Retrieve questions from the table
+                List<QuestionModel> selectedQuestions = allQuestions.Where(q => q.Topic == QuestionModel.Section.MedicalCare.ToString()).OrderBy(x => Guid.NewGuid()).Take(10).ToList(); // Select random questions from the list
+                return View("~/Views/Home/Tests/TestMedicalCare.cshtml", selectedQuestions);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка получения теста");
+                return Json("Ошибка получения теста");
+            }
+        }
+
+        public IActionResult TestCarDevice()
+        {
+            try
+            {
+                QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
+                List<QuestionModel> allQuestions = questionTable.GetAllQuestionsTrafficRegulations(); // Retrieve questions from the table
+                List<QuestionModel> selectedQuestions = allQuestions.Where(q => q.Topic == QuestionModel.Section.CarDevice.ToString()).OrderBy(x => Guid.NewGuid()).Take(10).ToList(); // Select random questions from the list
+                return View("~/Views/Home/Tests/TestCarDevice.cshtml", selectedQuestions);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка получения теста");
+                return Json("Ошибка получения теста");
+            }
+        }
 
 
         // Сохранение ответов пользователей
         // Метод, принимающий результаты теста
         [HttpPost]
-        public ActionResult SubmitAnswers(int userId, string nameTest,int resultTest)
+        public ActionResult SubmitAnswers(int userId, string path, int resultTest)
         {
+            Console.WriteLine(path);
             Console.WriteLine(userId + " " + resultTest);
 
             AnswerUserTestModel answerUserTestModel = new AnswerUserTestModel
             {
                 UserId = userId,
-                NameTest = nameTest,
                 ResultTest = resultTest
             };
+
+            switch (path)
+            {
+                case "/Home/TestTrafficRegulations":
+                    answerUserTestModel.NameTest = QuestionModel.Section.TrafficRegulations.ToString();
+                    break;
+
+                case "/Home/TestRoadSigns":
+                    answerUserTestModel.NameTest = QuestionModel.Section.RoadSigns.ToString();
+                    break;
+
+                case "/Home/TestMedicalCare":
+                    answerUserTestModel.NameTest = QuestionModel.Section.MedicalCare.ToString();
+                    break;
+
+                case "/Home/TestCarDevice":
+                    answerUserTestModel.NameTest = QuestionModel.Section.CarDevice.ToString();
+                    break;
+
+                default:
+                    Console.WriteLine("Путь не определен");
+                    break;
+            }
 
             // Проверка валидности объекта
             if (TryValidateModel(answerUserTestModel))

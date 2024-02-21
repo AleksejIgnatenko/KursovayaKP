@@ -32,5 +32,12 @@ namespace KursovayaKP.Models.TablesDBModel
                 return false;
             }
         }
+
+        //Получение всех вопросов
+        public List<QuestionModel> GetAllQuestionsTrafficRegulations()
+        {
+            return Question.ToList();
+
+        }
     }
 }

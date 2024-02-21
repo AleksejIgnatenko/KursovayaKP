@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KursovayaKP.Models
 {
-	public class QuestionModel
-	{
+    public class QuestionModel
+    {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -12,7 +12,7 @@ namespace KursovayaKP.Models
         [Required(ErrorMessage = "Заполните поле")]
         public string QuestionText { get; set; }
 
-        [Url(ErrorMessage = "Неверный формат ссылки")] 
+        [Url(ErrorMessage = "Неверный формат ссылки")]
         public string? LinkPhoto { get; set; }
 
         [Required(ErrorMessage = "Заполните поле")]
@@ -31,5 +31,13 @@ namespace KursovayaKP.Models
         public string CorrectAnswer { get; set; }
 
         public string? Topic { get; set; }
+
+        public enum Section
+        {
+            TrafficRegulations,
+            RoadSigns,
+            MedicalCare,
+            CarDevice
+        }
     }
 }
