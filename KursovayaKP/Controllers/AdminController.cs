@@ -44,6 +44,44 @@ namespace KursovayaKP.Controllers
 			return View("~/Views/Admin/AddQuestions/AddQuestionCarDevice.cshtml");
 		}
 
+        public IActionResult AllQuestions()
+        {
+            try
+            {
+                QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
+                List<QuestionModel> allquestions = questionTable.GetAllQuestions();
+                List<QuestionModel> questionTrafficRegulations = allquestions.Where(q => q.Topic == QuestionModel.Section.TrafficRegulations.ToString()).ToList();
+                ViewBag.Topic = "ПДД";
+                return View(questionTrafficRegulations);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка получения всех вопросов по теме");
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult DeleteQuestion(int questionId)
+        {
+            try
+            {
+                QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
+                bool isDeleted = questionTable.DeleteQuestion(questionId);
+                if (isDeleted)
+                {
+                    return RedirectToAction("AllQuestions");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка удаления вопроса");
+            }
+
+            // Обработка ошибки удаления
+            return RedirectToAction("AllQuestions");
+        }
+
         [HttpPost]
         public IActionResult AddQuestionTrafficRegulations(QuestionModel questionModel)
         {

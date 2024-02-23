@@ -1,0 +1,38 @@
+﻿@using KursovayaKP.Models;
+@model List<QuestionModel>
+
+@{
+    ViewData["Title"] = $"Все вопросы по теме \"{ViewBag.Topic}\"";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Tests.css" asp-append-version="true" />
+}
+
+<h1 id="title">Вопросы по теме @ViewBag.Topic</h1>
+
+<div id="question-container">
+    @foreach (var question in Model)
+    {
+        <div class="question" data-question-id="@question.Id">
+            <form class="question-form" asp-controller="Admin" asp-action="DeleteQuestion" method="post">
+                <input type="hidden" name="questionId" value="@question.Id" />
+                <div><label>Вопрос №@question.Id</label></div>
+                <div><label>@question.QuestionText</label></div>
+                @if (!string.IsNullOrEmpty(question.LinkPhoto))
+                {
+                    <img src="@question.LinkPhoto" style="max-width: 1000px" />
+                }
+                <div>
+                    <label for="answer1">Ответы:</label><br>
+                    <label for="answer1">@question.Answer1</label><br>
+                    <label for="answer2">@question.Answer2</label><br>
+                    <label for="answer3">@question.Answer3</label><br>
+                    <label for="answer4">@question.Answer4</label><br>
+                    <label for="answer4">Правильный ответ @question.CorrectAnswer</label><br>
+                    <button class="button edit-button" asp-controller="Admin" asp-action="DeleteQuestion">Удалить</button>
+                </div>
+            </form>
+        </div>
+    }
+</div>

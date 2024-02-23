@@ -68,7 +68,7 @@ namespace KursovayaKP.Controllers
             try
             {
                 QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
-                List<QuestionModel> allQuestions = questionTable.GetAllQuestionsTrafficRegulations(); // Retrieve questions from the table
+                List<QuestionModel> allQuestions = questionTable.GetAllQuestions(); // Retrieve questions from the table
                 List<QuestionModel> selectedQuestions = allQuestions.Where(q => q.Topic == QuestionModel.Section.TrafficRegulations.ToString()).OrderBy(x => Guid.NewGuid()).Take(10).ToList(); // Select random questions from the list
                 return View("~/Views/Home/Tests/TestTrafficRegulations.cshtml", selectedQuestions);
             }
@@ -84,7 +84,7 @@ namespace KursovayaKP.Controllers
             try
             {
                 QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
-                List<QuestionModel> allQuestions = questionTable.GetAllQuestionsTrafficRegulations(); // Retrieve questions from the table
+                List<QuestionModel> allQuestions = questionTable.GetAllQuestions(); // Retrieve questions from the table
                 List<QuestionModel> selectedQuestions = allQuestions.Where(q => q.Topic == QuestionModel.Section.RoadSigns.ToString()).OrderBy(x => Guid.NewGuid()).Take(10).ToList(); // Select random questions from the list
                 return View("~/Views/Home/Tests/TestRoadSigns.cshtml", selectedQuestions);
             }
@@ -100,7 +100,7 @@ namespace KursovayaKP.Controllers
             try
             {
                 QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
-                List<QuestionModel> allQuestions = questionTable.GetAllQuestionsTrafficRegulations(); // Retrieve questions from the table
+                List<QuestionModel> allQuestions = questionTable.GetAllQuestions(); // Retrieve questions from the table
                 List<QuestionModel> selectedQuestions = allQuestions.Where(q => q.Topic == QuestionModel.Section.MedicalCare.ToString()).OrderBy(x => Guid.NewGuid()).Take(10).ToList(); // Select random questions from the list
                 return View("~/Views/Home/Tests/TestMedicalCare.cshtml", selectedQuestions);
             }
@@ -116,7 +116,7 @@ namespace KursovayaKP.Controllers
             try
             {
                 QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
-                List<QuestionModel> allQuestions = questionTable.GetAllQuestionsTrafficRegulations(); // Retrieve questions from the table
+                List<QuestionModel> allQuestions = questionTable.GetAllQuestions(); // Retrieve questions from the table
                 List<QuestionModel> selectedQuestions = allQuestions.Where(q => q.Topic == QuestionModel.Section.CarDevice.ToString()).OrderBy(x => Guid.NewGuid()).Take(10).ToList(); // Select random questions from the list
                 return View("~/Views/Home/Tests/TestCarDevice.cshtml", selectedQuestions);
             }

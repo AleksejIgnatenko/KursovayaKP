@@ -33,8 +33,20 @@ namespace KursovayaKP.Models.TablesDBModel
             }
         }
 
+        public bool DeleteQuestion(int questionId)
+        {
+            var question = Question.FirstOrDefault(q => q.Id == questionId);
+            if (question != null)
+            {
+                Question.Remove(question);
+                SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
         //Получение всех вопросов
-        public List<QuestionModel> GetAllQuestionsTrafficRegulations()
+        public List<QuestionModel> GetAllQuestions()
         {
             return Question.ToList();
 
