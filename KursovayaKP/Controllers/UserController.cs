@@ -3,6 +3,7 @@ using KursovayaKP.Models.TablesDBModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace KursovayaKP.Controllers
 {
@@ -29,7 +30,21 @@ namespace KursovayaKP.Controllers
 
         public IActionResult Personal_office()
         {
-            return View();
+            // Получение значения 'id' из куки
+            string idCookie = Request.Cookies["Id"];
+
+            if (string.IsNullOrEmpty(idCookie) || !int.TryParse(idCookie, out int outId))
+            {
+                // Если 'id' отсутствует или недопустим, установить код состояния 404 и вернуть ошибку
+                return NotFound();
+            }
+
+            int id = Convert.ToInt32(idCookie);
+            Console.WriteLine(id);
+            UserTable userTable = new UserTable(_dbOptionsUser);
+            UserModel user = userTable.GetUser(id);
+
+            return View(user);
         }
 
         //Регистрация

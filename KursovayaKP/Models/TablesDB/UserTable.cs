@@ -41,5 +41,15 @@ namespace KursovayaKP.Models.TablesDBModel
                 return false;
             }
         }
+
+        public UserModel? GetUser(int id)
+        {
+            UserModel? user = Users.FirstOrDefault(u => u.Id == id);
+            if(user == null)
+            {
+                return null;
+            }
+            return user;
+        }
     }
 }

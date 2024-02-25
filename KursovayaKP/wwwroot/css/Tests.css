@@ -23,13 +23,3 @@
     .button:focus {
         box-shadow: 0 0 0 1px hsl(178, 100%, 50%);
     }
-
-.question-form .edit-button,
-.question-form .delete-button {
-    visibility: hidden; /* Скрыть кнопки по умолчанию */
-}
-
-.question-form:hover .edit-button,
-.question-form:hover .delete-button {
-    visibility: visible; /* Показать кнопки при наведении на форму */
-}

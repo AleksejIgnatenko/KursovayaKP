@@ -1,0 +1,24 @@
+﻿.image-button {
+    width: 24px;
+    height: 24px;
+    box-shadow: none;
+    border: none;
+    filter: brightness(50%);
+    border-radius: 50%;
+}
+
+    .image-button:hover {
+        filter: brightness(100%);
+        border-radius: 50%;
+
+    }
+
+.question-form .image-button
+/*.question-form .delete-button*/ {
+    visibility: hidden; /* Скрыть кнопки по умолчанию */
+}
+
+.question-form:hover .image-button
+/*.question-form:hover .delete-button*/ {
+    visibility: visible; /* Показать кнопки при наведении на форму */
+}
