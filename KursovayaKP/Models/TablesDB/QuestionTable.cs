@@ -45,6 +45,38 @@ namespace KursovayaKP.Models.TablesDBModel
             return false;
         }
 
+        /*        public void UpdateQuestion(QuestionModel question)
+                {
+                    Question.Update(question);
+                    SaveChanges();
+                }*/
+
+        public void UpdateQuestion(QuestionModel question)
+        {
+            var existingQuestion = Question.Find(question.Id);
+            if (existingQuestion != null)
+            {
+                existingQuestion.QuestionText = question.QuestionText;
+                existingQuestion.Answer1 = question.Answer1;
+                existingQuestion.Answer2 = question.Answer2;
+                existingQuestion.Answer3 = question.Answer3;
+                existingQuestion.Answer4 = question.Answer4;
+                existingQuestion.CorrectAnswer = question.CorrectAnswer;
+
+                SaveChanges();
+            }
+        }
+
+        public QuestionModel? GetQuestion(int questionId)
+        {
+            var question = Question.FirstOrDefault(q => q.Id == questionId);
+            if (question != null)
+            {
+                return question;
+            }
+            return null;
+        }
+
         //Получение всех вопросов
         public List<QuestionModel> GetAllQuestions()
         {

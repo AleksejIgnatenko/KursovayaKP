@@ -83,6 +83,37 @@ namespace KursovayaKP.Controllers
         }
 
         [HttpPost]
+        public IActionResult QuestionForUpdate(int questionId)
+        {;
+            Console.WriteLine(questionId);
+            QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
+            QuestionModel? question = questionTable.GetQuestion(questionId);
+            if (question != null)
+            {
+                return View(question);
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult QuestionUpdate (QuestionModel question)
+        {
+            Console.WriteLine(question.Id + " " + question.QuestionText + " " + question.Answer1 + " " + question.Answer2 + " " + question.Answer3
+                + " " + question.Answer4 + " " + question.CorrectAnswer);
+            try
+            {
+                QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
+                questionTable.UpdateQuestion(question);
+                return View("~/Views/Admin/QuestionForUpdate.cshtml", question);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex,"Ошибка редактирования");
+            }
+            return View("~/Views/Admin/QuestionForUpdate.cshtml", question);
+        }
+
+        [HttpPost]
         public IActionResult AddQuestionTrafficRegulations(QuestionModel questionModel)
         {
             questionModel.Topic = QuestionModel.Section.TrafficRegulations.ToString();
