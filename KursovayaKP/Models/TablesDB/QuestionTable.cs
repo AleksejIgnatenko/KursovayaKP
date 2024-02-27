@@ -62,7 +62,6 @@ namespace KursovayaKP.Models.TablesDBModel
                 existingQuestion.Answer3 = question.Answer3;
                 existingQuestion.Answer4 = question.Answer4;
                 existingQuestion.CorrectAnswer = question.CorrectAnswer;
-
                 SaveChanges();
             }
         }

@@ -165,9 +165,11 @@ namespace KursovayaKP.Controllers
                     break;
             }
 
+            Console.WriteLine(answerUserTestModel.UserId + " " + answerUserTestModel.NameTest + " " + answerUserTestModel.ResultTest);
             // Проверка валидности объекта
             if (TryValidateModel(answerUserTestModel))
             {
+                Console.WriteLine(answerUserTestModel.UserId + " " + answerUserTestModel.NameTest + " " + answerUserTestModel.ResultTest);
                 try
                 {
                     using (var db = new TableAnswerUserTest(_dbOptionsAnswerUserTest))
