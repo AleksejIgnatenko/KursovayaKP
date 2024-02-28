@@ -1,0 +1,15 @@
+﻿@{
+	ViewData["Title"] = $"Дорожные знаки";
+}
+
+@section Styles {
+	<link rel="stylesheet" href="~/css/AllQuestions.css" asp-append-version="true" />
+	@* 	<link rel="stylesheet" href="~/css/AllQuestions.css asp-append-version="true" /> *@
+}
+
+<h1 id="title">Дорожные знаки</h1>
+
+<div id="question-container">
+	<a class="text-dark" asp-area="" asp-controller="Admin" asp-action="AllQuestions" asp-route-topic="RoadSigns" style="margin-left: 0px; text-decoration: none">Вопросы</a>
+	<a class="text-dark" asp-area="" asp-controller="Admin" asp-action="AddQuestionRoadSigns" style="margin-left: 0px; text-decoration: none">Добавить вопрос</a>
+</div>
