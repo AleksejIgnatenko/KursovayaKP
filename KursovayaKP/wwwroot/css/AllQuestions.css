@@ -22,3 +22,20 @@
 /*.question-form:hover .delete-button*/ {
     visibility: visible; /* Показать кнопки при наведении на форму */
 }
+
+.vertical-line {
+    border-left: 1px solid black;
+    height: 15px;
+    margin: 0 5px;
+    display: inline-block;
+}
+
+#toolsMenu {
+    position: fixed;
+    top: 80px; /* Расположение меню относительно кнопки */
+    right: 0px;
+    background-color: white;
+    border: 1px solid silver;
+    padding: 10px;
+    z-index: 1; /* Чтобы меню находилось поверх остального контента */
+}

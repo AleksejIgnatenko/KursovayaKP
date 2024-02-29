@@ -7,7 +7,18 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/css/AllQuestions.css" asp-append-version="true" />
+    <script src="~/js/AllQuestions.js" asp-append-version="true"></script>
 }
+
+<button id="settingsButton" style="color: black; border: none; background-color: white;">Расширенные настройки</button>
+
+<div id="toolsMenu" style="display: none;">
+    <ul>
+        <li>Инструмент 1</li>
+        <li>Инструмент 2</li>
+        <li>Инструмент 3</li>
+    </ul>
+</div>
 
 <h1 id="title">Вопросы по теме @ViewBag.Topic</h1>
 
