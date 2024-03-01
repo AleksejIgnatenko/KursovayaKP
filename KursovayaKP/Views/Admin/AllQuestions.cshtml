@@ -12,7 +12,10 @@
 
 <button id="settingsButton" style="color: black; border: none; background-color: white;">Расширенные настройки</button>
 
-<div id="toolsMenu" style="display: none;">
+<div id="toolsMenu" style="display: none; width: 500px">
+    <input id="searchInput" placeholder="Поиск" style="width:100%;" />
+    <button id="sortByNameButton">СортировкаА-Я</button>
+    <button id="sortByNumberButton">Сортировка от 1-100</button>
     <ul>
         <li>Инструмент 1</li>
         <li>Инструмент 2</li>
@@ -20,7 +23,7 @@
     </ul>
 </div>
 
-<h1 id="title">Вопросы по теме @ViewBag.Topic</h1>
+<h1 id="title">Вопросы по теме @ViewBag.Topic</h1>  
 
 <div id="question-container">
     @foreach (var question in Model)
@@ -48,3 +51,40 @@
         </div>
     }
 </div>
+
+<script>
+    document.getElementById("sortByNameButton").addEventListener("click", function () {
+        var questionContainer = document.getElementById("question-container");
+        var questions = Array.from(questionContainer.getElementsByClassName("question"));
+
+        var sortedQuestions = questions.sort(function (a, b) {
+            var questionTextA = a.querySelector("label:last-of-type").textContent.toLowerCase();
+            var questionTextB = b.querySelector("label:last-of-type").textContent.toLowerCase();
+
+            // Меняем порядок сравнения в зависимости от текущего порядка сортировки
+            if (questionContainer.dataset.sortOrder === "ascending") {
+                return questionTextA.localeCompare(questionTextB);
+            } else {
+                return questionTextB.localeCompare(questionTextA);
+            }
+        });
+
+        // Изменяем порядок сортировки
+        if (questionContainer.dataset.sortOrder === "ascending") {
+            questionContainer.dataset.sortOrder = "descending";
+        } else {
+            questionContainer.dataset.sortOrder = "ascending";
+        }
+
+        // Удаляем текущие вопросы из контейнера
+        questions.forEach(function (question) {
+            questionContainer.removeChild(question);
+        });
+
+        // Добавляем отсортированные вопросы в контейнер
+        sortedQuestions.forEach(function (question) {
+            questionContainer.appendChild(question);
+        });
+    });
+</script>
+

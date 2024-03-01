@@ -10,13 +10,15 @@ namespace KursovayaKP.Controllers
 	{
 		private readonly DbContextOptions<QuestionTable> _dbOptionsQuestionTable;
 		private readonly DbContextOptions<TableAnswerUserTest> _dbOptionsAnswerUserTest;
-		private readonly ILogger<AdminController> _logger;
+        private readonly DbContextOptions<UserTable> _dbOptionsUserTable;
+        private readonly ILogger<AdminController> _logger;
 
-		public AdminController(DbContextOptions<QuestionTable> dbOptionsQuestionTable, DbContextOptions<TableAnswerUserTest> dbOptionsAnswerUserTest, ILogger<AdminController> logger)
+		public AdminController(DbContextOptions<QuestionTable> dbOptionsQuestionTable, DbContextOptions<TableAnswerUserTest> dbOptionsAnswerUserTest, DbContextOptions<UserTable> dbOptionsUserTable, ILogger<AdminController> logger)
 		{
 			_dbOptionsQuestionTable = dbOptionsQuestionTable;
 			_dbOptionsAnswerUserTest = dbOptionsAnswerUserTest;
-			_logger = logger;
+			_dbOptionsUserTable = dbOptionsUserTable;
+            _logger = logger;
 		}
 
 		public IActionResult AdminIndex()
@@ -62,6 +64,21 @@ namespace KursovayaKP.Controllers
 		public IActionResult AdminCarDevice()
 		{
 			return View("~/Views/Admin/AdminHome/AdminCarDevice.cshtml");
+		}
+
+		public IActionResult AllUsers()
+		{
+			try
+			{
+				UserTable userTable = new UserTable(_dbOptionsUserTable);
+				List<UserModel> allUsers = userTable.GetAllUsers();
+				return View(allUsers);
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Ошибка получения всех пользователей");
+			}
+			return View();
 		}
 
 		public IActionResult AllQuestions(string topic)
