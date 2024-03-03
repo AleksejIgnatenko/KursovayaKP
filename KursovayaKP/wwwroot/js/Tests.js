@@ -117,7 +117,4 @@ function getCookieValue(name) {
 // Перезагрузка страницы
 function restartTest() {
     location.reload();
-    setTimeout(function () {
-        window.location.href = '#title';
-    }, 500);
 }

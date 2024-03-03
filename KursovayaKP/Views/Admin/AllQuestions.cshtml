@@ -2,89 +2,59 @@
 @model List<QuestionModel>
 
 @{
-    ViewData["Title"] = $"Все вопросы по теме \"{ViewBag.Topic}\"";
+	ViewData["Title"] = $"Все вопросы по теме \"{ViewBag.Topic}\"";
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/AllQuestions.css" asp-append-version="true" />
-    <script src="~/js/AllQuestions.js" asp-append-version="true"></script>
+	<link rel="stylesheet" href="~/css/AllQuestions.css" asp-append-version="true" />
+	<script src="~/js/AllQuestions.js" asp-append-version="true"></script>
 }
 
 <button id="settingsButton" style="color: black; border: none; background-color: white;">Расширенные настройки</button>
 
 <div id="toolsMenu" style="display: none; width: 500px">
-    <input id="searchInput" placeholder="Поиск" style="width:100%;" />
-    <button id="sortByNameButton">СортировкаА-Я</button>
-    <button id="sortByNumberButton">Сортировка от 1-100</button>
-    <ul>
-        <li>Инструмент 1</li>
-        <li>Инструмент 2</li>
-        <li>Инструмент 3</li>
-    </ul>
+	<input id="searchInput" placeholder="Поиск" style="width:100%;" />
+	<div>
+		<button id="sortByNameButton" class="image-button" style="margin-top: 3px; background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1213753761848369172/from-a-to-z.png?ex=65f69f47&is=65e42a47&hm=832eda2fa6236568a6feb373b103c779b61b0f0f4e206117d264fd2345ff9abc&=&format=webp&quality=lossless')" title="Сортировка в алфавитном порядке"></button>
+		<button id="sortByNumberButton" class="image-button" style="margin-top: 3px; background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1213756103972618300/trafic.png?ex=65f6a175&is=65e42c75&hm=c374cce517eb37fcec12772981f332a122b6bf9ee5e365b0c6c22b7ca5987b0b&=&format=webp&quality=lossless')" title="Сортировка в по номеру вопроса"></button>
+		<button id="cancellation" class="image-button" style="margin-top: 3px; background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1213760647532249088/cancel.png?ex=65f6a5b0&is=65e430b0&hm=40c3a857a517ee7c23d7b880c880691ce8d2fdee09a0baef074f3c98daeaabc1&=&format=webp&quality=lossless')" title="Отмена фильтрации"></button>
+	</div>
+	<ul>
+		<li>Инструмент 1</li>
+		<li>Инструмент 2</li>
+		<li>Инструмент 3</li>
+	</ul>
 </div>
 
-<h1 id="title">Вопросы по теме @ViewBag.Topic</h1>  
+<h1 id="title">Вопросы по теме @ViewBag.Topic</h1>
 
 <div id="question-container">
-    @foreach (var question in Model)
-    {
-        <div class="question" data-question-id="@question.Id">
-            <form class="question-form" method="post">
-                <div><label>Вопрос №@question.Id</label></div>
-                <input type="hidden" name="questionId" value="@question.Id" />
-                <div><label>@question.QuestionText</label></div>
-                @if (!string.IsNullOrEmpty(question.LinkPhoto))
-                {
-                    <img src="@question.LinkPhoto" style="max-width: 1000px" />
-                }
-                <div>
-                    <label for="answer1">Ответы:</label><br>
-                    <label for="answer1">@question.Answer1</label><br>
-                    <label for="answer2">@question.Answer2</label><br>
-                    <label for="answer3">@question.Answer3</label><br>
-                    <label for="answer4">@question.Answer4</label><br>
-                    <label for="answer4">Правильный ответ @question.CorrectAnswer</label><br>
-                    <button asp-controller="Admin" asp-action="DeleteQuestion" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211257334207352832/Delete.png?ex=65ed8a4c&is=65db154c&hm=186472e1ce3de1b79ca162ca0a9a23edd211996786bd18ff98db2c507d78a05e&=&format=webp&quality=lossless')" title="Удалить"></button>
-                    <button asp-controller="Admin" asp-action="QuestionForUpdate" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211262049162625065/Editing.png?ex=65ed8eb0&is=65db19b0&hm=29c82b4a13617b4cfa672d881f2992c8359b0fecabca9c2f4c4f2b4be41df6a3&=&format=webp&quality=lossless')" title="Редактировать"></button>
-                </div>
-            </form>
-        </div>
-    }
+	@if (Model != null)
+	{
+		@foreach (var question in Model)
+		{
+			<div class="question" data-question-id="@question.Id">
+				<form class="question-form" method="post">
+					<div><label>Вопрос №@question.Id</label></div>
+					<input type="hidden" name="questionId" value="@question.Id" />
+					<div><label>@question.QuestionText</label></div>
+					@if (!string.IsNullOrEmpty(question.LinkPhoto))
+					{
+						<img src="@question.LinkPhoto" style="max-width: 1000px" />
+					}
+					<div>
+						<label for="answer1">Ответы:</label><br>
+						<label for="answer1">@question.Answer1</label><br>
+						<label for="answer2">@question.Answer2</label><br>
+						<label for="answer3">@question.Answer3</label><br>
+						<label for="answer4">@question.Answer4</label><br>
+						<label for="answer4">Правильный ответ @question.CorrectAnswer</label><br>
+						<button asp-controller="Admin" asp-action="DeleteQuestion" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211257334207352832/Delete.png?ex=65ed8a4c&is=65db154c&hm=186472e1ce3de1b79ca162ca0a9a23edd211996786bd18ff98db2c507d78a05e&=&format=webp&quality=lossless')" title="Удалить"></button>
+						<button asp-controller="Admin" asp-action="QuestionForUpdate" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211262049162625065/Editing.png?ex=65ed8eb0&is=65db19b0&hm=29c82b4a13617b4cfa672d881f2992c8359b0fecabca9c2f4c4f2b4be41df6a3&=&format=webp&quality=lossless')" title="Редактировать"></button>
+					</div>
+				</form>
+			</div>
+		}
+	}
 </div>
-
-<script>
-    document.getElementById("sortByNameButton").addEventListener("click", function () {
-        var questionContainer = document.getElementById("question-container");
-        var questions = Array.from(questionContainer.getElementsByClassName("question"));
-
-        var sortedQuestions = questions.sort(function (a, b) {
-            var questionTextA = a.querySelector("label:last-of-type").textContent.toLowerCase();
-            var questionTextB = b.querySelector("label:last-of-type").textContent.toLowerCase();
-
-            // Меняем порядок сравнения в зависимости от текущего порядка сортировки
-            if (questionContainer.dataset.sortOrder === "ascending") {
-                return questionTextA.localeCompare(questionTextB);
-            } else {
-                return questionTextB.localeCompare(questionTextA);
-            }
-        });
-
-        // Изменяем порядок сортировки
-        if (questionContainer.dataset.sortOrder === "ascending") {
-            questionContainer.dataset.sortOrder = "descending";
-        } else {
-            questionContainer.dataset.sortOrder = "ascending";
-        }
-
-        // Удаляем текущие вопросы из контейнера
-        questions.forEach(function (question) {
-            questionContainer.removeChild(question);
-        });
-
-        // Добавляем отсортированные вопросы в контейнер
-        sortedQuestions.forEach(function (question) {
-            questionContainer.appendChild(question);
-        });
-    });
-</script>
 
