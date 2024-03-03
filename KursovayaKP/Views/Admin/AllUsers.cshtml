@@ -6,13 +6,13 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/AllQuestions.css" asp-append-version="true" />
-    <script src="~/js/AllQuestions.js" asp-append-version="true"></script>
+    <link rel="stylesheet" href="~/css/AllUsers.css" asp-append-version="true" />
+    <script src="~/js/AllUsers.js" asp-append-version="true"></script>
 }
 
 <button id="settingsButton" style="color: black; border: none; background-color: white;">Расширенные настройки</button>
 
-<div id="toolsMenu" style="display: none; width: 500px">
+<div id="detailedInformation" style="display: none; width: 500px">
     <input id="searchInput" placeholder="Поиск" style="width:100%;" />
     <ul>
         <li>Инструмент 1</li>
@@ -32,8 +32,9 @@
                 <input type="hidden" name="questionId" value="@user.Id" />
                 <div><label>@user.UserName</label></div>
                 <label for="answer1">@user.Email</label><br>
-                <button asp-controller="Admin" asp-action="DeleteQuestion" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211257334207352832/Delete.png?ex=65ed8a4c&is=65db154c&hm=186472e1ce3de1b79ca162ca0a9a23edd211996786bd18ff98db2c507d78a05e&=&format=webp&quality=lossless')" title="Удалить"></button>
-                <button asp-controller="Admin" asp-action="QuestionForUpdate" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211262049162625065/Editing.png?ex=65ed8eb0&is=65db19b0&hm=29c82b4a13617b4cfa672d881f2992c8359b0fecabca9c2f4c4f2b4be41df6a3&=&format=webp&quality=lossless')" title="Редактировать"></button>
+                <button asp-controller="Admin" asp-action="" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211257334207352832/Delete.png?ex=65ed8a4c&is=65db154c&hm=186472e1ce3de1b79ca162ca0a9a23edd211996786bd18ff98db2c507d78a05e&=&format=webp&quality=lossless')" title="Удалить"></button>
+                <button asp-controller="Admin" asp-action="" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211262049162625065/Editing.png?ex=65ed8eb0&is=65db19b0&hm=29c82b4a13617b4cfa672d881f2992c8359b0fecabca9c2f4c4f2b4be41df6a3&=&format=webp&quality=lossless')" title="Редактировать"></button>
+                <button onclick="initializePage('@user.Id')" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1213836616607731782/more-information.png?ex=65f6ec71&is=65e47771&hm=e45a05231b5eff0834c8bd195a72ba6a269ffb5210305b039eef9d17e598d89d&=&format=webp&quality=lossless')" title="Подробнее"></button>
             </form>
         </div>
     }

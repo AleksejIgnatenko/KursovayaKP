@@ -10,7 +10,6 @@
     .image-button:hover {
         filter: brightness(100%);
         border-radius: 50%;
-
     }
 
 .question-form .image-button {
@@ -28,7 +27,7 @@
     display: inline-block;
 }
 
-#toolsMenu {
+#detailedInformation {
     position: fixed;
     top: 80px; /* Расположение меню относительно кнопки */
     right: 0px;

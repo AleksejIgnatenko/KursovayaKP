@@ -173,7 +173,6 @@ namespace KursovayaKP.Controllers
 		[HttpPost]
 		public IActionResult QuestionForUpdate(int questionId)
 		{
-			;
 			Console.WriteLine(questionId);
 			QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
 			QuestionModel? question = questionTable.GetQuestion(questionId);
@@ -230,7 +229,23 @@ namespace KursovayaKP.Controllers
 			return CheckingAddQuestion(questionModel, "~/Views/Admin/AddQuestions/AddQuestionCarDevice.cshtml", "~/Views/Admin/AddQuestions/AddQuestionCarDevice.cshtml");
 		}
 
-		public IActionResult CheckingAddQuestion(QuestionModel questionModel, string errorPage, string addingQuestionCorrectly)
+		[HttpPost]
+		public List<int> GetDetailedUserInformation(int userId)
+		{
+            Console.WriteLine(userId);
+            TableAnswerUserTest tableAnswerUserTest = new TableAnswerUserTest(_dbOptionsAnswerUserTest);
+			List<int> resultsTestTrafficRegulations = tableAnswerUserTest.GetRatingsTest(userId, QuestionModel.Section.TrafficRegulations.ToString());
+            Console.WriteLine(resultsTestTrafficRegulations.Count);
+            foreach (int result in resultsTestTrafficRegulations)
+			{
+                Console.WriteLine(result);
+            }
+
+			return resultsTestTrafficRegulations;
+        }
+
+
+        public IActionResult CheckingAddQuestion(QuestionModel questionModel, string errorPage, string addingQuestionCorrectly)
 		{
 			if (ModelState.IsValid)
 			{

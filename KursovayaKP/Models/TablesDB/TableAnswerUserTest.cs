@@ -26,5 +26,13 @@ namespace KursovayaKP.Models.TablesDBModel
                 return false;
             }
         }
+
+        public List<int> GetRatingsTest(int userId, string nameTest)
+        {
+            List<int> result = AnswerUserTest.Where(a => a.UserId == userId && a.NameTest == nameTest).Select(a => a.ResultTest).ToList();
+            //List<AnswerUserTestModel> result = AnswerUserTest.Where(a => a.UserId == userId && a.NameTest == nameTest).ToList();
+            return result;
+        }
+
     }
 }
