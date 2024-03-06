@@ -1,6 +1,6 @@
 ﻿@model QuestionModel
 @{
-    ViewData["Title"] = $"Добавление вопроса к разделу \"{"Устройство авто"}\"";
+    ViewData["Title"] = "Добавление вороса";
 }
 
 @section Styles {
@@ -13,8 +13,8 @@
 <body>
     <div class="fullscreen-container">
         <div class="addquestion-container">
-            <h1 class="header">Добавление вопроса по теме "Устройство авто"</h1>
-            <form class="form" asp-controller="Admin" asp-action="AddQuestionCarDevice" method="post">
+            <h1 class="header">Добавление вопроса</h1>
+            <form class="form" asp-controller="Admin" asp-action="AddQuestions" method="post">
                 <div class="input-group">
                     <label for="questionText">Вопрос</label>
                     <input type="text" id="questionText" name="questionText" placeholder="Введите вопрос" required asp-for="QuestionText">
@@ -57,11 +57,53 @@
                     <span asp-validation-for="CorrectAnswer" style="color: red; font-size: 12px; display: block; height: 12px;"></span>
                 </div>
 
+                <div class="input-group">
+                    <label for="Topic">Раздел</label>
+                    <select id="topic" name="topic" required asp-for="Topic">
+                        <option value="1">ПДД</option>
+                        <option value="2">Дорожные знаки</option>
+                        <option value="3">Медецинская помощь</option>
+                        <option value="4">Устройство авто</option>
+                    </select>
+                    <span asp-validation-for="Topic" style="color: red; font-size: 12px; display: block; height: 12px;"></span>
+                </div>
+
                 <button class="button">Добавить вопрос</button>
                 <div class="text-center">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="CarDevice">Назад</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="TrafficRegulations">Все вопросы</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AdminIndex">Назад</a>
                 </div>
             </form>
         </div>
     </div>
 </body>
+
+<script>
+    // Получаем путь предыдущей страницы
+    var referrerPath = new URL(document.referrer).pathname.toLowerCase();
+
+    // Проверяем, содержит ли путь "/admin/admintrafficregulations"
+    if (referrerPath.includes("/admin/admintrafficregulations")) {
+        // Если содержит, выбираем "Дорожные знаки" в списке
+        document.getElementById("topic").value = "1";
+    }
+
+    // Проверяем, содержит ли путь "/admin/adminroadsigns"
+    else if (referrerPath.includes("/admin/adminroadsigns")) {
+        // Если содержит, выбираем "Дорожные знаки" в списке
+        document.getElementById("topic").value = "2";
+    }
+
+    // Проверяем, содержит ли путь "/admin/adminroadsigns"
+    else if (referrerPath.includes("/admin/adminmedicalcare")) {
+        // Если содержит, выбираем "Дорожные знаки" в списке
+        document.getElementById("topic").value = "3";
+    }
+
+    // Проверяем, содержит ли путь "/admin/adminroadsigns"
+    else if (referrerPath.includes("/admin/admincardevice")) {
+        // Если содержит, выбираем "Дорожные знаки" в списке
+        document.getElementById("topic").value = "4";
+    }
+    
+</script>

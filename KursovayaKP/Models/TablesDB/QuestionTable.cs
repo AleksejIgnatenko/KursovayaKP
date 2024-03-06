@@ -79,8 +79,12 @@ namespace KursovayaKP.Models.TablesDBModel
         //Получение всех вопросов
         public List<QuestionModel> GetAllQuestions()
         {
+            List<QuestionModel> list = Question.ToList();
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.WriteLine(list[i].Id + " " + list[i].Topic);
+            }
             return Question.ToList();
-
         }
     }
 }

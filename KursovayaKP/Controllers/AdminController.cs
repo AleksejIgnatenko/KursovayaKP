@@ -66,6 +66,11 @@ namespace KursovayaKP.Controllers
             return View("~/Views/Admin/AdminHome/AdminCarDevice.cshtml");
         }
 
+        public IActionResult AddQuestions()
+        {
+            return View();
+        }
+
         public IActionResult AllUsers()
         {
             try
@@ -83,7 +88,7 @@ namespace KursovayaKP.Controllers
 
         public IActionResult AllQuestions(string topic)
         {
-            //Console.WriteLine(topic);
+            Console.WriteLine(topic);
             switch (topic)
             {
                 case "TrafficRegulations":
@@ -230,6 +235,63 @@ namespace KursovayaKP.Controllers
         }
 
         [HttpPost]
+        public IActionResult AddQuestions(QuestionModel questionModel)
+        {
+            switch (questionModel.Topic)
+            {
+                case "1":
+                    questionModel.Topic = "TrafficRegulations";
+                    break;
+                case "2":
+                    questionModel.Topic = "RoadSigns";
+                    break;
+                case "3":
+                    questionModel.Topic = "MedicalCare";
+                    break;
+                case "4":
+                    questionModel.Topic = "CarDevice";
+                    break;
+                default: throw new Exception("Ошибка выбора раздела длядобавления вопроса");
+            }
+
+            if (ModelState.IsValid)
+            {
+                var answers = new[] { questionModel.Answer1, questionModel.Answer2, questionModel.Answer3, questionModel.Answer4 };
+                var correctAnswer = answers.FirstOrDefault(a => a == questionModel.CorrectAnswer);
+
+                if (correctAnswer == null)
+                {
+                    ModelState.AddModelError("CorrectAnswer", "Выбранный правильный ответ не найден в списке ответов.");
+                    return View(questionModel);
+                }
+
+                try
+                {
+                    using (var db = new QuestionTable(_dbOptionsQuestionTable))
+                    {
+                        bool isAdded = db.AddQuestion(questionModel);
+                        if (isAdded)
+                        {
+                            ModelState.Clear(); // Очистить состояние модели
+                            return View();
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("QuestionText", "Вопрос с таким текстом уже существует.");
+                            return View(questionModel);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Ошибка добавления вопроса в БД");
+                    return Json("Ошибка добавления вопроса в БД");
+                }
+            }
+            return View(questionModel);
+        }
+
+        [HttpPost]
         public ActionResult<double[]> GetDetailedUserInformation(int userId)
         {
             try
@@ -266,43 +328,43 @@ namespace KursovayaKP.Controllers
         }
 
 
-    public IActionResult CheckingAddQuestion(QuestionModel questionModel, string errorPage, string addingQuestionCorrectly)
-    {
-        if (ModelState.IsValid)
+        public IActionResult CheckingAddQuestion(QuestionModel questionModel, string errorPage, string addingQuestionCorrectly)
         {
-            var answers = new[] { questionModel.Answer1, questionModel.Answer2, questionModel.Answer3, questionModel.Answer4 };
-            var correctAnswer = answers.FirstOrDefault(a => a == questionModel.CorrectAnswer);
-
-            if (correctAnswer == null)
+            if (ModelState.IsValid)
             {
-                ModelState.AddModelError("CorrectAnswer", "Выбранный правильный ответ не найден в списке ответов.");
-                return View(errorPage, questionModel);
-            }
+                var answers = new[] { questionModel.Answer1, questionModel.Answer2, questionModel.Answer3, questionModel.Answer4 };
+                var correctAnswer = answers.FirstOrDefault(a => a == questionModel.CorrectAnswer);
 
-            try
-            {
-                using (var db = new QuestionTable(_dbOptionsQuestionTable))
+                if (correctAnswer == null)
                 {
-                    bool isAdded = db.AddQuestion(questionModel);
-                    if (isAdded)
+                    ModelState.AddModelError("CorrectAnswer", "Выбранный правильный ответ не найден в списке ответов.");
+                    return View(errorPage, questionModel);
+                }
+
+                try
+                {
+                    using (var db = new QuestionTable(_dbOptionsQuestionTable))
                     {
-                        ModelState.Clear(); // Очистить состояние модели
-                        return View(addingQuestionCorrectly);
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("QuestionText", "Вопрос с таким текстом уже существует.");
-                        return View(errorPage, questionModel);
+                        bool isAdded = db.AddQuestion(questionModel);
+                        if (isAdded)
+                        {
+                            ModelState.Clear(); // Очистить состояние модели
+                            return View(addingQuestionCorrectly);
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("QuestionText", "Вопрос с таким текстом уже существует.");
+                            return View(errorPage, questionModel);
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Ошибка добавления вопроса в БД");
+                    return Json("Ошибка добавления вопроса в БД");
+                }
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Ошибка добавления вопроса в БД");
-                return Json("Ошибка добавления вопроса в БД");
-            }
+            return View(errorPage, questionModel);
         }
-        return View(errorPage, questionModel);
     }
-}
 }
