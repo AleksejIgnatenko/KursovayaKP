@@ -63,7 +63,7 @@ namespace KursovayaKP.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult TestTrafficRegulations()
+/*        public IActionResult TestTrafficRegulations()
         {
             try
             {
@@ -77,9 +77,9 @@ namespace KursovayaKP.Controllers
                 _logger.LogError(ex, "Ошибка получения теста");
                 return Json("Ошибка получения теста");
             }
-        }
+        }*/
 
-        public IActionResult TestRoadSigns()
+/*        public IActionResult TestRoadSigns()
         {
             try
             {
@@ -93,9 +93,9 @@ namespace KursovayaKP.Controllers
                 _logger.LogError(ex, "Ошибка получения теста");
                 return Json("Ошибка получения теста");
             }
-        }
+        }*/
 
-        public IActionResult TestMedicalCare()
+/*        public IActionResult TestMedicalCare()
         {
             try
             {
@@ -109,9 +109,9 @@ namespace KursovayaKP.Controllers
                 _logger.LogError(ex, "Ошибка получения теста");
                 return Json("Ошибка получения теста");
             }
-        }
+        }*/
 
-        public IActionResult TestCarDevice()
+/*        public IActionResult TestCarDevice()
         {
             try
             {
@@ -125,7 +125,7 @@ namespace KursovayaKP.Controllers
                 _logger.LogError(ex, "Ошибка получения теста");
                 return Json("Ошибка получения теста");
             }
-        }
+        }*/
 
 
         // Сохранение ответов пользователей
@@ -142,7 +142,7 @@ namespace KursovayaKP.Controllers
                 ResultTest = resultTest
             };
 
-            switch (path)
+/*            switch (path)
             {
                 case "/Home/TestTrafficRegulations":
                     answerUserTestModel.NameTest = QuestionModel.Section.TrafficRegulations.ToString();
@@ -163,7 +163,7 @@ namespace KursovayaKP.Controllers
                 default:
                     Console.WriteLine("Путь не определен");
                     break;
-            }
+            }*/
 
             Console.WriteLine(answerUserTestModel.UserId + " " + answerUserTestModel.NameTest + " " + answerUserTestModel.ResultTest);
             // Проверка валидности объекта

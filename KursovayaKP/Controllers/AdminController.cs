@@ -71,7 +71,12 @@ namespace KursovayaKP.Controllers
 
 		public IActionResult AddQuestions()
 		{
-			return View();
+			TestTable testTable = new TestTable(_dbOptionsTestTable);
+			List<TestModel> allTests = testTable.GetAllTest();
+			QuestionModel questionModel = new QuestionModel();
+
+			var model = new Tuple<QuestionModel, List<TestModel>>(questionModel, allTests);
+			return View(model);
 		}
 
 		public IActionResult AddTest()
@@ -94,18 +99,10 @@ namespace KursovayaKP.Controllers
             return View();
         }
 
-        public async Task<ActionResult> GetAllTests()
-        {
-            TestTable testTable = new TestTable(_dbOptionsTestTable);
-            TestModel[] allTests = testTable.GetAllTest();
-
-            return Json(allTests);
-        }
-
         public IActionResult AllQuestions(string topic)
         {
             Console.WriteLine(topic);
-            switch (topic)
+            /*switch (topic)
             {
                 case "TrafficRegulations":
                     try
@@ -166,7 +163,7 @@ namespace KursovayaKP.Controllers
                         _logger.LogError(ex, "Ошибка получения всех вопросов по теме");
                     }
                     break;
-            }
+            }*/
             return View();
         }
 
@@ -222,53 +219,17 @@ namespace KursovayaKP.Controllers
             return View("~/Views/Admin/QuestionForUpdate.cshtml", question);
         }
 
-        [HttpPost]
-        public IActionResult AddQuestionTrafficRegulations(QuestionModel questionModel)
-        {
-            questionModel.Topic = QuestionModel.Section.TrafficRegulations.ToString();
-            return CheckingAddQuestion(questionModel, "~/Views/Admin/AddQuestions/AddQuestionTrafficRegulations.cshtml", "~/Views/Admin/AddQuestions/AddQuestionTrafficRegulations.cshtml");
-        }
-
-        [HttpPost]
-        public IActionResult AddQuestionRoadSigns(QuestionModel questionModel)
-        {
-            questionModel.Topic = QuestionModel.Section.RoadSigns.ToString();
-            return CheckingAddQuestion(questionModel, "~/Views/Admin/AddQuestions/AddQuestionRoadSigns.cshtml", "~/Views/Admin/AddQuestions/AddQuestionRoadSigns.cshtml");
-        }
-
-        [HttpPost]
-        public IActionResult AddQuestionMedicalCare(QuestionModel questionModel)
-        {
-            questionModel.Topic = QuestionModel.Section.MedicalCare.ToString();
-            return CheckingAddQuestion(questionModel, "~/Views/Admin/AddQuestions/AddQuestionMedicalCare.cshtml", "~/Views/Admin/AddQuestions/AddQuestionMedicalCare.cshtml");
-        }
-
-        [HttpPost]
-        public IActionResult AddQuestionCarDevice(QuestionModel questionModel)
-        {
-            questionModel.Topic = QuestionModel.Section.CarDevice.ToString();
-            return CheckingAddQuestion(questionModel, "~/Views/Admin/AddQuestions/AddQuestionCarDevice.cshtml", "~/Views/Admin/AddQuestions/AddQuestionCarDevice.cshtml");
-        }
 
         [HttpPost]
         public IActionResult AddQuestions(QuestionModel questionModel)
         {
-            switch (questionModel.Topic)
-            {
-                case "1":
-                    questionModel.Topic = "TrafficRegulations";
-                    break;
-                case "2":
-                    questionModel.Topic = "RoadSigns";
-                    break;
-                case "3":
-                    questionModel.Topic = "MedicalCare";
-                    break;
-                case "4":
-                    questionModel.Topic = "CarDevice";
-                    break;
-                default: throw new Exception("Ошибка выбора раздела длядобавления вопроса");
-            }
+
+            Console.WriteLine(questionModel.IdTest + " " + questionModel.QuestionText + " " + questionModel.Answer1 + " " +
+                questionModel.Answer2 + " " + questionModel.Answer3 + " " + questionModel.Answer4 + " " + questionModel.CorrectAnswer);
+            
+            TestTable testTable = new TestTable(_dbOptionsTestTable);
+            List<TestModel> allTests = testTable.GetAllTest();
+            var model1 = new Tuple<QuestionModel, List<TestModel>>(questionModel, allTests);
 
             if (ModelState.IsValid)
             {
@@ -278,7 +239,8 @@ namespace KursovayaKP.Controllers
                 if (correctAnswer == null)
                 {
                     ModelState.AddModelError("CorrectAnswer", "Выбранный правильный ответ не найден в списке ответов.");
-                    return View(questionModel);
+                    var model = new Tuple<QuestionModel, List<TestModel>>(questionModel, allTests);
+                    return View(model);
                 }
 
                 try
@@ -288,13 +250,15 @@ namespace KursovayaKP.Controllers
                         bool isAdded = db.AddQuestion(questionModel);
                         if (isAdded)
                         {
-                            ModelState.Clear(); // Очистить состояние модели
-                            return View();
+                            ModelState.Clear(); // Clear the model state
+                            var model = new Tuple<QuestionModel, List<TestModel>>(new QuestionModel(), allTests); // Create a new instance of the model
+                            return View(model);
                         }
                         else
                         {
                             ModelState.AddModelError("QuestionText", "Вопрос с таким текстом уже существует.");
-                            return View(questionModel);
+                            var model = new Tuple<QuestionModel, List<TestModel>>(questionModel, allTests);
+                            return View(model);
                         }
                     }
                 }
@@ -304,7 +268,8 @@ namespace KursovayaKP.Controllers
                     return Json("Ошибка добавления вопроса в БД");
                 }
             }
-            return View(questionModel);
+            
+            return View(model1);
         }
 
         [HttpPost]
@@ -314,10 +279,10 @@ namespace KursovayaKP.Controllers
             {
                 double[] userResults = new double[4];
                 TableAnswerUserTest tableAnswerUserTest = new TableAnswerUserTest(_dbOptionsAnswerUserTest);
-                userResults[0] = tableAnswerUserTest.GetRatingsTest(userId, QuestionModel.Section.TrafficRegulations.ToString());
+/*                userResults[0] = tableAnswerUserTest.GetRatingsTest(userId, QuestionModel.Section.TrafficRegulations.ToString());
                 userResults[1] = tableAnswerUserTest.GetRatingsTest(userId, QuestionModel.Section.RoadSigns.ToString());
                 userResults[2] = tableAnswerUserTest.GetRatingsTest(userId, QuestionModel.Section.MedicalCare.ToString());
-                userResults[3] = tableAnswerUserTest.GetRatingsTest(userId, QuestionModel.Section.CarDevice.ToString());
+                userResults[3] = tableAnswerUserTest.GetRatingsTest(userId, QuestionModel.Section.CarDevice.ToString());*/
 
                 return Ok(userResults);
             }

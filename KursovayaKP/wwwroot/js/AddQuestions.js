@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
+﻿/*document.addEventListener('DOMContentLoaded', function () {
     GetAllTests();
 });
 function GetAllTests() {
@@ -28,4 +28,4 @@ function GetAllTests() {
             // Обрабатываем ошибку
         }
     });
-}
+}*/
