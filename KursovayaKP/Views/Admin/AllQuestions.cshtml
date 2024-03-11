@@ -33,10 +33,10 @@
 	{
 		@foreach (var question in Model)
 		{
-			<div class="question" data-question-id="@question.Id">
+			<div class="question" data-question-id="@question.IdQuestion">
 				<form class="question-form" method="post">
-					<div><label>Вопрос №@question.Id</label></div>
-					<input type="hidden" name="questionId" value="@question.Id" />
+					<div><label>Вопрос №@question.IdQuestion</label></div>
+					<input type="hidden" name="questionId" value="@question.IdQuestion" />
 					<div><label>@question.QuestionText</label></div>
 					@if (!string.IsNullOrEmpty(question.LinkPhoto))
 					{

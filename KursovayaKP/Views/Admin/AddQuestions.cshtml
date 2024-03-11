@@ -4,7 +4,8 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/AddQuestion.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Add.css" asp-append-version="true" />
+    <script src="~/js/AddQuestions.js" asp-append-version="true"></script>
 }
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/fontawesome.min.css" integrity="sha512-RvQxwf+3zJuNwl4e0sZjQeX7kUa3o82bDETpgVCH2RiwYSZVDdFJ7N/woNigN/ldyOOoKw8584jM4plQdt8bhA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -68,6 +69,8 @@
                     <span asp-validation-for="Topic" style="color: red; font-size: 12px; display: block; height: 12px;"></span>
                 </div>
 
+                <ul id="testList"></ul>
+
                 <button class="button">Добавить вопрос</button>
                 <div class="text-center">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="TrafficRegulations">Все вопросы</a>
@@ -77,33 +80,3 @@
         </div>
     </div>
 </body>
-
-<script>
-    // Получаем путь предыдущей страницы
-    var referrerPath = new URL(document.referrer).pathname.toLowerCase();
-
-    // Проверяем, содержит ли путь "/admin/admintrafficregulations"
-    if (referrerPath.includes("/admin/admintrafficregulations")) {
-        // Если содержит, выбираем "Дорожные знаки" в списке
-        document.getElementById("topic").value = "1";
-    }
-
-    // Проверяем, содержит ли путь "/admin/adminroadsigns"
-    else if (referrerPath.includes("/admin/adminroadsigns")) {
-        // Если содержит, выбираем "Дорожные знаки" в списке
-        document.getElementById("topic").value = "2";
-    }
-
-    // Проверяем, содержит ли путь "/admin/adminroadsigns"
-    else if (referrerPath.includes("/admin/adminmedicalcare")) {
-        // Если содержит, выбираем "Дорожные знаки" в списке
-        document.getElementById("topic").value = "3";
-    }
-
-    // Проверяем, содержит ли путь "/admin/adminroadsigns"
-    else if (referrerPath.includes("/admin/admincardevice")) {
-        // Если содержит, выбираем "Дорожные знаки" в списке
-        document.getElementById("topic").value = "4";
-    }
-    
-</script>

@@ -1,4 +1,4 @@
-using KursovayaKP.Models;
+using KursovayaKP.Models.TablesDB;
 using KursovayaKP.Models.TablesDBModel;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +11,7 @@ string connection = builder.Configuration.GetConnectionString("DefaultConnection
 builder.Services.AddDbContext<UserTable>(options => options.UseSqlServer(connection));
 builder.Services.AddDbContext<QuestionTable>(options => options.UseSqlServer(connection));
 builder.Services.AddDbContext<TableAnswerUserTest>(options => options.UseSqlServer(connection));
+builder.Services.AddDbContext<TestTable>(options => options.UseSqlServer(connection));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

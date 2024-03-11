@@ -1,4 +1,5 @@
 ﻿using KursovayaKP.Models;
+using KursovayaKP.Models.TablesDB;
 using KursovayaKP.Models.TablesDBModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -11,13 +12,15 @@ namespace KursovayaKP.Controllers
         private readonly DbContextOptions<QuestionTable> _dbOptionsQuestionTable;
         private readonly DbContextOptions<TableAnswerUserTest> _dbOptionsAnswerUserTest;
         private readonly DbContextOptions<UserTable> _dbOptionsUserTable;
+        private readonly DbContextOptions<TestTable> _dbOptionsTestTable;
         private readonly ILogger<AdminController> _logger;
 
-        public AdminController(DbContextOptions<QuestionTable> dbOptionsQuestionTable, DbContextOptions<TableAnswerUserTest> dbOptionsAnswerUserTest, DbContextOptions<UserTable> dbOptionsUserTable, ILogger<AdminController> logger)
+        public AdminController(DbContextOptions<QuestionTable> dbOptionsQuestionTable, DbContextOptions<TableAnswerUserTest> dbOptionsAnswerUserTest, DbContextOptions<UserTable> dbOptionsUserTable, DbContextOptions<TestTable> dbOptionsTestTable, ILogger<AdminController> logger)
         {
             _dbOptionsQuestionTable = dbOptionsQuestionTable;
             _dbOptionsAnswerUserTest = dbOptionsAnswerUserTest;
             _dbOptionsUserTable = dbOptionsUserTable;
+            _dbOptionsTestTable = dbOptionsTestTable;
             _logger = logger;
         }
 
@@ -66,7 +69,12 @@ namespace KursovayaKP.Controllers
             return View("~/Views/Admin/AdminHome/AdminCarDevice.cshtml");
         }
 
-        public IActionResult AddQuestions()
+		public IActionResult AddQuestions()
+		{
+			return View();
+		}
+
+		public IActionResult AddTest()
         {
             return View();
         }
@@ -84,6 +92,14 @@ namespace KursovayaKP.Controllers
                 _logger.LogError(ex, "Ошибка получения всех пользователей");
             }
             return View();
+        }
+
+        public async Task<ActionResult> GetAllTests()
+        {
+            TestTable testTable = new TestTable(_dbOptionsTestTable);
+            TestModel[] allTests = testTable.GetAllTest();
+
+            return Json(allTests);
         }
 
         public IActionResult AllQuestions(string topic)
@@ -191,7 +207,7 @@ namespace KursovayaKP.Controllers
         [HttpPost]
         public IActionResult QuestionUpdate(QuestionModel question)
         {
-            Console.WriteLine(question.Id + " " + question.QuestionText + " " + question.Answer1 + " " + question.Answer2 + " " + question.Answer3
+            Console.WriteLine(question.IdQuestion + " " + question.QuestionText + " " + question.Answer1 + " " + question.Answer2 + " " + question.Answer3
                 + " " + question.Answer4 + " " + question.CorrectAnswer);
             try
             {
@@ -308,23 +324,31 @@ namespace KursovayaKP.Controllers
             catch (Exception ex)
             {
                 // Логирование ошибки
-                _logger.LogError(ex.Message, "Ошибка получения результатов");
+                _logger.LogError(ex, "Ошибка получения результатов");
                 return Ok();
             }
+        }
 
-
-            /*            List<int> resultsTestTrafficRegulations = tableAnswerUserTest.GetRatingsTest(userId, QuestionModel.Section.TrafficRegulations.ToString());
-                        Console.WriteLine(resultsTestTrafficRegulations.Count);
-                        double sum = 0;
-                        foreach (int result in resultsTestTrafficRegulations)
-                        {
-                            sum += result;
-                            Console.WriteLine(result);
-                        }
-                        Console.WriteLine((sum/resultsTestTrafficRegulations.Count).ToString("0.00"));*/
-            //return userResults;
-
-
+        [HttpPost]
+        public IActionResult AddTest(TestModel testModel)
+        {
+            Console.WriteLine(testModel.IdTest + " " + testModel.NameTest);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    Console.WriteLine("true");
+                    TestTable test = new TestTable(_dbOptionsTestTable);
+                    test.AddTest(testModel);
+                    ModelState.Clear();
+                    return View("~/Views/Admin/AddTest.cshtml");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка добавления теста");
+            }
+            return View("~/Views/Admin/AddTest.cshtml");
         }
 
 

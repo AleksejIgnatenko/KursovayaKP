@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KursovayaKP.Models.TablesDBModel
 {
-    public class TableAnswerUserTest : TablesDB
+    public class TableAnswerUserTest : DBTables
     {
         private readonly ILogger<TableAnswerUserTest>? _logger;
         public TableAnswerUserTest(DbContextOptions<TableAnswerUserTest> options) : base(options)

@@ -65,7 +65,7 @@ namespace KursovayaKP.Controllers
                         if (userAdded)
                         {
                             // Add cookies
-                            Response.Cookies.Append("ID", userModel.Id.ToString());
+                            Response.Cookies.Append("ID", userModel.IdUser.ToString());
                             Response.Cookies.Append("UserName", userModel.UserName);
                             Response.Cookies.Append("Role", userModel.Role);
 
@@ -101,7 +101,7 @@ namespace KursovayaKP.Controllers
                     if (user != null)
                     {
                         // Данные пользователя совпадают, устанавливаем куки и выполняем перенаправление
-                        Response.Cookies.Append("ID", user.Id.ToString());
+                        Response.Cookies.Append("ID", user.IdUser.ToString());
                         Response.Cookies.Append("UserName", user.UserName);
                         Response.Cookies.Append("Role", user.Role);
 

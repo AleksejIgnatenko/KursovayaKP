@@ -2,7 +2,7 @@
 
 namespace KursovayaKP.Models.TablesDBModel
 {
-    public class QuestionTable : TablesDB
+    public class QuestionTable : DBTables
     {
         private readonly ILogger<QuestionTable>? _logger;
         public QuestionTable(DbContextOptions<QuestionTable> options) : base(options)
@@ -11,31 +11,21 @@ namespace KursovayaKP.Models.TablesDBModel
 
         public bool AddQuestion(QuestionModel question)
         {
-            try
+            // Проверяем наличие пользователя с такой же почтой
+            var existingquestion = Question.FirstOrDefault(q => q.QuestionText == question.QuestionText);
+            if (existingquestion != null)
             {
-                // Проверяем наличие пользователя с такой же почтой
-                var existingquestion = Question.FirstOrDefault(q => q.QuestionText == question.QuestionText);
-                if (existingquestion != null)
-                {
-                    return false;
-                }
-
-                Question.Add(question);
-                SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                // Обработка исключения, возникшего при работе с базой данных
-                // Записываем ошибку в лог
-                _logger.LogError(ex, "Ошибка при добавлении вопроса в базу данных");
                 return false;
             }
+
+            Question.Add(question);
+            SaveChanges();
+            return true;
         }
 
         public bool DeleteQuestion(int questionId)
         {
-            var question = Question.FirstOrDefault(q => q.Id == questionId);
+            var question = Question.FirstOrDefault(q => q.IdQuestion == questionId);
             if (question != null)
             {
                 Question.Remove(question);
@@ -53,7 +43,7 @@ namespace KursovayaKP.Models.TablesDBModel
 
         public void UpdateQuestion(QuestionModel question)
         {
-            var existingQuestion = Question.Find(question.Id);
+            var existingQuestion = Question.Find(question.IdQuestion);
             if (existingQuestion != null)
             {
                 existingQuestion.QuestionText = question.QuestionText;
@@ -68,7 +58,7 @@ namespace KursovayaKP.Models.TablesDBModel
 
         public QuestionModel? GetQuestion(int questionId)
         {
-            var question = Question.FirstOrDefault(q => q.Id == questionId);
+            var question = Question.FirstOrDefault(q => q.IdQuestion == questionId);
             if (question != null)
             {
                 return question;
@@ -82,7 +72,7 @@ namespace KursovayaKP.Models.TablesDBModel
             List<QuestionModel> list = Question.ToList();
             for (int i = 0; i < list.Count; i++)
             {
-                Console.WriteLine(list[i].Id + " " + list[i].Topic);
+                Console.WriteLine(list[i].IdQuestion + " " + list[i].Topic);
             }
             return Question.ToList();
         }

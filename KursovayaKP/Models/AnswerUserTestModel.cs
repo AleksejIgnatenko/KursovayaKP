@@ -9,7 +9,7 @@ namespace KursovayaKP.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
-        public int Id { get; set; }
+        public int IdAnswerUser { get; set; }
 
         [Required]
         public int UserId { get; set; }

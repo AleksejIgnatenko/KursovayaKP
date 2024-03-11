@@ -4,7 +4,8 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/AddQuestion.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Add.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Add.css" asp-append-version="true" />
 }
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/fontawesome.min.css" integrity="sha512-RvQxwf+3zJuNwl4e0sZjQeX7kUa3o82bDETpgVCH2RiwYSZVDdFJ7N/woNigN/ldyOOoKw8584jM4plQdt8bhA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -15,7 +16,7 @@
         <div class="addquestion-container">
             <h1 class="header">Добавление вопроса по теме "Устройство авто"</h1>
             <form class="form" asp-controller="Admin" asp-action="QuestionUpdate" method="post">
-                <input asp-for="Id" type="hidden" name="Id" value="@Model.Id" />
+                <input asp-for="IdQuestion" type="hidden" name="Id" value="@Model.IdQuestion" />
                 <div class="input-group">
                     <label for="questionText">Вопрос</label>
                     <input type="text" id="questionText" name="questionText" placeholder="Введите вопрос" required asp-for="QuestionText" value="@Model.QuestionText">

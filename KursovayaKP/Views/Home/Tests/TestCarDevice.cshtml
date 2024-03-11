@@ -15,9 +15,9 @@
 <div id="question-container">
     @foreach (var question in Model)
     {
-        <div class="question" data-question-id="@question.Id" data-correct-answer="@question.CorrectAnswer">
+        <div class="question" data-question-id="@question.IdQuestion" data-correct-answer="@question.CorrectAnswer">
             <form>
-                <h3>Вопрос №@question.Id</h3>
+                <h3>Вопрос №@question.IdQuestion</h3>
                 <h3>@question.QuestionText</h3>
                 @if (!string.IsNullOrEmpty(question.LinkPhoto))
                 {
