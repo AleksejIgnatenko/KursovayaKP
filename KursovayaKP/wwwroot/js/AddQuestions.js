@@ -1,31 +1,37 @@
-﻿/*document.addEventListener('DOMContentLoaded', function () {
+﻿document.addEventListener('DOMContentLoaded', function () {
     GetAllTests();
 });
 function GetAllTests() {
     // Выполняем AJAX-запрос на сервер
     $.ajax({
         url: '/Admin/GetAllTests',
-        type: 'GET',
-        contentType: 'application/json',
+        type: 'POST',
+        contentType: 'application/x-www-form-urlencoded',
+        dataType: 'json',
         success: function (result) {
             // Очищаем список перед добавлением элементов
-            $('#topic').empty();
+            $('#test').empty();
 
             // Преобразуем полученный массив в объекты TestModel
             var testModels = result.map(function (test) {
                 return {
-                    IdTest: parseInt(test.IdTest),
-                    NameTest: String(test.NameTest)
+                    IdTest: parseInt(test.idTest, 10),
+                    NameTest: String(test.nameTest)
                 };
             });
 
             // Добавляем элементы списка на основе преобразованных объектов TestModel
             testModels.forEach(function (test) {
-                $('#topic').append('<option value="' + test.IdTest + '">' + test.NameTest + '</option>');
+                $('#test').append('<option value="' + test.IdTest + '">' + test.NameTest + '</option>');
+            });
+
+            // Обновляем скрытое поле при изменении выбора в select
+            $('#test').change(function () {
+                $('#selectedTest').val($(this).val());
             });
         },
         error: function (error) {
             // Обрабатываем ошибку
         }
     });
-}*/
+}

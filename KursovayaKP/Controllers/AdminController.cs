@@ -71,12 +71,7 @@ namespace KursovayaKP.Controllers
 
 		public IActionResult AddQuestions()
 		{
-			TestTable testTable = new TestTable(_dbOptionsTestTable);
-			List<TestModel> allTests = testTable.GetAllTest();
-			QuestionModel questionModel = new QuestionModel();
-
-			var model = new Tuple<QuestionModel, List<TestModel>>(questionModel, allTests);
-			return View(model);
+			return View();
 		}
 
 		public IActionResult AddTest()
@@ -101,7 +96,6 @@ namespace KursovayaKP.Controllers
 
         public IActionResult AllQuestions(string topic)
         {
-            Console.WriteLine(topic);
             /*switch (topic)
             {
                 case "TrafficRegulations":
@@ -191,7 +185,6 @@ namespace KursovayaKP.Controllers
         [HttpPost]
         public IActionResult QuestionForUpdate(int questionId)
         {
-            Console.WriteLine(questionId);
             QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
             QuestionModel? question = questionTable.GetQuestion(questionId);
             if (question != null)
@@ -204,8 +197,8 @@ namespace KursovayaKP.Controllers
         [HttpPost]
         public IActionResult QuestionUpdate(QuestionModel question)
         {
-            Console.WriteLine(question.IdQuestion + " " + question.QuestionText + " " + question.Answer1 + " " + question.Answer2 + " " + question.Answer3
-                + " " + question.Answer4 + " " + question.CorrectAnswer);
+/*            Console.WriteLine(question.IdQuestion + " " + question.QuestionText + " " + question.Answer1 + " " + question.Answer2 + " " + question.Answer3
+                + " " + question.Answer4 + " " + question.CorrectAnswer);*/
             try
             {
                 QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
@@ -219,17 +212,21 @@ namespace KursovayaKP.Controllers
             return View("~/Views/Admin/QuestionForUpdate.cshtml", question);
         }
 
+        [HttpPost]
+        public TestModel[] GetAllTests()
+        {
+            TestTable testTable = new TestTable(_dbOptionsTestTable);
+            TestModel[] allTests = testTable.GetAllTest();
+            //Console.WriteLine(allTests[0].IdTest + " " + allTests[0].NameTest);
+			return allTests;
+        }
 
         [HttpPost]
-        public IActionResult AddQuestions(QuestionModel questionModel)
-        {
-
-            Console.WriteLine(questionModel.IdTest + " " + questionModel.QuestionText + " " + questionModel.Answer1 + " " +
-                questionModel.Answer2 + " " + questionModel.Answer3 + " " + questionModel.Answer4 + " " + questionModel.CorrectAnswer);
-            
-            TestTable testTable = new TestTable(_dbOptionsTestTable);
-            List<TestModel> allTests = testTable.GetAllTest();
-            var model1 = new Tuple<QuestionModel, List<TestModel>>(questionModel, allTests);
+		public IActionResult AddQuestions(QuestionModel questionModel)
+		{
+			// Access the selected test ID using the idTest parameter
+			Console.WriteLine(questionModel.IdTest + " " + questionModel.QuestionText + " " + questionModel.Answer1 + " " +
+				questionModel.Answer2 + " " + questionModel.Answer3 + " " + questionModel.Answer4 + " " + questionModel.CorrectAnswer);
 
             if (ModelState.IsValid)
             {
@@ -239,8 +236,7 @@ namespace KursovayaKP.Controllers
                 if (correctAnswer == null)
                 {
                     ModelState.AddModelError("CorrectAnswer", "Выбранный правильный ответ не найден в списке ответов.");
-                    var model = new Tuple<QuestionModel, List<TestModel>>(questionModel, allTests);
-                    return View(model);
+                    return View(questionModel);
                 }
 
                 try
@@ -250,15 +246,13 @@ namespace KursovayaKP.Controllers
                         bool isAdded = db.AddQuestion(questionModel);
                         if (isAdded)
                         {
-                            ModelState.Clear(); // Clear the model state
-                            var model = new Tuple<QuestionModel, List<TestModel>>(new QuestionModel(), allTests); // Create a new instance of the model
-                            return View(model);
+                            ModelState.Clear(); // Очистить состояние модели
+                            return View();
                         }
                         else
                         {
                             ModelState.AddModelError("QuestionText", "Вопрос с таким текстом уже существует.");
-                            var model = new Tuple<QuestionModel, List<TestModel>>(questionModel, allTests);
-                            return View(model);
+                            return View(questionModel);
                         }
                     }
                 }
@@ -268,9 +262,9 @@ namespace KursovayaKP.Controllers
                     return Json("Ошибка добавления вопроса в БД");
                 }
             }
-            
-            return View(model1);
+            return View(questionModel);
         }
+
 
         [HttpPost]
         public ActionResult<double[]> GetDetailedUserInformation(int userId)
@@ -297,12 +291,10 @@ namespace KursovayaKP.Controllers
         [HttpPost]
         public IActionResult AddTest(TestModel testModel)
         {
-            Console.WriteLine(testModel.IdTest + " " + testModel.NameTest);
             try
             {
                 if (ModelState.IsValid)
                 {
-                    Console.WriteLine("true");
                     TestTable test = new TestTable(_dbOptionsTestTable);
                     test.AddTest(testModel);
                     ModelState.Clear();

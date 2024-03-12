@@ -15,9 +15,9 @@ namespace KursovayaKP.Models.TablesDB
             SaveChanges();
         }
 
-        public List<TestModel> GetAllTest()
+        public TestModel[] GetAllTest()
         {
-            return Tests.ToList();
+            return Tests.ToArray();
         }
     }
 }
