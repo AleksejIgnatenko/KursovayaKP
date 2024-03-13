@@ -9,7 +9,7 @@ namespace KursovayaKP.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdQuestion { get; set; }
 
-        [ForeignKey("IdTest")]
+        [ForeignKey("TestModel")]
         public int IdTest { get; set; }
 
         [Required(ErrorMessage = "Заполните поле")]

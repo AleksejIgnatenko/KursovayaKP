@@ -4,7 +4,6 @@ namespace KursovayaKP.Models.TablesDBModel
 {
     public class QuestionTable : DBTables
     {
-        private readonly ILogger<QuestionTable>? _logger;
         public QuestionTable(DbContextOptions<QuestionTable> options) : base(options)
         {
         }

@@ -13,14 +13,16 @@ namespace KursovayaKP.Controllers
         private readonly DbContextOptions<TableAnswerUserTest> _dbOptionsAnswerUserTest;
         private readonly DbContextOptions<UserTable> _dbOptionsUserTable;
         private readonly DbContextOptions<TestTable> _dbOptionsTestTable;
+        private readonly DbContextOptions<CategoryTable> _dbOptionsCategoryTable;
         private readonly ILogger<AdminController> _logger;
 
-        public AdminController(DbContextOptions<QuestionTable> dbOptionsQuestionTable, DbContextOptions<TableAnswerUserTest> dbOptionsAnswerUserTest, DbContextOptions<UserTable> dbOptionsUserTable, DbContextOptions<TestTable> dbOptionsTestTable, ILogger<AdminController> logger)
+        public AdminController(DbContextOptions<QuestionTable> dbOptionsQuestionTable, DbContextOptions<TableAnswerUserTest> dbOptionsAnswerUserTest, DbContextOptions<UserTable> dbOptionsUserTable, DbContextOptions<TestTable> dbOptionsTestTable, DbContextOptions<CategoryTable> dbOptionsCategoryTable, ILogger<AdminController> logger)
         {
             _dbOptionsQuestionTable = dbOptionsQuestionTable;
             _dbOptionsAnswerUserTest = dbOptionsAnswerUserTest;
             _dbOptionsUserTable = dbOptionsUserTable;
             _dbOptionsTestTable = dbOptionsTestTable;
+            _dbOptionsCategoryTable = dbOptionsCategoryTable;
             _logger = logger;
         }
 
@@ -197,8 +199,6 @@ namespace KursovayaKP.Controllers
         [HttpPost]
         public IActionResult QuestionUpdate(QuestionModel question)
         {
-/*            Console.WriteLine(question.IdQuestion + " " + question.QuestionText + " " + question.Answer1 + " " + question.Answer2 + " " + question.Answer3
-                + " " + question.Answer4 + " " + question.CorrectAnswer);*/
             try
             {
                 QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
@@ -222,12 +222,16 @@ namespace KursovayaKP.Controllers
         }
 
         [HttpPost]
+        public CategoryModel[] GetAllCategory()
+        {
+            CategoryTable categoryTable = new CategoryTable(_dbOptionsCategoryTable);
+            CategoryModel[] categories = categoryTable.GetAllCategory();
+            return categories;
+        }
+
+        [HttpPost]
 		public IActionResult AddQuestions(QuestionModel questionModel)
 		{
-			// Access the selected test ID using the idTest parameter
-			Console.WriteLine(questionModel.IdTest + " " + questionModel.QuestionText + " " + questionModel.Answer1 + " " +
-				questionModel.Answer2 + " " + questionModel.Answer3 + " " + questionModel.Answer4 + " " + questionModel.CorrectAnswer);
-
             if (ModelState.IsValid)
             {
                 var answers = new[] { questionModel.Answer1, questionModel.Answer2, questionModel.Answer3, questionModel.Answer4 };
@@ -295,6 +299,7 @@ namespace KursovayaKP.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    Console.WriteLine(testModel.IdCategory + " " + testModel.NameTest);
                     TestTable test = new TestTable(_dbOptionsTestTable);
                     test.AddTest(testModel);
                     ModelState.Clear();

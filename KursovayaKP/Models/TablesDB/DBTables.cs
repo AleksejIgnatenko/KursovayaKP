@@ -11,10 +11,11 @@ namespace KursovayaKP.Models.TablesDBModel
         public DbSet<QuestionModel> Question { get; set; }
         public DbSet<AnswerUserTestModel> AnswerUserTest { get; set; }
         public DbSet<TestModel> Tests { get; set; }
+		public DbSet<CategoryModel> Category { get; set; }
 
 
-        // Создаем базу данных при первом обращении
-        public DBTables(DbContextOptions<UserTable> options) : base(options)
+		// Создаем базу данных при первом обращении
+		public DBTables(DbContextOptions<UserTable> options) : base(options)
         {
             Database.EnsureCreated();
         }
@@ -37,7 +38,13 @@ namespace KursovayaKP.Models.TablesDBModel
             Database.EnsureCreated();
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+		// Создаем базу данных при первом обращении
+		public DBTables(DbContextOptions<CategoryTable> options) : base(options)
+		{
+			Database.EnsureCreated();
+		}
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
@@ -48,8 +55,16 @@ namespace KursovayaKP.Models.TablesDBModel
                 new UserModel { IdUser = 3, UserName = "Sam", Email = "test1@gmail.com", Password = "+lhdichR3TOKcNz1Naoqkv7ng23Wr/EiZYPojgmWKT8WvACcZSgm4PxccGaVoDzdzjcvE57/TROVnabx9dPqvg==", Repeat_password = "+lhdichR3TOKcNz1Naoqkv7ng23Wr/EiZYPojgmWKT8WvACcZSgm4PxccGaVoDzdzjcvE57/TROVnabx9dPqvg==", Role = "User" }
             );
 
-            //Добавление записей в таблицу Quenstion
-            modelBuilder.Entity<QuestionModel>().HasData(
+			//Добавление записей в таблицу Users
+			modelBuilder.Entity<CategoryModel>().HasData(
+					new CategoryModel { IdCategory = 1, NameCategory = "ПДД" },
+					new CategoryModel { IdCategory = 2, NameCategory = "Дорожные знаки" },
+					new CategoryModel { IdCategory = 3, NameCategory = "Медецинская помощь" },
+					new CategoryModel { IdCategory = 4, NameCategory = "Устройство авто" }
+			);
+
+			//Добавление записей в таблицу Quenstion
+			modelBuilder.Entity<QuestionModel>().HasData(
                 new QuestionModel { IdQuestion = 1, QuestionText = "Вопрос 1", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4"},
                 new QuestionModel { IdQuestion = 2, QuestionText = "Вопрос 2", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4"},
                 new QuestionModel { IdQuestion = 3, QuestionText = "Вопрос 3", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4"},

@@ -12,6 +12,7 @@ builder.Services.AddDbContext<UserTable>(options => options.UseSqlServer(connect
 builder.Services.AddDbContext<QuestionTable>(options => options.UseSqlServer(connection));
 builder.Services.AddDbContext<TableAnswerUserTest>(options => options.UseSqlServer(connection));
 builder.Services.AddDbContext<TestTable>(options => options.UseSqlServer(connection));
+builder.Services.AddDbContext<CategoryTable>(options => options.UseSqlServer(connection));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
