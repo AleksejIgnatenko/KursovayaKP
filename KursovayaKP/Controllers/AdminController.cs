@@ -81,6 +81,19 @@ namespace KursovayaKP.Controllers
             return View();
         }
 
+        public CategoryModel? GetCategory(int categoryId)
+        {
+            Console.WriteLine(categoryId);
+            CategoryTable categoryTable = new CategoryTable(_dbOptionsCategoryTable);
+            CategoryModel? category = categoryTable.GetCategory(categoryId);
+            Console.WriteLine(category.IdCategory + " " + category.NameCategory);
+            if (category == null)
+            {
+                return null;
+            }
+            return category;
+        }
+
         public IActionResult AllUsers()
         {
             try
@@ -96,7 +109,22 @@ namespace KursovayaKP.Controllers
             return View();
         }
 
-        public IActionResult AllQuestions(string topic)
+		public IActionResult AllTests()
+		{
+			try
+			{
+                TestTable testTable = new TestTable(_dbOptionsTestTable);
+                TestModel[] allTests = testTable.GetAllTest();
+				return View(allTests);
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Ошибка получения всех пользователей");
+			}
+			return View();
+		}
+
+		public IActionResult AllQuestions(string topic)
         {
             /*switch (topic)
             {

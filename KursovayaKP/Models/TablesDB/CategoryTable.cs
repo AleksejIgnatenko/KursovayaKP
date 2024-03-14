@@ -13,6 +13,11 @@ namespace KursovayaKP.Models.TablesDB
 		{
 			return Category.ToArray();
 		}
-
+		
+		public CategoryModel? GetCategory(int id)
+		{
+			CategoryModel? category = Category.FirstOrDefault(category => category.IdCategory == id);
+			return category;
+		}
     }
 }

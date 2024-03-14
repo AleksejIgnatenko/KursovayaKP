@@ -1,0 +1,48 @@
+﻿@using KursovayaKP.Models;
+@model TestModel[]
+
+@{
+	ViewData["Title"] = $"Все вопросы по теме \"{ViewBag.Topic}\"";
+}
+
+@section Styles {
+	<link rel="stylesheet" href="~/css/AllQuestions.css" asp-append-version="true" />
+	<script src="~/js/AllTests.js" asp-append-version="true"></script>
+}
+
+<button id="settingsButton" style="color: black; border: none; background-color: white;">Расширенные настройки</button>
+
+<div id="toolsMenu" style="display: none; width: 500px">
+	<input id="searchInput" placeholder="Поиск" style="width:100%;" />
+	<div>
+		<button id="sortByNameButton" class="image-button" style="margin-top: 3px; background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1213753761848369172/from-a-to-z.png?ex=65f69f47&is=65e42a47&hm=832eda2fa6236568a6feb373b103c779b61b0f0f4e206117d264fd2345ff9abc&=&format=webp&quality=lossless')" title="Сортировка в алфавитном порядке"></button>
+		<button id="sortByNumberButton" class="image-button" style="margin-top: 3px; background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1213756103972618300/trafic.png?ex=65f6a175&is=65e42c75&hm=c374cce517eb37fcec12772981f332a122b6bf9ee5e365b0c6c22b7ca5987b0b&=&format=webp&quality=lossless')" title="Сортировка в по номеру вопроса"></button>
+		<button id="cancellation" class="image-button" style="margin-top: 3px; background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1213760647532249088/cancel.png?ex=65f6a5b0&is=65e430b0&hm=40c3a857a517ee7c23d7b880c880691ce8d2fdee09a0baef074f3c98daeaabc1&=&format=webp&quality=lossless')" title="Отмена фильтрации"></button>
+	</div>
+	<ul>
+		<li>Инструмент 1</li>
+		<li>Инструмент 2</li>
+		<li>Инструмент 3</li>
+	</ul>
+</div>
+
+<h1 id="title">Тесты</h1>
+
+<div id="question-container">
+	@if (Model != null)
+	{
+		@foreach (var test in Model)
+		{
+			<div class="question" data-question-id="@test.IdTest">
+				<form class="question-form" method="post">
+					<div><label>Тест №@test.IdTest</label></div>
+					<input type="hidden" name="questionId" value="@test.NameTest" />
+					<div><label>Название теста: @test.NameTest</label></div>
+					<div><label>Категория: <span class="category-label">@test.IdCategory</span></label></div>
+					<button asp-controller="" asp-action="" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211257334207352832/Delete.png?ex=65ffff4c&is=65ed8a4c&hm=d1866f93c442f0b7469112b6bd576179aa5363cbf3a06bf40cd0ba3e0dedc46a&=&format=webp&quality=lossless')" title="Удалить"></button>
+					<button asp-controller="" asp-action="" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211262049162625065/Editing.png?ex=660003b0&is=65ed8eb0&hm=4eb355c8221990c515f20aeefe2b59450d229900127f491d267e55cb533f5c96&=&format=webp&quality=lossless')" title="Редактировать"></button>
+				</form>
+			</div>
+		}
+	}
+</div>

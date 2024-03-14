@@ -5,14 +5,14 @@ namespace KursovayaKP.Models
 {
 	public class TestModel
 	{
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int IdTest { get; set; }
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		public int IdTest { get; set; }
 
-        [ForeignKey("CategoryModel")]
-        public int IdCategory { get; set; }
+		[ForeignKey("Category")]
+		public int IdCategory { get; set; }
 
-        [Required(ErrorMessage = "Введите название вопроса")]
-        public string NameTest { get; set; }
-    }
+		[Required(ErrorMessage = "Введите название вопроса")]
+		public string NameTest { get; set; }
+	}
 }
