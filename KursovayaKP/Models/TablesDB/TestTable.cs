@@ -19,5 +19,10 @@ namespace KursovayaKP.Models.TablesDB
         {
             return Tests.ToArray();
         }
+
+        public string? GetNameTest(int idTest) 
+        {
+            return Tests.Where(t => t.IdTest == idTest).Select(t => t.NameTest).FirstOrDefault();
+        }
     }
 }

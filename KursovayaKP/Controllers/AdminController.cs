@@ -86,7 +86,6 @@ namespace KursovayaKP.Controllers
             Console.WriteLine(categoryId);
             CategoryTable categoryTable = new CategoryTable(_dbOptionsCategoryTable);
             CategoryModel? category = categoryTable.GetCategory(categoryId);
-            Console.WriteLine(category.IdCategory + " " + category.NameCategory);
             if (category == null)
             {
                 return null;
@@ -124,7 +123,27 @@ namespace KursovayaKP.Controllers
 			return View();
 		}
 
-		public IActionResult AllQuestions(string topic)
+        public IActionResult TestQuestions(int testId)
+        {
+            Console.WriteLine($"ID теста {testId}");
+            try
+            {
+                QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
+                QuestionModel[] questions = questionTable.GetQuestionsTestId(testId);
+
+                TestTable testTable = new TestTable(_dbOptionsTestTable);
+                string? topic = testTable.GetNameTest(testId);
+                ViewBag.Topic = (topic != null) ? $"\"{topic}\"" : "";
+				return View(questions);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"{ex.Message}");
+                return View();
+            }
+        }
+
+        public IActionResult AllQuestions(string topic)
         {
             /*switch (topic)
             {

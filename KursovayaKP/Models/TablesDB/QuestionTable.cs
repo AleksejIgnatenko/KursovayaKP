@@ -34,12 +34,6 @@ namespace KursovayaKP.Models.TablesDBModel
             return false;
         }
 
-        /*        public void UpdateQuestion(QuestionModel question)
-                {
-                    Question.Update(question);
-                    SaveChanges();
-                }*/
-
         public void UpdateQuestion(QuestionModel question)
         {
             var existingQuestion = Question.Find(question.IdQuestion);
@@ -53,6 +47,12 @@ namespace KursovayaKP.Models.TablesDBModel
                 existingQuestion.CorrectAnswer = question.CorrectAnswer;
                 SaveChanges();
             }
+        }
+
+        public QuestionModel[] GetQuestionsTestId(int testId)
+        {
+            QuestionModel[] questions = Question.Where(q => q.IdTest == testId).ToArray();
+            return questions;
         }
 
         public QuestionModel? GetQuestion(int questionId)

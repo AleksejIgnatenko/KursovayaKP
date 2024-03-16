@@ -1,13 +1,13 @@
-﻿@using KursovayaKP.Models;
-@model List<QuestionModel>
+﻿﻿@using KursovayaKP.Models;
+@model QuestionModel[]
 
 @{
-	ViewData["Title"] = $"Все вопросы по теме \"{ViewBag.Topic}\"";
+	ViewData["Title"] = $"Все вопросы по тесту \"{ViewBag.Topic}\"";
 }
 
 @section Styles {
-	<link rel="stylesheet" href="~/css/AllQuestions.css" asp-append-version="true" />
-	<script src="~/js/AllQuestions.js" asp-append-version="true"></script>
+	<link rel="stylesheet" href="~/css/Questions.css" asp-append-version="true" />
+	<script src="~/js/Questions.js" asp-append-version="true"></script>
 }
 
 <button id="settingsButton" style="color: black; border: none; background-color: white;">Расширенные настройки</button>
@@ -49,12 +49,11 @@
 						<label for="answer3">@question.Answer3</label><br>
 						<label for="answer4">@question.Answer4</label><br>
 						<label for="answer4">Правильный ответ @question.CorrectAnswer</label><br>
-						<button asp-controller="Admin" asp-action="DeleteQuestion" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211257334207352832/Delete.png?ex=65ed8a4c&is=65db154c&hm=186472e1ce3de1b79ca162ca0a9a23edd211996786bd18ff98db2c507d78a05e&=&format=webp&quality=lossless')" title="Удалить"></button>
-						<button asp-controller="Admin" asp-action="QuestionForUpdate" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211262049162625065/Editing.png?ex=65ed8eb0&is=65db19b0&hm=29c82b4a13617b4cfa672d881f2992c8359b0fecabca9c2f4c4f2b4be41df6a3&=&format=webp&quality=lossless')" title="Редактировать"></button>
+						<button asp-controller="Admin" asp-action="DeleteQuestion" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211257334207352832/Delete.png?ex=65ffff4c&is=65ed8a4c&hm=d1866f93c442f0b7469112b6bd576179aa5363cbf3a06bf40cd0ba3e0dedc46a&=&format=webp&quality=lossless')" title="Удалить"></button>
+						<button asp-controller="Admin" asp-action="QuestionForUpdate" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211262049162625065/Editing.png?ex=660003b0&is=65ed8eb0&hm=4eb355c8221990c515f20aeefe2b59450d229900127f491d267e55cb533f5c96&=&format=webp&quality=lossless')" title="Редактировать"></button>
 					</div>
 				</form>
 			</div>
 		}
 	}
 </div>
-
