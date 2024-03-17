@@ -167,7 +167,27 @@ namespace KursovayaKP.Controllers
 			return RedirectToAction("AllTests");
 		}
 
-		public IActionResult TestQuestions(int testId)
+        public IActionResult UpdateTest(TestModel test)
+        {
+            Console.WriteLine($"ID теста {test.IdTest} {test.IdCategory} {test.NameTest}");
+            if (ModelState.IsValid)
+            {
+                Console.WriteLine(true);
+                try
+                {
+                    TestTable testTable = new TestTable(_dbOptionsTestTable);
+                    testTable.UpdateTest(test);
+                    return View("~/Views/Admin/TestForUpdate.cshtml", test);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"{ex}");
+                }
+            }
+            return View("~/Views/Admin/TestForUpdate.cshtml", test);
+        }
+
+        public IActionResult TestQuestions(int testId)
         {
             Console.WriteLine($"ID теста {testId}");
             try

@@ -15,21 +15,22 @@
     <div class="fullscreen-container">
         <div class="addquestion-container">
             <h1 class="header">Добавление вопроса</h1>
-            <form class="form" asp-controller="Admin" asp-action="AddTest" method="post">
+            <form class="form" asp-controller="Admin" asp-action="UpdateTest" method="post">
+                <input asp-for="IdTest" type="hidden" name="test.IdTest" value="@Model.IdTest" />
                 <div class="input-group">
-                    <label for="Topic">Тест</label>
-                    <select asp-for="IdCategory" id="category" name="idCategory" required>
+                    <label for="category">Тест</label>
+                    <select asp-for="IdCategory" id="category" name="test.IdCategory" required>
                         <option value=""></option>
                     </select>
                 </div>
 
                 <div class="input-group">
                     <label for="nameTest">Название теста</label>
-                    <input type="text" id="nameTest" name="nameTest" placeholder="Введите вопрос" required asp-for="NameTest">
+                    <input type="text" id="nameTest" name="test.NameTest" placeholder="Введите название теста" required asp-for="NameTest" value="@Model.NameTest">
                     <span asp-validation-for="NameTest" style="color: red; font-size: 12px; display: block; height: 12px;"></span>
                 </div>
 
-                <button class="button">Добавить тест</button>
+                <button class="button">Сохранить изменения</button>
                 <div class="text-center">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AdminIndex">Назад</a>
                 </div>

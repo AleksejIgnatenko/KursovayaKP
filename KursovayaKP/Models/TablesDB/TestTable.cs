@@ -47,5 +47,17 @@ namespace KursovayaKP.Models.TablesDB
 			return null;
 		}
 
+		public void UpdateTest(TestModel testModel)
+		{
+            Console.WriteLine(true);
+            TestModel? test = Tests.FirstOrDefault(t => t.IdTest == testModel.IdTest);
+			if (test != null)
+			{
+                Console.WriteLine(true);
+                test.IdCategory = testModel.IdCategory;
+				test.NameTest = testModel.NameTest;
+				SaveChanges();
+			}
+		}
 	}
 }
