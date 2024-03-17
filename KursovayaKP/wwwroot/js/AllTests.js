@@ -51,3 +51,22 @@ function getCategoryValue(categoryId, categoryLabel) {
 		}
 	});
 }
+
+//Поиск
+document.addEventListener("DOMContentLoaded", function () {
+	document.getElementById("searchInput").addEventListener("input", function () {
+		var input = this.value.toLowerCase();
+		var questions = document.getElementsByClassName("question");
+
+		for (var i = 0; i < questions.length; i++) {
+			var question = questions[i];
+			var questionText = question.innerText.toLowerCase();
+
+			if (questionText.includes(input)) {
+				question.style.display = "block";
+			} else {
+				question.style.display = "none";
+			}
+		}
+	});
+});
