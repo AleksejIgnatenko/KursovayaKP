@@ -123,7 +123,51 @@ namespace KursovayaKP.Controllers
 			return View();
 		}
 
-        public IActionResult TestQuestions(int testId)
+		[HttpPost]
+		public IActionResult DeleteTest(int testId)
+		{
+			Console.WriteLine($"ID теста {testId}");
+			try
+			{
+				TestTable testTable = new TestTable(_dbOptionsTestTable);
+				bool isRemove = testTable.DeleteTest(testId);
+				if (isRemove)
+				{
+					return RedirectToAction("AllTests");
+				}
+				_logger.LogError("Тест не удален");
+
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError($"{ex}");
+			}
+			return RedirectToAction("AllTests");
+		}
+
+		public IActionResult TestForUpdate(int testId)
+		{
+			Console.WriteLine($"ID теста {testId}");
+			try
+			{
+				TestTable testTable = new TestTable(_dbOptionsTestTable);
+				TestModel? test = testTable.GetTest(testId);
+				if (test != null)
+				{
+					return View(test);
+				}
+				return RedirectToAction("AllTests");
+
+
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError($"{ex}");
+			}
+			return RedirectToAction("AllTests");
+		}
+
+		public IActionResult TestQuestions(int testId)
         {
             Console.WriteLine($"ID теста {testId}");
             try

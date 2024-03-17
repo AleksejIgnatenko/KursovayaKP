@@ -24,5 +24,28 @@ namespace KursovayaKP.Models.TablesDB
         {
             return Tests.Where(t => t.IdTest == idTest).Select(t => t.NameTest).FirstOrDefault();
         }
-    }
+
+		public bool DeleteTest(int idTest)
+		{
+			TestModel? test = Tests.FirstOrDefault(t => t.IdTest == idTest);
+			if (test != null)
+			{
+				Tests.Remove(test);
+				SaveChanges();
+				return true;
+			}
+			return false;
+		}
+
+		public TestModel? GetTest(int idTest)
+		{
+			TestModel? test = Tests.FirstOrDefault(t => t.IdTest == idTest);
+			if (test != null)
+			{
+				return test;
+			}
+			return null;
+		}
+
+	}
 }

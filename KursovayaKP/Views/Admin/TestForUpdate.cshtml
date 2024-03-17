@@ -1,0 +1,39 @@
+﻿@model TestModel
+@{
+    ViewData["Title"] = "Добавление теста";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Add.css" asp-append-version="true" />
+    <script src="~/js/AddTest.js" asp-append-version="true"></script>
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/fontawesome.min.css" integrity="sha512-RvQxwf+3zJuNwl4e0sZjQeX7kUa3o82bDETpgVCH2RiwYSZVDdFJ7N/woNigN/ldyOOoKw8584jM4plQdt8bhA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<body>
+    <div class="fullscreen-container">
+        <div class="addquestion-container">
+            <h1 class="header">Добавление вопроса</h1>
+            <form class="form" asp-controller="Admin" asp-action="AddTest" method="post">
+                <div class="input-group">
+                    <label for="Topic">Тест</label>
+                    <select asp-for="IdCategory" id="category" name="idCategory" required>
+                        <option value=""></option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="nameTest">Название теста</label>
+                    <input type="text" id="nameTest" name="nameTest" placeholder="Введите вопрос" required asp-for="NameTest">
+                    <span asp-validation-for="NameTest" style="color: red; font-size: 12px; display: block; height: 12px;"></span>
+                </div>
+
+                <button class="button">Добавить тест</button>
+                <div class="text-center">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AdminIndex">Назад</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>

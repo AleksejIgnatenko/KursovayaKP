@@ -39,9 +39,9 @@
 					<input type="hidden" name="testId" value="@test.IdTest" />
 					<div><label>Название теста: @test.NameTest</label></div>
 					<div><label>Категория: <span class="category-label">@test.IdCategory</span></label></div>
-					<button asp-controller="" asp-action="" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211257334207352832/Delete.png?ex=65ffff4c&is=65ed8a4c&hm=d1866f93c442f0b7469112b6bd576179aa5363cbf3a06bf40cd0ba3e0dedc46a&=&format=webp&quality=lossless')" title="Удалить"></button>
-					<button asp-controller="" asp-action="" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211262049162625065/Editing.png?ex=660003b0&is=65ed8eb0&hm=4eb355c8221990c515f20aeefe2b59450d229900127f491d267e55cb533f5c96&=&format=webp&quality=lossless')" title="Редактировать"></button>
-					<button asp-controller="Admin" asp-action="TestQuestions" class="image-button" style="background-image: url('https://cdn.discordapp.com/attachments/1160898526201516052/1218557413884432384/question.png?ex=66081907&is=65f5a407&hm=67c7113e07fe14e65562546c9fdffca3e050ad5ffaedfcdcd6cf40b1917d1abd&')" title="Вопросы теста"></button>
+					<button asp-controller="Admin" asp-action="DeleteTest" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211257334207352832/Delete.png?ex=65ffff4c&is=65ed8a4c&hm=d1866f93c442f0b7469112b6bd576179aa5363cbf3a06bf40cd0ba3e0dedc46a&=&format=webp&quality=lossless')" title="Удалить" data-id="@test.IdTest"></button>
+					<button asp-controller="Admin" asp-action="TestForUpdate" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211262049162625065/Editing.png?ex=660003b0&is=65ed8eb0&hm=4eb355c8221990c515f20aeefe2b59450d229900127f491d267e55cb533f5c96&=&format=webp&quality=lossless')" title="Редактировать" data-id="@test.IdTest"></button>
+					<button asp-controller="Admin" asp-action="TestQuestions" class="image-button" style="background-image: url('https://cdn.discordapp.com/attachments/1160898526201516052/1218557413884432384/question.png?ex=66081907&is=65f5a407&hm=67c7113e07fe14e65562546c9fdffca3e050ad5ffaedfcdcd6cf40b1917d1abd&')" title="Вопросы теста" data-id="@test.IdTest"></button>
 				</form>
 			</div>
 		}
