@@ -39,6 +39,7 @@ namespace KursovayaKP.Models.TablesDBModel
             var existingQuestion = Question.Find(question.IdQuestion);
             if (existingQuestion != null)
             {
+                existingQuestion.IdTest = question.IdTest;
                 existingQuestion.QuestionText = question.QuestionText;
                 existingQuestion.Answer1 = question.Answer1;
                 existingQuestion.Answer2 = question.Answer2;

@@ -310,15 +310,28 @@ namespace KursovayaKP.Controllers
         [HttpPost]
         public IActionResult QuestionUpdate(QuestionModel question)
         {
-            try
+/*            Console.WriteLine(question.IdQuestion + " " + question.IdTest + " " + question.QuestionText + " " + question.Answer1 + " " +
+            question.Answer2 + " " + question.Answer3 + " " + question.Answer4 + " " + question.CorrectAnswer);*/
+            if (ModelState.IsValid)
             {
-                QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
-                questionTable.UpdateQuestion(question);
-                return View("~/Views/Admin/QuestionForUpdate.cshtml", question);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Ошибка редактирования");
+                var answers = new[] { question.Answer1, question.Answer2, question.Answer3, question.Answer4 };
+                var correctAnswer = answers.FirstOrDefault(a => a == question.CorrectAnswer);
+
+                if (correctAnswer == null)
+                {
+                    ModelState.AddModelError("CorrectAnswer", "Выбранный правильный ответ не найден в списке ответов.");
+                    return View("~/Views/Admin/QuestionForUpdate.cshtml", question);
+                }
+                try
+                {
+                    QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
+                    questionTable.UpdateQuestion(question);
+                    return View("~/Views/Admin/QuestionForUpdate.cshtml", question);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Ошибка редактирования");
+                }
             }
             return View("~/Views/Admin/QuestionForUpdate.cshtml", question);
         }

@@ -5,7 +5,7 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/css/Add.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/Add.css" asp-append-version="true" />
+    <script src="~/js/AddQuestions.js" asp-append-version="true"></script>
 }
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/fontawesome.min.css" integrity="sha512-RvQxwf+3zJuNwl4e0sZjQeX7kUa3o82bDETpgVCH2RiwYSZVDdFJ7N/woNigN/ldyOOoKw8584jM4plQdt8bhA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -16,7 +16,12 @@
         <div class="addquestion-container">
             <h1 class="header">Добавление вопроса по теме "Устройство авто"</h1>
             <form class="form" asp-controller="Admin" asp-action="QuestionUpdate" method="post">
-                <input asp-for="IdQuestion" type="hidden" name="Id" value="@Model.IdQuestion" />
+                <input asp-for="IdQuestion" type="hidden" name="IdQuestion" value="@Model.IdQuestion" />
+
+                <select asp-for="IdTest" id="test" name="idTest" required>
+                    <option value=""></option>
+                </select>
+
                 <div class="input-group">
                     <label for="questionText">Вопрос</label>
                     <input type="text" id="questionText" name="questionText" placeholder="Введите вопрос" required asp-for="QuestionText" value="@Model.QuestionText">
@@ -59,7 +64,7 @@
                     <span asp-validation-for="CorrectAnswer" style="color: red; font-size: 12px; display: block; height: 12px;"></span>
                 </div>
 
-                <button class="button">Добавить вопрос</button>
+                <button class="button">Сохранить изменения</button>
                 <div class="text-center">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AllQuestions">Назад</a>
                 </div>
