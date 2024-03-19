@@ -59,5 +59,5 @@ namespace KursovayaKP.Models.TablesDB
 				SaveChanges();
 			}
 		}
-	}
+    }
 }

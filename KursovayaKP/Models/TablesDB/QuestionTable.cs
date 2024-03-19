@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace KursovayaKP.Models.TablesDBModel
 {
@@ -52,6 +53,7 @@ namespace KursovayaKP.Models.TablesDBModel
 
         public QuestionModel[] GetQuestionsTestId(int testId)
         {
+
             QuestionModel[] questions = Question.Where(q => q.IdTest == testId).ToArray();
             return questions;
         }
@@ -70,7 +72,15 @@ namespace KursovayaKP.Models.TablesDBModel
         public List<QuestionModel> GetAllQuestions()
         {
             List<QuestionModel> list = Question.ToList();
-            return Question.ToList();
-        }
-    }
+			return Question.ToList();
+		}
+
+        public void DeletingTestQuestions(int testID)
+        {
+			var questionsToRemove = Question.Where(q => q.IdTest == testID);
+			Question.RemoveRange(questionsToRemove);
+			SaveChanges();
+		}
+
+	}
 }

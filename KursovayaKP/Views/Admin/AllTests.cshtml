@@ -2,7 +2,7 @@
 @model TestModel[]
 
 @{
-	ViewData["Title"] = $"Все вопросы по теме \"{ViewBag.Topic}\"";
+	ViewData["Title"] = $"Все вопросы {ViewBag.Topic}";
 }
 
 @section Styles {
@@ -39,11 +39,47 @@
 					<input type="hidden" name="testId" value="@test.IdTest" />
 					<div><label>Название теста: @test.NameTest</label></div>
 					<div><label>Категория: <span class="category-label">@test.IdCategory</span></label></div>
-					<button asp-controller="Admin" asp-action="DeleteTest" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211257334207352832/Delete.png?ex=65ffff4c&is=65ed8a4c&hm=d1866f93c442f0b7469112b6bd576179aa5363cbf3a06bf40cd0ba3e0dedc46a&=&format=webp&quality=lossless')" title="Удалить" data-id="@test.IdTest"></button>
-					<button asp-controller="Admin" asp-action="TestForUpdate" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211262049162625065/Editing.png?ex=660003b0&is=65ed8eb0&hm=4eb355c8221990c515f20aeefe2b59450d229900127f491d267e55cb533f5c96&=&format=webp&quality=lossless')" title="Редактировать" data-id="@test.IdTest"></button>
-					<button asp-controller="Admin" asp-action="TestQuestions" class="image-button" style="background-image: url('https://cdn.discordapp.com/attachments/1160898526201516052/1218557413884432384/question.png?ex=66081907&is=65f5a407&hm=67c7113e07fe14e65562546c9fdffca3e050ad5ffaedfcdcd6cf40b1917d1abd&')" title="Вопросы теста" data-id="@test.IdTest"></button>
+					<button class="image-button delete-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211257334207352832/Delete.png?ex=65ffff4c&is=65ed8a4c&hm=d1866f93c442f0b7469112b6bd576179aa5363cbf3a06bf40cd0ba3e0dedc46a&=&format=webp&quality=lossless')" title="Удалить"></button>
+					<button asp-controller="Admin" asp-action="DeleteTest" class="image-button confirm-delete-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1219542277521670214/checked.png?ex=660bae40&is=65f93940&hm=72f2a0f59069d0159a8c318b7bde48acf5815b0b93a1393907b41e9227886aab&=&format=webp&quality=lossless'); display: none;" title="Подтвердить удаление" data-id="@test.IdTest"></button>
+					<button class="image-button cancel-delete-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1219542299357351966/close.png?ex=660bae46&is=65f93946&hm=a736d8adaa89fce43938c8bc2a76a2a982c567dc3d51892ef6c8608f1f5d50bb&=&format=webp&quality=lossless'); display: none;" title="Отменить удаление"></button>
+					<button asp-controller="Admin" asp-action="TestForUpdate" class="image-button edit-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211262049162625065/Editing.png?ex=660003b0&is=65ed8eb0&hm=4eb355c8221990c515f20aeefe2b59450d229900127f491d267e55cb533f5c96&=&format=webp&quality=lossless')" title="Редактировать" data-id="@test.IdTest"></button>
+					<button asp-controller="Admin" asp-action="TestQuestions" class="image-button questions-button" style="background-image: url('https://cdn.discordapp.com/attachments/1160898526201516052/1218557413884432384/question.png?ex=66081907&is=65f5a407&hm=67c7113e07fe14e65562546c9fdffca3e050ad5ffaedfcdcd6cf40b1917d1abd&')" title="Вопросы теста" data-id="@test.IdTest"></button>
 				</form>
 			</div>
 		}
 	}
 </div>
+
+<script>
+	const deleteButtons = document.getElementsByClassName('delete-button');
+	const confirmDeleteButtons = document.getElementsByClassName('confirm-delete-button');
+	const cancelDeleteButtons = document.getElementsByClassName('cancel-delete-button');
+	const editButtons = document.getElementsByClassName('edit-button');
+	const questionsButtons = document.getElementsByClassName('questions-button');
+
+	for (let i = 0; i < deleteButtons.length; i++) {
+		const deleteButton = deleteButtons[i];
+		const confirmDeleteButton = confirmDeleteButtons[i];
+		const cancelDeleteButton = cancelDeleteButtons[i];
+		const editButton = editButtons[i];
+		const questionsButton = questionsButtons[i];
+
+		deleteButton.addEventListener('click', function (event) {
+			event.preventDefault();
+			deleteButton.style.display = 'none';
+			confirmDeleteButton.style.display = 'inline-block';
+			cancelDeleteButton.style.display = 'inline-block';
+			editButton.style.display = 'none'; // Скрываем кнопку "Редактировать"
+			questionsButton.style.display = 'none'; // Скрываем кнопку "Вопросы теста"
+		});
+
+		cancelDeleteButton.addEventListener('click', function (event) {
+			event.preventDefault();
+			deleteButton.style.display = 'inline-block';
+			confirmDeleteButton.style.display = 'none';
+			cancelDeleteButton.style.display = 'none';
+			editButton.style.display = 'inline-block'; // Отображаем кнопку "Редактировать"
+			questionsButton.style.display = 'inline-block'; // Отображаем кнопку "Вопросы теста"
+		});
+	}
+</script>

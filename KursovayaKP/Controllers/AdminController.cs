@@ -133,6 +133,8 @@ namespace KursovayaKP.Controllers
 				bool isRemove = testTable.DeleteTest(testId);
 				if (isRemove)
 				{
+                    QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
+                    questionTable.DeletingTestQuestions(testId);
 					return RedirectToAction("AllTests");
 				}
 				_logger.LogError("Тест не удален");
@@ -274,40 +276,42 @@ namespace KursovayaKP.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult DeleteQuestion(int questionId)
-        {
-            try
-            {
-                QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
-                bool isDeleted = questionTable.DeleteQuestion(questionId);
-                if (isDeleted)
-                {
-                    return RedirectToAction("AllQuestions");
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Ошибка удаления вопроса");
-            }
+		[HttpPost]
+		public IActionResult DeleteQuestion(int questionId, int testId)
+		{
+			//Console.WriteLine($"ID test {testId} ID question{questionId}");
+			try
+			{
+				QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
+				bool isDeleted = questionTable.DeleteQuestion(questionId);
+				if (isDeleted)
+				{
+					QuestionModel[] questions = questionTable.GetQuestionsTestId(testId);
+					return View("TestQuestions", questions);
+				}
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Ошибка удаления вопроса");
+			}
 
-            // Обработка ошибки удаления
-            return RedirectToAction("AllQuestions");
-        }
+			// Обработка ошибки удаления
+			return RedirectToAction("TestQuestions");
+		}
 
-        [HttpPost]
-        public IActionResult QuestionForUpdate(int questionId)
-        {
-            QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
-            QuestionModel? question = questionTable.GetQuestion(questionId);
-            if (question != null)
-            {
-                return View(question);
-            }
-            return View();
-        }
+		[HttpPost]
+		public IActionResult QuestionForUpdate(int questionId)
+		{
+			QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
+			QuestionModel? question = questionTable.GetQuestion(questionId);
+			if (question != null)
+			{
+				return View(question);
+			}
+			return View();
+		}
 
-        [HttpPost]
+		[HttpPost]
         public IActionResult QuestionUpdate(QuestionModel question)
         {
 /*            Console.WriteLine(question.IdQuestion + " " + question.IdTest + " " + question.QuestionText + " " + question.Answer1 + " " +

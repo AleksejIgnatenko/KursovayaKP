@@ -2,7 +2,7 @@
 @model QuestionModel[]
 
 @{
-	ViewData["Title"] = $"Все вопросы по тесту \"{ViewBag.Topic}\"";
+	ViewData["Title"] = $"Все вопросы по тесту {ViewBag.Topic}";
 }
 
 @section Styles {
@@ -37,6 +37,7 @@
 				<form class="question-form" method="post">
 					<div><label>Вопрос №@question.IdQuestion</label></div>
 					<input type="hidden" name="questionId" value="@question.IdQuestion" />
+					<input type="hidden" name="testId" value="@question.IdTest" />
 					<div><label>@question.QuestionText</label></div>
 					@if (!string.IsNullOrEmpty(question.LinkPhoto))
 					{
