@@ -69,12 +69,14 @@ async function checkAnswers() {
 
     // Получаем идентификатор пользователя из куки
     var userId = getCookieValue('ID');
+    var testId = document.getElementById("testId").value;
+    console.log(testId);
 
     // Отправляем данные на сервер вместе с идентификатором пользователя и названием теста
     var data = {
         userId: parseInt(userId),
-        path: window.location.pathname, // Добавляем путь как значение свойства nameTest
-        resultTest: resultTest,
+        testId: testId,
+        resultTest: resultTest
     };
 
     console.log(data);

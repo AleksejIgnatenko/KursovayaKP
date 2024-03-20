@@ -11,11 +11,11 @@ namespace KursovayaKP.Models
 
         public int IdAnswerUser { get; set; }
 
-        [Required]
+        [ForeignKey("UserModel")]
         public int UserId { get; set; }
 
-        [Required] 
-        public string NameTest { get; set; }
+		[ForeignKey("TestModel")]
+		public int TestId { get; set; }
 
         [Required]
         public int ResultTest { get; set; }

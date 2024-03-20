@@ -27,7 +27,7 @@ namespace KursovayaKP.Models.TablesDBModel
             }
         }
 
-        public double GetRatingsTest(int userId, string nameTest)
+/*        public double GetRatingsTest(int userId, string nameTest)
         {
             int[] results = AnswerUserTest.Where(a => a.UserId == userId && a.NameTest == nameTest).Select(a => a.ResultTest).ToArray();
             if (results.Length != 0)
@@ -39,7 +39,7 @@ namespace KursovayaKP.Models.TablesDBModel
                 //List<AnswerUserTestModel> result = AnswerUserTest.Where(a => a.UserId == userId && a.NameTest == nameTest).ToList();
             }
             return -1;
-        }
+        }*/
 
     }
 }

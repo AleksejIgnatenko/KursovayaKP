@@ -82,5 +82,11 @@ namespace KursovayaKP.Models.TablesDBModel
 			SaveChanges();
 		}
 
+        public List<QuestionModel> GetRandomQuestionsTest(int testID)
+        {
+            List<QuestionModel> randomQuestionsTest = Question.Where(q => q.IdTest == testID).OrderBy(t => Guid.NewGuid()).Take(10).ToList();
+            return randomQuestionsTest;
+
+		}
 	}
 }

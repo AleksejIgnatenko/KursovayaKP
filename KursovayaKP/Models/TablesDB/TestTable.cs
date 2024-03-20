@@ -59,5 +59,12 @@ namespace KursovayaKP.Models.TablesDB
 				SaveChanges();
 			}
 		}
-    }
+
+		public int GetRandomTestId(int categoryID)
+		{
+			int randomTestId = Tests.Where(t => t.IdCategory == categoryID).OrderBy(t => Guid.NewGuid()).Take(1).Select(t => t.IdTest).FirstOrDefault();
+			return randomTestId;
+		}
+
+	}
 }

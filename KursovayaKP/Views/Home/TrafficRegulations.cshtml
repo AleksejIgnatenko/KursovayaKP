@@ -1,11 +1,14 @@
 ﻿@{
-    ViewData["Title"] = "Правила дорожного движения";
+	ViewData["Title"] = $"Правила дорожного движения";
 }
 
 @section Styles {
-    @*     <link rel="stylesheet" href="~/css/Sign_In.css" asp-append-version="true" /> *@
+	<link rel="stylesheet" href="~/css/Questions.css" asp-append-version="true" />
 }
 
-<body>
+<h1 id="title">Правила дорожного движения</h1>
 
-</body>
+<div id="question-container">
+	<a class="text-dark" asp-area="" asp-controller="Home" asp-action="Test" asp-route-categoryID="1" style="margin-left: 0px; text-decoration: none">Тест</a>
+	<div class="vertical-line"></div>
+</div>

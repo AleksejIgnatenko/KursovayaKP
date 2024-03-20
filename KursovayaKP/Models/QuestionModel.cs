@@ -32,15 +32,5 @@ namespace KursovayaKP.Models
 
         [Required(ErrorMessage = "Заполните поле")]
         public string CorrectAnswer { get; set; }
-
-/*        public string Topic { get; set; }
-
-        public enum Section
-        {
-            TrafficRegulations,
-            RoadSigns,
-            MedicalCare,
-            CarDevice
-        }*/
     }
 }

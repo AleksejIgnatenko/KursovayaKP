@@ -1,4 +1,5 @@
 using KursovayaKP.Models;
+using KursovayaKP.Models.TablesDB;
 using KursovayaKP.Models.TablesDBModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,12 +12,14 @@ namespace KursovayaKP.Controllers
     {
         private readonly DbContextOptions<QuestionTable> _dbOptionsQuestionTable;
         private readonly DbContextOptions<TableAnswerUserTest> _dbOptionsAnswerUserTest;
+        private readonly DbContextOptions<TestTable> _dbOptionsTestTable;
         private readonly ILogger<AdminController> _logger;
 
-        public HomeController(DbContextOptions<QuestionTable> dbOptionsQuestionTable, DbContextOptions<TableAnswerUserTest> dbOptionsAnswerUserTest, ILogger<AdminController> logger)
+        public HomeController(DbContextOptions<QuestionTable> dbOptionsQuestionTable, DbContextOptions<TableAnswerUserTest> dbOptionsAnswerUserTest, DbContextOptions<TestTable> dbOptionsTestTable, ILogger<AdminController> logger)
         {
             _dbOptionsQuestionTable = dbOptionsQuestionTable;
             _dbOptionsAnswerUserTest = dbOptionsAnswerUserTest;
+            _dbOptionsTestTable = dbOptionsTestTable;
             _logger = logger;
         }
 
@@ -57,119 +60,32 @@ namespace KursovayaKP.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+		public IActionResult Test(int categoryID)
+		{
+			Console.WriteLine("Путь " + categoryID);
+			TestTable testTable = new TestTable(_dbOptionsTestTable);
+			int randomTestId = testTable.GetRandomTestId(categoryID);
+            Console.WriteLine(randomTestId);
+            QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
+            List<QuestionModel> questions = questionTable.GetRandomQuestionsTest(randomTestId);
+            return View(questions);
+		}
+
+		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-/*        public IActionResult TestTrafficRegulations()
-        {
-            try
-            {
-                QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
-                List<QuestionModel> allQuestions = questionTable.GetAllQuestions(); // Retrieve questions from the table
-                List<QuestionModel> selectedQuestions = allQuestions.Where(q => q.Topic == QuestionModel.Section.TrafficRegulations.ToString()).OrderBy(x => Guid.NewGuid()).Take(10).ToList(); // Select random questions from the list
-                return View("~/Views/Home/Tests/TestTrafficRegulations.cshtml", selectedQuestions);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Ошибка получения теста");
-                return Json("Ошибка получения теста");
-            }
-        }*/
-
-/*        public IActionResult TestRoadSigns()
-        {
-            try
-            {
-                QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
-                List<QuestionModel> allQuestions = questionTable.GetAllQuestions(); // Retrieve questions from the table
-                List<QuestionModel> selectedQuestions = allQuestions.Where(q => q.Topic == QuestionModel.Section.RoadSigns.ToString()).OrderBy(x => Guid.NewGuid()).Take(10).ToList(); // Select random questions from the list
-                return View("~/Views/Home/Tests/TestRoadSigns.cshtml", selectedQuestions);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Ошибка получения теста");
-                return Json("Ошибка получения теста");
-            }
-        }*/
-
-/*        public IActionResult TestMedicalCare()
-        {
-            try
-            {
-                QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
-                List<QuestionModel> allQuestions = questionTable.GetAllQuestions(); // Retrieve questions from the table
-                List<QuestionModel> selectedQuestions = allQuestions.Where(q => q.Topic == QuestionModel.Section.MedicalCare.ToString()).OrderBy(x => Guid.NewGuid()).Take(10).ToList(); // Select random questions from the list
-                return View("~/Views/Home/Tests/TestMedicalCare.cshtml", selectedQuestions);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Ошибка получения теста");
-                return Json("Ошибка получения теста");
-            }
-        }*/
-
-/*        public IActionResult TestCarDevice()
-        {
-            try
-            {
-                QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
-                List<QuestionModel> allQuestions = questionTable.GetAllQuestions(); // Retrieve questions from the table
-                List<QuestionModel> selectedQuestions = allQuestions.Where(q => q.Topic == QuestionModel.Section.CarDevice.ToString()).OrderBy(x => Guid.NewGuid()).Take(10).ToList(); // Select random questions from the list
-                return View("~/Views/Home/Tests/TestCarDevice.cshtml", selectedQuestions);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Ошибка получения теста");
-                return Json("Ошибка получения теста");
-            }
-        }*/
-
-
         // Сохранение ответов пользователей
-        // Метод, принимающий результаты теста
         [HttpPost]
-        public ActionResult SubmitAnswers(int userId, string path, int resultTest)
+        public ActionResult SubmitAnswers(AnswerUserTestModel answerUserTestModel)
         {
-            Console.WriteLine(path);
-            Console.WriteLine(userId + " " + resultTest);
+            Console.WriteLine(answerUserTestModel.UserId + " " + answerUserTestModel.TestId + " " + answerUserTestModel.ResultTest);
 
-            AnswerUserTestModel answerUserTestModel = new AnswerUserTestModel
-            {
-                UserId = userId,
-                ResultTest = resultTest
-            };
-
-/*            switch (path)
-            {
-                case "/Home/TestTrafficRegulations":
-                    answerUserTestModel.NameTest = QuestionModel.Section.TrafficRegulations.ToString();
-                    break;
-
-                case "/Home/TestRoadSigns":
-                    answerUserTestModel.NameTest = QuestionModel.Section.RoadSigns.ToString();
-                    break;
-
-                case "/Home/TestMedicalCare":
-                    answerUserTestModel.NameTest = QuestionModel.Section.MedicalCare.ToString();
-                    break;
-
-                case "/Home/TestCarDevice":
-                    answerUserTestModel.NameTest = QuestionModel.Section.CarDevice.ToString();
-                    break;
-
-                default:
-                    Console.WriteLine("Путь не определен");
-                    break;
-            }*/
-
-            Console.WriteLine(answerUserTestModel.UserId + " " + answerUserTestModel.NameTest + " " + answerUserTestModel.ResultTest);
             // Проверка валидности объекта
-            if (TryValidateModel(answerUserTestModel))
+            if (ModelState.IsValid)
             {
-                Console.WriteLine(answerUserTestModel.UserId + " " + answerUserTestModel.NameTest + " " + answerUserTestModel.ResultTest);
                 try
                 {
                     using (var db = new TableAnswerUserTest(_dbOptionsAnswerUserTest))
