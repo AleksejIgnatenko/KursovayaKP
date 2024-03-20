@@ -19,5 +19,12 @@ namespace KursovayaKP.Models.TablesDB
 			CategoryModel? category = Category.FirstOrDefault(category => category.IdCategory == id);
 			return category;
 		}
+
+		public string? GetNameCategory(int id)
+		{
+			string? nameCategory = Category.Where(c => c.IdCategory == id).Select(c => c.NameCategory).FirstOrDefault();
+			Console.WriteLine("название категории: " + nameCategory);
+            return nameCategory;
+        }
     }
 }

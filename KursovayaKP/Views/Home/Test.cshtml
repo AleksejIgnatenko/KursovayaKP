@@ -1,9 +1,9 @@
 ﻿@using KursovayaKP.Models;
 @model List<QuestionModel>
 
-@{
+@* @{
     ViewData["Title"] = $"Тест по теме \"{"ПДД"}\"";
-}
+} *@
 
 @section Styles {
     <link rel="stylesheet" href="~/css/Tests.css" asp-append-version="true" />
@@ -13,7 +13,7 @@
 @* <h1 id="title">Test Traffic Regulations</h1> *@
 
 <div id="question-container">
-    <input type="hidden" id="testId" name="test.IdTest" value="@Model[0].IdTest" />
+<input type="hidden" id="testId" name="test.IdTest" value="@Model[0].IdTest" />
     @if (Model != null)
     {
         @foreach (var question in Model)

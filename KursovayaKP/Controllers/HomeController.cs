@@ -12,14 +12,18 @@ namespace KursovayaKP.Controllers
     {
         private readonly DbContextOptions<QuestionTable> _dbOptionsQuestionTable;
         private readonly DbContextOptions<TableAnswerUserTest> _dbOptionsAnswerUserTest;
+        private readonly DbContextOptions<UserTable> _dbOptionsUserTable;
         private readonly DbContextOptions<TestTable> _dbOptionsTestTable;
+        private readonly DbContextOptions<CategoryTable> _dbOptionsCategoryTable;
         private readonly ILogger<AdminController> _logger;
 
-        public HomeController(DbContextOptions<QuestionTable> dbOptionsQuestionTable, DbContextOptions<TableAnswerUserTest> dbOptionsAnswerUserTest, DbContextOptions<TestTable> dbOptionsTestTable, ILogger<AdminController> logger)
+        public HomeController(DbContextOptions<QuestionTable> dbOptionsQuestionTable, DbContextOptions<TableAnswerUserTest> dbOptionsAnswerUserTest, DbContextOptions<UserTable> dbOptionsUserTable, DbContextOptions<TestTable> dbOptionsTestTable, DbContextOptions<CategoryTable> dbOptionsCategoryTable, ILogger<AdminController> logger)
         {
             _dbOptionsQuestionTable = dbOptionsQuestionTable;
             _dbOptionsAnswerUserTest = dbOptionsAnswerUserTest;
+            _dbOptionsUserTable = dbOptionsUserTable;
             _dbOptionsTestTable = dbOptionsTestTable;
+            _dbOptionsCategoryTable = dbOptionsCategoryTable;
             _logger = logger;
         }
 
@@ -62,12 +66,14 @@ namespace KursovayaKP.Controllers
 
 		public IActionResult Test(int categoryID)
 		{
-			Console.WriteLine("Путь " + categoryID);
-			TestTable testTable = new TestTable(_dbOptionsTestTable);
+            Console.WriteLine("Id катиегории " + categoryID);
+            TestTable testTable = new TestTable(_dbOptionsTestTable);
 			int randomTestId = testTable.GetRandomTestId(categoryID);
-            Console.WriteLine(randomTestId);
             QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
             List<QuestionModel> questions = questionTable.GetRandomQuestionsTest(randomTestId);
+            CategoryTable categoryTable = new CategoryTable(_dbOptionsCategoryTable);
+            string? testName = categoryTable.GetNameCategory(categoryID);
+            ViewData["Title"] = $"Тест по теме \"{testName}\"";
             return View(questions);
 		}
 
@@ -81,8 +87,6 @@ namespace KursovayaKP.Controllers
         [HttpPost]
         public ActionResult SubmitAnswers(AnswerUserTestModel answerUserTestModel)
         {
-            Console.WriteLine(answerUserTestModel.UserId + " " + answerUserTestModel.TestId + " " + answerUserTestModel.ResultTest);
-
             // Проверка валидности объекта
             if (ModelState.IsValid)
             {
