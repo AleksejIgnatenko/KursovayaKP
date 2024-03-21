@@ -1,6 +1,8 @@
+using Azure;
 using KursovayaKP.Models.TablesDB;
 using KursovayaKP.Models.TablesDBModel;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +35,43 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+// Проверка наличия пользователя в базе данных
+app.Use(async (context, next) =>
+{
+	try
+	{
+		// Получение информации о пользователе из базы данных
+		var dbContext = context.RequestServices.GetRequiredService<UserTable>();
+		var userIdString = context.Request.Cookies["ID"];
+
+		if (int.TryParse(userIdString, out int userId))
+		{
+			var user = await dbContext.Users.FindAsync(userId);
+
+			if (user == null)
+			{
+				// Пользователь не найден в базе данных, выполните необходимые действия, например, удаление cookies
+				context.Response.Cookies.Delete("ID");
+				context.Response.Cookies.Delete("UserName");
+				context.Response.Cookies.Delete("Role");
+
+				await next();
+				return;
+			}
+		}
+
+		await next(); // Продолжение обработки запроса
+	}
+	catch (Exception ex)
+	{
+		await Console.Out.WriteLineAsync($"{ex}");
+		context.Response.Cookies.Delete("ID");
+		context.Response.Cookies.Delete("UserName");
+		context.Response.Cookies.Delete("Role");
+		context.Response.Redirect("/Home/Index");
+	}
+});
 
 // Проверка роли пользователя и обработка маршрута "/Admin/".
 app.Use(async (context, next) =>

@@ -28,33 +28,44 @@ namespace KursovayaKP.Controllers
             return View();
         }
 
-        public IActionResult Personal_office()
-        {
-            // Получение значения 'id' из куки
-            string idCookie = Request.Cookies["Id"];
-
-            if (string.IsNullOrEmpty(idCookie) || !int.TryParse(idCookie, out int outId))
+		public IActionResult Personal_office()
+		{
+            try
             {
-                // Если 'id' отсутствует или недопустим, установить код состояния 404 и вернуть ошибку
-                return NotFound();
+                // Получение значения 'id' из куки
+                string? idCookie = Request.Cookies["ID"];
+
+                if (string.IsNullOrEmpty(idCookie) || !int.TryParse(idCookie, out int outId))
+                {
+                    // Если 'id' отсутствует или недопустим, установить код состояния 404 и вернуть ошибку
+                    return NotFound();
+                }
+
+                int id = Convert.ToInt32(idCookie);
+                Console.WriteLine(id);
+                UserTable userTable = new UserTable(_dbOptionsUser);
+                UserModel? user = userTable.GetUser(id);
+
+                if (user != null)
+                {
+                    return View(user);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex}");
             }
 
-            int id = Convert.ToInt32(idCookie);
-            Console.WriteLine(id);
-            UserTable userTable = new UserTable(_dbOptionsUser);
-            UserModel user = userTable.GetUser(id);
+			return View();
+		}
 
-            return View(user);
-        }
-
-        //Регистрация
-        [HttpPost]
+		//Регистрация
+		[HttpPost]
         public IActionResult Check_registration(UserModel userModel)
         {
             if (ModelState.IsValid)
             {
                 userModel.Password = UserModel.HashPassword(userModel.Password);
-
 
                 try
                 {
@@ -80,8 +91,8 @@ namespace KursovayaKP.Controllers
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Ошибка Регистрации(не получилоась зарегистрировать)");
-                }
+					_logger.LogError($"{ex}");
+				}
             }
 
             // Валидация не удалась или пользователь с такой почтой уже существует, возвращаем модель с ошибками
@@ -116,9 +127,9 @@ namespace KursovayaKP.Controllers
             }
             catch (Exception ex)
             {
-                // Обработка исключения, возникшего при работе с базой данных
-                _logger.LogError(ex, "Ошибка входа в аккаунт(не получилось войти");
-            }
+				ModelState.AddModelError("Password", "Ошибка получения данных");
+				_logger.LogError($"{ex}");
+			}
 
             // Валидация не удалась или данные пользователя не совпадают, возвращаем модель с ошибками
             return View("Sign_In", userModel);
