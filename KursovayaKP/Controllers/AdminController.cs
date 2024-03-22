@@ -401,16 +401,13 @@ namespace KursovayaKP.Controllers
         [HttpPost]
         public ActionResult<double[]> GetDetailedUserInformation(int userId)
         {
+            Console.WriteLine("userId GetDetailedUserInformation" + userId);
             try
             {
                 double[] userResults = new double[4];
                 TableAnswerUserTest tableAnswerUserTest = new TableAnswerUserTest(_dbOptionsAnswerUserTest);
-/*                userResults[0] = tableAnswerUserTest.GetRatingsTest(userId, QuestionModel.Section.TrafficRegulations.ToString());
-                userResults[1] = tableAnswerUserTest.GetRatingsTest(userId, QuestionModel.Section.RoadSigns.ToString());
-                userResults[2] = tableAnswerUserTest.GetRatingsTest(userId, QuestionModel.Section.MedicalCare.ToString());
-                userResults[3] = tableAnswerUserTest.GetRatingsTest(userId, QuestionModel.Section.CarDevice.ToString());*/
-
-                return Ok(userResults);
+                userResults = tableAnswerUserTest.GetRatingsTests(userId);
+				return Ok(userResults);
             }
             catch (Exception ex)
             {

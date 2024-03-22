@@ -41,5 +41,28 @@ namespace KursovayaKP.Models.TablesDBModel
             return -1;
         }*/
 
-    }
+        public double[] GetRatingsTests(int userID)
+        {
+            double[] ratings = new double[4];
+            for (int i = 1; i < 5; i++)
+            {
+                int[] test = AnswerUserTest.Where(a => Tests.Any(t => t.IdTest == a.TestId && t.IdCategory == i)).Where(u => u.UserId == userID)
+                                            .Select(a => a.ResultTest)
+                                            .ToArray();
+
+                if (test.Length == 0)
+                {
+                    ratings[i - 1] = 0;
+                }
+                else
+                {
+                    double average = test.Average();
+                    double roundedAverage = Math.Round(average, 2);
+                    ratings[i - 1] = roundedAverage;
+                }
+            }
+            return ratings;
+        }
+
+	}
 }
