@@ -46,7 +46,7 @@ function initializePage(userId) {
 
                 // Устанавливаем значения из массива в каждый элемент списка
                 if (result[0] !== -1) {
-                    $listItems.eq(0).text('Средний балл ПДД - ' + result[0]);
+                    $listItems.eq(0).text('Средний балл "ПДД" - ' + result[0]);
                 }
                 else {
                     $listItems.eq(0).text('Средний балл ПДД - Отсутствует');

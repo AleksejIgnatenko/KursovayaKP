@@ -64,20 +64,31 @@ namespace KursovayaKP.Controllers
             return View();
         }
 
-		public IActionResult Test(int categoryID)
-		{
-            Console.WriteLine("Id катиегории " + categoryID);
-            TestTable testTable = new TestTable(_dbOptionsTestTable);
-			int randomTestId = testTable.GetRandomTestId(categoryID);
-            QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
-            List<QuestionModel> questions = questionTable.GetRandomQuestionsTest(randomTestId);
-            CategoryTable categoryTable = new CategoryTable(_dbOptionsCategoryTable);
-            string? testName = categoryTable.GetNameCategory(categoryID);
-            ViewData["Title"] = $"Тест по теме \"{testName}\"";
-            return View(questions);
-		}
+        public IActionResult Test(int categoryID)
+        {
+            if (Request.Cookies.TryGetValue("ID", out string? idCookie))
+            {
+                int idFromCookie;
+                if (int.TryParse(idCookie, out idFromCookie))
+                {
+                    // ID найден в cookies, открываем тест
+                    Console.WriteLine("ID категории из cookies: " + idFromCookie);
+                    TestTable testTable = new TestTable(_dbOptionsTestTable);
+                    int randomTestId = testTable.GetRandomTestId(categoryID);
+                    QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
+                    List<QuestionModel> questions = questionTable.GetRandomQuestionsTest(randomTestId);
+                    CategoryTable categoryTable = new CategoryTable(_dbOptionsCategoryTable);
+                    string? testName = categoryTable.GetNameCategory(categoryID);
+                    ViewData["Title"] = $"Тест по теме \"{testName}\"";
+                    return View(questions);
+                }
+            }
 
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+            // ID отсутствует в cookies, возвращаем другую страницу
+            return View("~/Views/User/Registration.cshtml");
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

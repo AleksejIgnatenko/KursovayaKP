@@ -2,7 +2,7 @@
 @model List<UserModel>
 
 @{
-    ViewData["Title"] = $"Все вопросы по теме \"{ViewBag.Topic}\"";
+    ViewData["Title"] = $"Все пользователи";
 }
 
 @section Styles {
@@ -21,7 +21,7 @@
     </ul>
 </div>
 
-<h1 id="title">Вопросы по теме @ViewBag.Topic</h1>
+<h1 id="title">Все пользователи</h1>
 
 <div id="question-container">
     @foreach (var user in Model)

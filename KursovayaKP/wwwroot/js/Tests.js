@@ -41,7 +41,6 @@ async function checkAnswers() {
 
     for (var i = 0; i < questions.length; i++) {
         var question = questions[i];
-        var questionId = question.dataset.questionId;
         var correctAnswer = question.dataset.correctAnswer;
         var selectedAnswer = question.querySelector('input[name="answer"]:checked');
         var answerLabels = question.querySelectorAll('label');
@@ -70,7 +69,6 @@ async function checkAnswers() {
     // Получаем идентификатор пользователя из куки
     var userId = getCookieValue('ID');
     var testId = document.getElementById("testId").value;
-    console.log(testId);
 
     // Отправляем данные на сервер вместе с идентификатором пользователя и названием теста
     var data = {
@@ -99,9 +97,13 @@ async function checkAnswers() {
     document.querySelector(".button").style.display = "none";
     //Показать кнопку "Пройти тест еще раз"
     document.querySelector("#restartTestButton").style.display = "block";
-
+    console.log(resultTest)
     // Показываем уведомление после выделения неправильных вопросов
-    alert('Ваш результат: ' + resultTest + ' из ' + questions.length);
+    if (resultTest > 8) {
+        alert('Ваш результат: ' + resultTest + ' из ' + questions.length + ' (экзамен сдан)');
+    } else {
+        alert('Ваш результат: ' + resultTest + ' из ' + questions.length + ' (экзамен не сдан)');
+    }
 }
 
 // Функция для получения значения куки по имени
