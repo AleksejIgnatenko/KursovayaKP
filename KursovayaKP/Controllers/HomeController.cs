@@ -31,7 +31,7 @@ namespace KursovayaKP.Controllers
         {
             var role = HttpContext.Request.Cookies["Role"];
 
-            if (role == "Admin")
+            if ((role == "Admin") || (role == "Manager"))
             {
                 return RedirectToAction("AdminIndex", "Admin");
             }

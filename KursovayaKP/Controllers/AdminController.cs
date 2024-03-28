@@ -95,6 +95,29 @@ namespace KursovayaKP.Controllers
 
         public IActionResult AllUsers()
         {
+            var role = HttpContext.Request.Cookies["Role"];
+            if (role == "Manager")
+            {
+                return RedirectToAction("Management", "Admin");
+            }
+            else
+            {
+                try
+                {
+                    UserTable userTable = new UserTable(_dbOptionsUserTable);
+                    List<UserModel> allUsers = userTable.GetAllUsers();
+                    return View(allUsers);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Ошибка получения всех пользователей");
+                }
+            }
+            return View();
+        }
+
+        public IActionResult Management()
+        {
             try
             {
                 UserTable userTable = new UserTable(_dbOptionsUserTable);
@@ -108,22 +131,22 @@ namespace KursovayaKP.Controllers
             return View();
         }
 
-		public IActionResult AllTests()
-		{
-			try
-			{
+        public IActionResult AllTests()
+        {
+            try
+            {
                 TestTable testTable = new TestTable(_dbOptionsTestTable);
                 TestModel[] allTests = testTable.GetAllTest();
-				return View(allTests);
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "Ошибка получения всех пользователей");
-			}
-			return View();
-		}
+                return View(allTests);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка получения всех пользователей");
+            }
+            return View();
+        }
 
-		[HttpPost]
+        [HttpPost]
 		public IActionResult DeleteTest(int testId)
 		{
 			Console.WriteLine($"ID теста {testId}");
@@ -149,7 +172,6 @@ namespace KursovayaKP.Controllers
 
 		public IActionResult TestForUpdate(int testId)
 		{
-			Console.WriteLine($"ID теста {testId}");
 			try
 			{
 				TestTable testTable = new TestTable(_dbOptionsTestTable);
@@ -207,6 +229,38 @@ namespace KursovayaKP.Controllers
                 _logger.LogError($"{ex.Message}");
                 return View();
             }
+        }
+
+        public IActionResult SetAdminRole(int id)
+        {
+            try
+            {
+                UserTable userTable = new UserTable(_dbOptionsUserTable);
+                userTable.SetAdminRole(id);
+                List<UserModel> allUsers = userTable.GetAllUsers();
+                return View("~/Views/Admin/Management.cshtml", allUsers);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка получения всех пользователей");
+            }
+            return View("~/Views/Admin/Management.cshtml");
+        }
+
+        public IActionResult DeleteAdminRole(int id)
+        {
+            try
+            {
+                UserTable userTable = new UserTable(_dbOptionsUserTable);
+                userTable.DeleteAdminRole(id);
+                List<UserModel> allUsers = userTable.GetAllUsers();
+                return View("~/Views/Admin/Management.cshtml", allUsers);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка получения всех пользователей");
+            }
+            return View("~/Views/Admin/Management.cshtml");
         }
 
         public IActionResult AllQuestions(string topic)

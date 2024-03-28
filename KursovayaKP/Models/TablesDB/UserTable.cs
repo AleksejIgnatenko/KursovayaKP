@@ -40,5 +40,25 @@ namespace KursovayaKP.Models.TablesDBModel
             }
             return user;
         }
+
+        public void SetAdminRole(int id)
+        {
+            UserModel? user =  Users.Where(u => u.IdUser == id).FirstOrDefault();
+            if (user != null)
+            {
+                user.Role = "Admin";
+                SaveChanges();
+            }
+        }
+
+        public void DeleteAdminRole(int id)
+        {
+            UserModel? user = Users.Where(u => u.IdUser == id).FirstOrDefault();
+            if (user != null)
+            {
+                user.Role = "User";
+                SaveChanges();
+            }
+        }
     }
 }

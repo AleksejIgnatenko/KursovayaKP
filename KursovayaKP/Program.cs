@@ -76,17 +76,17 @@ app.Use(async (context, next) =>
 // Проверка роли пользователя и обработка маршрута "/Admin/".
 app.Use(async (context, next) =>
 {
-    // Получение роли пользователя
-    var userRole = context.Request.Cookies["Role"];
+	// Получение роли пользователя
+	var userRole = context.Request.Cookies["Role"];
 
-    // Проверка роли пользователя и маршрута
-    if (userRole != "Admin" && context.Request.Path.StartsWithSegments("/Admin"))
-    {
-        context.Response.StatusCode = 404; // Установка кода состояния 404
-        return;
-    }
+	// Проверка роли пользователя и маршрута
+	if (userRole != "Admin" && userRole != "Manager" && context.Request.Path.StartsWithSegments("/Admin"))
+	{
+		context.Response.StatusCode = 404; // Установка кода состояния 404
+		return;
+	}
 
-    await next(); // Продолжение обработки запроса
+	await next(); // Продолжение обработки запроса
 });
 
 app.MapControllerRoute(
