@@ -17,6 +17,7 @@
             <form class="form">
                 <label>Имя: @Model.UserName</label>
                 <label>Почта: @Model.Email</label>
+                <pre>@Html.Raw(ViewBag.Result)</pre>
                 <button class="button" asp-area="" asp-controller="User" asp-action="Exit_in_account">Выйти из аккаунта</button>
                 <div class="text-center">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">На главную</a>

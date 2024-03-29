@@ -64,5 +64,20 @@ namespace KursovayaKP.Models.TablesDBModel
             return ratings;
         }
 
-	}
+        public string ExamIsPassed(int userID, int catigoryID)
+        {
+            //int lastResult = AnswerUserTest.Where((u => u.UserId == userID) && (c => c )).FirstOrDefault();
+            int lastResult = AnswerUserTest.Where(a => Tests.Any(t => t.IdTest == a.TestId && t.IdCategory == catigoryID))
+                                           .Where(u => u.UserId == userID)
+                                           .Select(a => a.ResultTest)
+                                           .OrderByDescending(result => result)
+                                           .FirstOrDefault();
+            if(lastResult > 8)
+            {
+                return "Экзамен сдан";
+            }
+            return "Экзамен не сдан";
+        }
+
+    }
 }

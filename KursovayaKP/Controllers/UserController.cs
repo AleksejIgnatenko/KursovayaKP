@@ -1,4 +1,5 @@
 ﻿using KursovayaKP.Models;
+using KursovayaKP.Models.TablesDB;
 using KursovayaKP.Models.TablesDBModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -9,12 +10,20 @@ namespace KursovayaKP.Controllers
 {
     public class UserController : Controller
     {
-        private readonly DbContextOptions<UserTable> _dbOptionsUser;
-        private readonly ILogger<UserController> _logger;
+        private readonly DbContextOptions<QuestionTable> _dbOptionsQuestionTable;
+        private readonly DbContextOptions<TableAnswerUserTest> _dbOptionsAnswerUserTest;
+        private readonly DbContextOptions<UserTable> _dbOptionsUserTable;
+        private readonly DbContextOptions<TestTable> _dbOptionsTestTable;
+        private readonly DbContextOptions<CategoryTable> _dbOptionsCategoryTable;
+        private readonly ILogger<AdminController> _logger;
 
-        public UserController(DbContextOptions<UserTable> dbOptionsUser, ILogger<UserController> logger)
+        public UserController(DbContextOptions<QuestionTable> dbOptionsQuestionTable, DbContextOptions<TableAnswerUserTest> dbOptionsAnswerUserTest, DbContextOptions<UserTable> dbOptionsUserTable, DbContextOptions<TestTable> dbOptionsTestTable, DbContextOptions<CategoryTable> dbOptionsCategoryTable, ILogger<AdminController> logger)
         {
-            _dbOptionsUser = dbOptionsUser;
+            _dbOptionsQuestionTable = dbOptionsQuestionTable;
+            _dbOptionsAnswerUserTest = dbOptionsAnswerUserTest;
+            _dbOptionsUserTable = dbOptionsUserTable;
+            _dbOptionsTestTable = dbOptionsTestTable;
+            _dbOptionsCategoryTable = dbOptionsCategoryTable;
             _logger = logger;
         }
 
@@ -42,12 +51,20 @@ namespace KursovayaKP.Controllers
                 }
 
                 int id = Convert.ToInt32(idCookie);
-                Console.WriteLine(id);
-                UserTable userTable = new UserTable(_dbOptionsUser);
+
+                TableAnswerUserTest tableAnswerUserTest = new TableAnswerUserTest(_dbOptionsAnswerUserTest);
+                CategoryTable categoryTable = new CategoryTable(_dbOptionsCategoryTable);
+                UserTable userTable = new UserTable(_dbOptionsUserTable);
                 UserModel? user = userTable.GetUser(id);
 
                 if (user != null)
                 {
+                    for (int i = 1; i < 5; i++)
+                    {
+                        string? nameCategory = categoryTable.GetNameCategory(i);
+                        string resultExam = tableAnswerUserTest.ExamIsPassed(id, i);
+                        ViewBag.Result += nameCategory + ": " + resultExam + "<br />";
+                    }
                     return View(user);
                 }
             }
@@ -69,7 +86,7 @@ namespace KursovayaKP.Controllers
 
                 try
                 {
-                    using (var db = new UserTable(_dbOptionsUser)) // Создаем экземпляр DBUser
+                    using (var db = new UserTable(_dbOptionsUserTable)) // Создаем экземпляр DBUser
                     {
                         bool userAdded = db.AddUser(userModel); // Добавляем пользователя в базу данных
 
@@ -106,7 +123,7 @@ namespace KursovayaKP.Controllers
             // Проверяем наличие пользователя с введенным email и паролем
             try
             {
-                using (var db = new UserTable(_dbOptionsUser))
+                using (var db = new UserTable(_dbOptionsUserTable))
                 {
                     var user = db.Users.FirstOrDefault(u => u.Email == userModel.Email && u.Password == UserModel.HashPassword(userModel.Password));
                     if (user != null)

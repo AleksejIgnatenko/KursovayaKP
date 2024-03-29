@@ -9,7 +9,11 @@
 	<link rel="stylesheet" href="~/css/Questions.css" asp-append-version="true" />
 	<script src="~/js/AllTests.js" asp-append-version="true"></script>
 }
-
+<div id="question-container">
+	<a class="text-dark" asp-area="" asp-controller="Admin" asp-action="AddTest" style="margin-left: 0px; text-decoration: none">Добавить тест</a>
+	<div class="vertical-line"></div>
+	<a class="text-dark" asp-area="" asp-controller="Admin" asp-action="AddQuestions" style="margin-left: 0px; text-decoration: none">Добавить вопрос в тест</a>
+</div>
 <button id="settingsButton" style="color: black; border: none; background-color: white;">Расширенные настройки</button>
 
 <div id="toolsMenu" style="display: none; width: 500px">

@@ -1,4 +1,4 @@
-﻿@using KursovayaKP.Models;
+﻿﻿@using KursovayaKP.Models;
 @model List<UserModel>
 
 @{
@@ -43,7 +43,11 @@
                     <button asp-controller="Admin" asp-action="SetAdminRole" class="image-button confirm-set-admin-role-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1219542277521670214/checked.png?ex=660bae40&is=65f93940&hm=72f2a0f59069d0159a8c318b7bde48acf5815b0b93a1393907b41e9227886aab&=&format=webp&quality=lossless'); display: none;" title="Выдать права Администратора" name="id" value="@user.IdUser"></button>
                     <button class="image-button cancel-setAdminRole-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1219542299357351966/close.png?ex=660bae46&is=65f93946&hm=a736d8adaa89fce43938c8bc2a76a2a982c567dc3d51892ef6c8608f1f5d50bb&=&format=webp&quality=lossless'); display: none;" title="Отмена"></button>
 
-                    <button asp-controller="Admin" asp-action="DeleteAdminRole" class="image-button delete-admin-role-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1222792690224332840/DeleteAdmin.png?ex=6617816f&is=66050c6f&hm=53914c41795a86be104be16f090fbddf59204d5ea8f1b201fd0b6e399e632721&=&format=webp&quality=lossless')" title="Забрать права Администратора" name="id" value="@user.IdUser"></button>
+                    <button type="button" class="image-button delete-admin-role-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1222792690224332840/DeleteAdmin.png?ex=6617816f&is=66050c6f&hm=53914c41795a86be104be16f090fbddf59204d5ea8f1b201fd0b6e399e632721&=&format=webp&quality=lossless')" title="Забрать права Администратора"></button>
+                    <button asp-controller="Admin" asp-action="DeleteAdminRole" class="image-button confirm-delete-admin-role-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1219542277521670214/checked.png?ex=660bae40&is=65f93940&hm=72f2a0f59069d0159a8c318b7bde48acf5815b0b93a1393907b41e9227886aab&=&format=webp&quality=lossless'); display: none;" title="Забрать права Администратора" name="id" value="@user.IdUser"></button>
+                    <button class="image-button cancel-deleteAdminRole-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1219542299357351966/close.png?ex=660bae46&is=65f93946&hm=a736d8adaa89fce43938c8bc2a76a2a982c567dc3d51892ef6c8608f1f5d50bb&=&format=webp&quality=lossless'); display: none;" title="Отмена"></button>
+
+@*                     <button asp-controller="Admin" asp-action="DeleteAdminRole" class="image-button delete-admin-role-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1222792690224332840/DeleteAdmin.png?ex=6617816f&is=66050c6f&hm=53914c41795a86be104be16f090fbddf59204d5ea8f1b201fd0b6e399e632721&=&format=webp&quality=lossless')" title="Забрать права Администратора" name="id" value="@user.IdUser"></button> *@
                 </form>
             </div>
         }
@@ -58,6 +62,8 @@
     const confirmSetAdminRoleButtons = document.getElementsByClassName('confirm-set-admin-role-button');
     const cancelSetAdminRoleButtons = document.getElementsByClassName('cancel-setAdminRole-button');
     const deleteAdminRoleButtons = document.getElementsByClassName('delete-admin-role-button');
+    const confirmDeleteAdminRoleButtons = document.getElementsByClassName('confirm-delete-admin-role-button');
+    const cancelDeleteAdminRoleButtons = document.getElementsByClassName('cancel-deleteAdminRole-button');
 
     for (let i = 0; i < deleteButtons.length; i++) {
         const deleteButton = deleteButtons[i];
@@ -67,6 +73,8 @@
         const confirmSetAdminRoleButton = confirmSetAdminRoleButtons[i];
         const cancelSetAdminRoleButton = cancelSetAdminRoleButtons[i];
         const deleteAdminRoleButton = deleteAdminRoleButtons[i];
+        const confirmDeleteAdminRoleButton = confirmDeleteAdminRoleButtons[i];
+        const cancelDeleteAdminRoleButton = cancelDeleteAdminRoleButtons[i];
 
         setAdminRoleButton.addEventListener('click', function (event) {
             event.preventDefault();
@@ -88,6 +96,28 @@
             confirmSetAdminRoleButton.style.display = 'none';
             cancelSetAdminRoleButton.style.display = 'none';
             deleteAdminRoleButton.style.display = 'inline-block';
+        });
+
+        deleteAdminRoleButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            deleteButton.style.display = 'none';
+            editButton.style.display = 'none';
+            moreDetailedButton.style.display = 'none';
+            setAdminRoleButton.style.display = 'none';
+            confirmDeleteAdminRoleButton.style.display = 'inline-block';
+            cancelDeleteAdminRoleButton.style.display = 'inline-block';
+            deleteAdminRoleButton.style.display = 'none';
+        });
+
+        cancelDeleteAdminRoleButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            deleteButton.style.display = 'inline-block';
+            editButton.style.display = 'inline-block';
+            moreDetailedButton.style.display = 'inline-block';
+            setAdminRoleButton.style.display = 'inline-block';
+            deleteAdminRoleButton.style.display = 'inline-block';
+            confirmDeleteAdminRoleButton.style.display = 'none';
+            cancelDeleteAdminRoleButton.style.display = 'none';
         });
     }
 </script>
