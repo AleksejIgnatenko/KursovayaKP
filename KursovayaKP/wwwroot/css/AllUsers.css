@@ -36,3 +36,27 @@
     padding: 10px;
     z-index: 1; /* Чтобы меню находилось поверх остального контента */
 }
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: .8rem;
+}
+
+    .input-group input {
+        font-size: .9rem;
+        padding: 7px;
+        border: none;
+        outline: none;
+        border-bottom: 2px solid hsl(0, 0%, 83%);
+    }
+
+        .input-group input:focus {
+            box-shadow: 0 2px 0 hsl(178, 100%, 50%);
+            border-bottom: none;
+        }
+
+label{
+    font-size: 16px;
+}

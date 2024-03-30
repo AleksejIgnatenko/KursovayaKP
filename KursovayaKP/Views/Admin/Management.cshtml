@@ -1,4 +1,4 @@
-﻿﻿@using KursovayaKP.Models;
+﻿﻿﻿@using KursovayaKP.Models;
 @model List<UserModel>
 
 @{
@@ -32,11 +32,18 @@
                 <form class="question-form" method="post">
                     <div><label>ID: №@user.IdUser</label></div>
                     <input type="hidden" value="@user.IdUser" />
-                    <div><label>Имя: @user.UserName</label></div>
+
+                    <div class="label-user-name"><label>Имя: @user.UserName</label></div>
+					<div class="input-group" style="width:min-content;">
+						<input class="input-user-name" style="display: none;" value="@user.UserName" />
+					</div>
+
                     <label>Email: @user.Email</label><br>
                     <div><label>Роль: @user.Role</label></div>
-                    <button asp-controller="Admin" asp-action="" class="image-button delete-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211257334207352832/Delete.png?ex=660939cc&is=65f6c4cc&hm=3085eb490c9ea15ef0094732698f3a19b183a44f81088755cf24e022dfcc2489&=&format=webp&quality=lossless')" title="Удалить"></button>
-                    <button asp-controller="Admin" asp-action="" class="image-button edit-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211262049162625065/Editing.png?ex=66093e30&is=65f6c930&hm=49574bb9a091fa7328d40727f53de51d3b60317a50395d64324df4afeecc32cc&=&format=webp&quality=lossless')" title="Редактировать"></button>
+                    <button class="image-button edit-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211262049162625065/Editing.png?ex=66093e30&is=65f6c930&hm=49574bb9a091fa7328d40727f53de51d3b60317a50395d64324df4afeecc32cc&=&format=webp&quality=lossless')" title="Редактировать"></button>
+                    <button asp-controller="Admin" asp-action="" class="image-button confirm-edit-name-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1219542277521670214/checked.png?ex=660bae40&is=65f93940&hm=72f2a0f59069d0159a8c318b7bde48acf5815b0b93a1393907b41e9227886aab&=&format=webp&quality=lossless'); display: none;" title="Изменить имя" name="id" value="@user.IdUser"></button>
+                    <button class="image-button cancel-edit-name-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1219542299357351966/close.png?ex=660bae46&is=65f93946&hm=a736d8adaa89fce43938c8bc2a76a2a982c567dc3d51892ef6c8608f1f5d50bb&=&format=webp&quality=lossless'); display: none;" title="Отмена"></button>
+
                     <button onclick="initializePage('@user.IdUser')" class="image-button more-detailed-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1213836616607731782/more-information.png?ex=66096171&is=65f6ec71&hm=5edbbc7caf4c7efa5de1f80332daf123e02ac09eed8fe86c672c7fb22c79fef0&=&format=webp&quality=lossless')" title="Подробнее"></button>
 
                     <button type="button" class="image-button set-admin-role-button" style="background-image: url('https://cdn.discordapp.com/attachments/1160898526201516052/1222786294703456296/admin-with-cogwheels.png?ex=66177b7a&is=6605067a&hm=7d87d76ff700f42f56e0ab570b6e9d21a888775a14fc9742e9854fd41031977d&')" title="Выдать права Администратора"></button>
@@ -47,7 +54,7 @@
                     <button asp-controller="Admin" asp-action="DeleteAdminRole" class="image-button confirm-delete-admin-role-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1219542277521670214/checked.png?ex=660bae40&is=65f93940&hm=72f2a0f59069d0159a8c318b7bde48acf5815b0b93a1393907b41e9227886aab&=&format=webp&quality=lossless'); display: none;" title="Забрать права Администратора" name="id" value="@user.IdUser"></button>
                     <button class="image-button cancel-deleteAdminRole-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1219542299357351966/close.png?ex=660bae46&is=65f93946&hm=a736d8adaa89fce43938c8bc2a76a2a982c567dc3d51892ef6c8608f1f5d50bb&=&format=webp&quality=lossless'); display: none;" title="Отмена"></button>
 
-@*                     <button asp-controller="Admin" asp-action="DeleteAdminRole" class="image-button delete-admin-role-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1222792690224332840/DeleteAdmin.png?ex=6617816f&is=66050c6f&hm=53914c41795a86be104be16f090fbddf59204d5ea8f1b201fd0b6e399e632721&=&format=webp&quality=lossless')" title="Забрать права Администратора" name="id" value="@user.IdUser"></button> *@
+                    @*                     <button asp-controller="Admin" asp-action="DeleteAdminRole" class="image-button delete-admin-role-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1222792690224332840/DeleteAdmin.png?ex=6617816f&is=66050c6f&hm=53914c41795a86be104be16f090fbddf59204d5ea8f1b201fd0b6e399e632721&=&format=webp&quality=lossless')" title="Забрать права Администратора" name="id" value="@user.IdUser"></button> *@
                 </form>
             </div>
         }
@@ -55,8 +62,12 @@
 </div>
 
 <script>
-    const deleteButtons = document.getElementsByClassName('delete-button');
     const editButtons = document.getElementsByClassName('edit-button');
+    const confirmEditNameButtons = document.getElementsByClassName('confirm-edit-name-button');
+    const cancelEditNameButtons = document.getElementsByClassName('cancel-edit-name-button');
+    const labelUserNames = document.getElementsByClassName('label-user-name');
+    const inputUserNames = document.getElementsByClassName('input-user-name');
+
     const moreDetailedButtons = document.getElementsByClassName('more-detailed-button');
     const setAdminRoleButtons = document.getElementsByClassName('set-admin-role-button');
     const confirmSetAdminRoleButtons = document.getElementsByClassName('confirm-set-admin-role-button');
@@ -65,9 +76,13 @@
     const confirmDeleteAdminRoleButtons = document.getElementsByClassName('confirm-delete-admin-role-button');
     const cancelDeleteAdminRoleButtons = document.getElementsByClassName('cancel-deleteAdminRole-button');
 
-    for (let i = 0; i < deleteButtons.length; i++) {
-        const deleteButton = deleteButtons[i];
+    for (let i = 0; i < editButtons.length; i++) {
         const editButton = editButtons[i];
+        const confirmEditNameButton = confirmEditNameButtons[i];
+        const cancelEditNameButton = cancelEditNameButtons[i];
+        const labelUserName = labelUserNames[i];
+        const inputUserName = inputUserNames[i];
+
         const moreDetailedButton = moreDetailedButtons[i];
         const setAdminRoleButton = setAdminRoleButtons[i];
         const confirmSetAdminRoleButton = confirmSetAdminRoleButtons[i];
@@ -78,7 +93,6 @@
 
         setAdminRoleButton.addEventListener('click', function (event) {
             event.preventDefault();
-            deleteButton.style.display = 'none';
             editButton.style.display = 'none';
             moreDetailedButton.style.display = 'none';
             setAdminRoleButton.style.display = 'none';
@@ -89,7 +103,6 @@
 
         cancelSetAdminRoleButton.addEventListener('click', function (event) {
             event.preventDefault();
-            deleteButton.style.display = 'inline-block';
             editButton.style.display = 'inline-block';
             moreDetailedButton.style.display = 'inline-block';
             setAdminRoleButton.style.display = 'inline-block';
@@ -100,7 +113,6 @@
 
         deleteAdminRoleButton.addEventListener('click', function (event) {
             event.preventDefault();
-            deleteButton.style.display = 'none';
             editButton.style.display = 'none';
             moreDetailedButton.style.display = 'none';
             setAdminRoleButton.style.display = 'none';
@@ -111,13 +123,36 @@
 
         cancelDeleteAdminRoleButton.addEventListener('click', function (event) {
             event.preventDefault();
-            deleteButton.style.display = 'inline-block';
             editButton.style.display = 'inline-block';
             moreDetailedButton.style.display = 'inline-block';
             setAdminRoleButton.style.display = 'inline-block';
             deleteAdminRoleButton.style.display = 'inline-block';
             confirmDeleteAdminRoleButton.style.display = 'none';
             cancelDeleteAdminRoleButton.style.display = 'none';
+        });
+
+        editButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            editButton.style.display = 'none';
+            moreDetailedButton.style.display = 'none';
+            setAdminRoleButton.style.display = 'none';
+            confirmEditNameButton.style.display = 'inline-block';
+            cancelEditNameButton.style.display = 'inline-block';
+            labelUserName.style.display = 'none';
+            inputUserName.style.display = 'inline-block';
+            deleteAdminRoleButton.style.display = 'none';
+        });
+
+        cancelEditNameButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            editButton.style.display = 'inline-block';
+            moreDetailedButton.style.display = 'inline-block';
+            setAdminRoleButton.style.display = 'inline-block';
+            confirmEditNameButton.style.display = 'none';
+            cancelEditNameButton.style.display = 'none';
+            labelUserName.style.display = 'inline-block';
+            inputUserName.style.display = 'none';
+            deleteAdminRoleButton.style.display = 'inline-block';
         });
     }
 </script>
