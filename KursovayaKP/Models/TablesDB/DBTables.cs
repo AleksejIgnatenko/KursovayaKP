@@ -44,7 +44,7 @@ namespace KursovayaKP.Models.TablesDBModel
 			Database.EnsureCreated();
 		}
 
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
@@ -55,42 +55,43 @@ namespace KursovayaKP.Models.TablesDBModel
                 new UserModel { IdUser = 3, UserName = "Sam", Email = "test1@gmail.com", Password = "+lhdichR3TOKcNz1Naoqkv7ng23Wr/EiZYPojgmWKT8WvACcZSgm4PxccGaVoDzdzjcvE57/TROVnabx9dPqvg==", Role = "User" }
             );
 
-			//Добавление записей в таблицу CategoryModel
-			modelBuilder.Entity<CategoryModel>().HasData(
-					new CategoryModel { IdCategory = 1, NameCategory = "ПДД" },
-					new CategoryModel { IdCategory = 2, NameCategory = "Дорожные знаки" },
-					new CategoryModel { IdCategory = 3, NameCategory = "Медецинская помощь" },
-					new CategoryModel { IdCategory = 4, NameCategory = "Устройство авто" }
-			);
+            //Добавление записей в таблицу CategoryModel
+            modelBuilder.Entity<CategoryModel>().HasData(
+                    new CategoryModel { IdCategory = 1, NameCategory = "ПДД" },
+                    new CategoryModel { IdCategory = 2, NameCategory = "Дорожные знаки" },
+                    new CategoryModel { IdCategory = 3, NameCategory = "Медецинская помощь" },
+                    new CategoryModel { IdCategory = 4, NameCategory = "Устройство авто" }
+            );
 
-			//Добавление записей в таблицу Test
-			modelBuilder.Entity<TestModel>().HasData(
-                    new TestModel { IdTest = 1, IdCategory = 1 , NameTest = "Тест 1"},                    
-                    new TestModel { IdTest = 2, IdCategory = 2 , NameTest = "Тест 2"},                    
-                    new TestModel { IdTest = 3, IdCategory = 3 , NameTest = "Тест 3"},                    
-                    new TestModel { IdTest = 4, IdCategory = 4 , NameTest = "Тест 4"}
+            //Добавление записей в таблицу Test
+            modelBuilder.Entity<TestModel>().HasData(
+                    new TestModel { IdTest = 1, IdCategory = 1, NameTest = "Тест 1" },
+                    new TestModel { IdTest = 2, IdCategory = 2, NameTest = "Тест 2" },
+                    new TestModel { IdTest = 3, IdCategory = 3, NameTest = "Тест 3" },
+                    new TestModel { IdTest = 4, IdCategory = 4, NameTest = "Тест 4" }
 
-			);
+            );
 
-			//Добавление записей в таблицу Quenstion
-			modelBuilder.Entity<QuestionModel>().HasData(
-                new QuestionModel { IdQuestion = 1, IdTest = 1, QuestionText = "Вопрос 1", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4"},
-                new QuestionModel { IdQuestion = 2, IdTest = 1, QuestionText = "Вопрос 2", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4"},
-                new QuestionModel { IdQuestion = 3, IdTest = 1, QuestionText = "Вопрос 3", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4"},
-                new QuestionModel { IdQuestion = 4, IdTest = 1, QuestionText = "Вопрос 4", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4"},
-                new QuestionModel { IdQuestion = 5, IdTest = 2, QuestionText = "Вопрос 5", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4"},
-                new QuestionModel { IdQuestion = 6, IdTest = 2, QuestionText = "Вопрос 6", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4"},
-                new QuestionModel { IdQuestion = 7, IdTest = 2, QuestionText = "Вопрос 7", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4"},
-                new QuestionModel { IdQuestion = 8, IdTest = 2, QuestionText = "Вопрос 8", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4"},
-                new QuestionModel { IdQuestion = 9, IdTest = 3, QuestionText = "Вопрос 9", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4"},
-                new QuestionModel { IdQuestion = 10, IdTest = 3, QuestionText = "Вопрос 10", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4"},
-                new QuestionModel { IdQuestion = 11, IdTest = 3, QuestionText = "Вопрос 11", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4"},
-                new QuestionModel { IdQuestion = 12, IdTest = 3, QuestionText = "Вопрос 12", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4"},
-                new QuestionModel { IdQuestion = 13, IdTest = 4, QuestionText = "Вопрос 13", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4"},
-                new QuestionModel { IdQuestion = 14, IdTest = 4, QuestionText = "Вопрос 14", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4"},
-                new QuestionModel { IdQuestion = 15, IdTest = 4, QuestionText = "Вопрос 15", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4"},
+            //Добавление записей в таблицу Quenstion
+            modelBuilder.Entity<QuestionModel>().HasData(
+                new QuestionModel { IdQuestion = 1, IdTest = 1, QuestionText = "Вопрос 1", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
+                new QuestionModel { IdQuestion = 2, IdTest = 1, QuestionText = "Вопрос 2", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
+                new QuestionModel { IdQuestion = 3, IdTest = 1, QuestionText = "Вопрос 3", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
+                new QuestionModel { IdQuestion = 4, IdTest = 1, QuestionText = "Вопрос 4", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
+                new QuestionModel { IdQuestion = 5, IdTest = 2, QuestionText = "Вопрос 5", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
+                new QuestionModel { IdQuestion = 6, IdTest = 2, QuestionText = "Вопрос 6", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
+                new QuestionModel { IdQuestion = 7, IdTest = 2, QuestionText = "Вопрос 7", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
+                new QuestionModel { IdQuestion = 8, IdTest = 2, QuestionText = "Вопрос 8", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
+                new QuestionModel { IdQuestion = 9, IdTest = 3, QuestionText = "Вопрос 9", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
+                new QuestionModel { IdQuestion = 10, IdTest = 3, QuestionText = "Вопрос 10", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
+                new QuestionModel { IdQuestion = 11, IdTest = 3, QuestionText = "Вопрос 11", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
+                new QuestionModel { IdQuestion = 12, IdTest = 3, QuestionText = "Вопрос 12", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
+                new QuestionModel { IdQuestion = 13, IdTest = 4, QuestionText = "Вопрос 13", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
+                new QuestionModel { IdQuestion = 14, IdTest = 4, QuestionText = "Вопрос 14", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
+                new QuestionModel { IdQuestion = 15, IdTest = 4, QuestionText = "Вопрос 15", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
 
                 new QuestionModel { IdQuestion = 16, IdTest = 4, QuestionText = "Вопрос 16", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" }
+
 /*                new QuestionModel { IdQuestion = 17, QuestionText = "Вопрос 17", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
                 new QuestionModel { IdQuestion = 18, QuestionText = "Вопрос 18", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
                 new QuestionModel { IdQuestion = 19, QuestionText = "Вопрос 19", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },

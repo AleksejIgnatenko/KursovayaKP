@@ -119,3 +119,7 @@ body {
 .fa-google {
     color: #D64E44;
 }
+
+pre {
+    font-family: inherit;
+}

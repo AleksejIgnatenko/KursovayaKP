@@ -37,7 +37,7 @@ app.UseRouting();
 app.UseAuthorization();
 
 // Проверка наличия пользователя в базе данных
-/*app.Use(async (context, next) =>
+app.Use(async (context, next) =>
 {
 	try
 	{
@@ -55,8 +55,7 @@ app.UseAuthorization();
 				context.Response.Cookies.Delete("ID");
 				context.Response.Cookies.Delete("UserName");
 				context.Response.Cookies.Delete("Role");
-
-				await next();
+                context.Response.Redirect("/Home/Index");
 				return;
 			}
 		}
@@ -71,7 +70,7 @@ app.UseAuthorization();
 		context.Response.Cookies.Delete("Role");
 		context.Response.Redirect("/Home/Index");
 	}
-});*/
+});
 
 // Проверка роли пользователя и обработка маршрута "/Admin/".
 app.Use(async (context, next) =>
