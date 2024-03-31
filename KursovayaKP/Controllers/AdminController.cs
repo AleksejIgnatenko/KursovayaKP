@@ -263,6 +263,23 @@ namespace KursovayaKP.Controllers
             return View("~/Views/Admin/Management.cshtml");
         }
 
+        public IActionResult EditUserName(int id, string userName)
+        {
+            try
+            {
+                UserTable userTable = new UserTable(_dbOptionsUserTable);
+                userTable.EditUserName(id, userName);
+
+                List<UserModel> allUsers = userTable.GetAllUsers();
+                return View("~/Views/Admin/Management.cshtml", allUsers);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка получения всех пользователей");
+            }
+            return View("~/Views/Admin/Management.cshtml");
+        }
+
         public IActionResult AllQuestions(string topic)
         {
             /*switch (topic)
@@ -333,7 +350,6 @@ namespace KursovayaKP.Controllers
 		[HttpPost]
 		public IActionResult DeleteQuestion(int questionId, int testId)
 		{
-			//Console.WriteLine($"ID test {testId} ID question{questionId}");
 			try
 			{
 				QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);

@@ -1,4 +1,4 @@
-﻿﻿﻿@using KursovayaKP.Models;
+﻿﻿﻿﻿@using KursovayaKP.Models;
 @model List<UserModel>
 
 @{
@@ -31,17 +31,17 @@
             <div class="question" data-question-id="@user.IdUser">
                 <form class="question-form" method="post">
                     <div><label>ID: №@user.IdUser</label></div>
-                    <input type="hidden" value="@user.IdUser" />
+                    <input type="hidden" name="id" value="@user.IdUser" />
 
                     <div class="label-user-name"><label>Имя: @user.UserName</label></div>
-					<div class="input-group" style="width:min-content;">
-						<input class="input-user-name" style="display: none;" value="@user.UserName" />
-					</div>
+                    <div class="input-group" style="width:min-content;">
+                        <input class="input-user-name" name="userName" style="display: none;" value="@user.UserName" />
+                    </div>
 
                     <label>Email: @user.Email</label><br>
                     <div><label>Роль: @user.Role</label></div>
                     <button class="image-button edit-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211262049162625065/Editing.png?ex=66093e30&is=65f6c930&hm=49574bb9a091fa7328d40727f53de51d3b60317a50395d64324df4afeecc32cc&=&format=webp&quality=lossless')" title="Редактировать"></button>
-                    <button asp-controller="Admin" asp-action="" class="image-button confirm-edit-name-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1219542277521670214/checked.png?ex=660bae40&is=65f93940&hm=72f2a0f59069d0159a8c318b7bde48acf5815b0b93a1393907b41e9227886aab&=&format=webp&quality=lossless'); display: none;" title="Изменить имя" name="id" value="@user.IdUser"></button>
+                    <button asp-controller="Admin" asp-action="EditUserName" class="image-button confirm-edit-name-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1219542277521670214/checked.png?ex=660bae40&is=65f93940&hm=72f2a0f59069d0159a8c318b7bde48acf5815b0b93a1393907b41e9227886aab&=&format=webp&quality=lossless'); display: none;" title="Изменить имя"></button>
                     <button class="image-button cancel-edit-name-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1219542299357351966/close.png?ex=660bae46&is=65f93946&hm=a736d8adaa89fce43938c8bc2a76a2a982c567dc3d51892ef6c8608f1f5d50bb&=&format=webp&quality=lossless'); display: none;" title="Отмена"></button>
 
                     <button onclick="initializePage('@user.IdUser')" class="image-button more-detailed-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1213836616607731782/more-information.png?ex=66096171&is=65f6ec71&hm=5edbbc7caf4c7efa5de1f80332daf123e02ac09eed8fe86c672c7fb22c79fef0&=&format=webp&quality=lossless')" title="Подробнее"></button>

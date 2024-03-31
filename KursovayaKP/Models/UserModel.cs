@@ -21,13 +21,13 @@ namespace KursovayaKP.Models
         public string Email { get; set; }
 
 		[MinLength(8, ErrorMessage = "Пароль должен состоять минимум из 8 символов")]
-		[MaxLength (16, ErrorMessage = "Пароль не должен превышать 16 символов")]
+		//[MaxLength (16, ErrorMessage = "Пароль не должен превышать 16 символов")]
 		public string Password { get; set; }
 
 		[NotMapped]
 		[Compare("Password", ErrorMessage = "Пароли не совпадают")]
 		[MinLength(8, ErrorMessage = "Пароль должен состоять минимум из 8 символов")]
-		[MaxLength(16, ErrorMessage = "Пароль не должен превышать 16 символов")]
+		//[MaxLength(16, ErrorMessage = "Пароль не должен превышать 16 символов")]
 		public string Repeat_password { get; set; }
 
 		public string Role { get; set; } = "User";//User Admin
