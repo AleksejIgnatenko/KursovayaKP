@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace KursovayaKP.Controllers
 {
@@ -37,8 +38,8 @@ namespace KursovayaKP.Controllers
             return View();
         }
 
-		public IActionResult Personal_office()
-		{
+        public IActionResult Personal_office()
+        {
             try
             {
                 // Получение значения 'id' из куки
@@ -73,43 +74,41 @@ namespace KursovayaKP.Controllers
                 _logger.LogError($"{ex}");
             }
 
-			return View();
-		}
+            return View();
+        }
 
-		//Регистрация
-		[HttpPost]
+        //Регистрация
+        [HttpPost]
         public IActionResult Check_registration(UserModel userModel)
         {
-            if (ModelState.IsValid)
+            userModel.Password = UserModel.HashPassword(userModel.Password);
+
+            try
             {
-                userModel.Password = UserModel.HashPassword(userModel.Password);
-
-                try
+                using (var db = new UserTable(_dbOptionsUserTable)) // Создаем экземпляр DBUser
                 {
-                    using (var db = new UserTable(_dbOptionsUserTable)) // Создаем экземпляр DBUser
+                    bool userAdded = db.AddUser(userModel); // Добавляем пользователя в базу данных
+
+                    if (userAdded)
                     {
-                        bool userAdded = db.AddUser(userModel); // Добавляем пользователя в базу данных
+                        // Add cookies
+                        Response.Cookies.Append("ID", userModel.IdUser.ToString());
+                        Response.Cookies.Append("UserName", userModel.UserName);
+                        Response.Cookies.Append("Role", userModel.Role);
 
-                        if (userAdded)
-                        {
-                            // Add cookies
-                            Response.Cookies.Append("ID", userModel.IdUser.ToString());
-                            Response.Cookies.Append("UserName", userModel.UserName);
-                            Response.Cookies.Append("Role", userModel.Role);
-
-                            return RedirectToAction("Index", "Home");
-                        }
-                        else
-                        {
-                            // Пользователь с такой почтой уже существует
-                            ModelState.AddModelError("Email", "Аккаунт с таким Email уже существует");
-                        }
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        // Пользователь с такой почтой уже существует
+                        ModelState.AddModelError("Email", "Аккаунт с таким Email уже существует");
                     }
                 }
-                catch (Exception ex)
-                {
-					_logger.LogError($"{ex}");
-				}
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex}");
+
             }
 
             // Валидация не удалась или пользователь с такой почтой уже существует, возвращаем модель с ошибками
@@ -144,9 +143,9 @@ namespace KursovayaKP.Controllers
             }
             catch (Exception ex)
             {
-				ModelState.AddModelError("Password", "Ошибка получения данных");
-				_logger.LogError($"{ex}");
-			}
+                ModelState.AddModelError("Password", "Ошибка получения данных");
+                _logger.LogError($"{ex}");
+            }
 
             // Валидация не удалась или данные пользователя не совпадают, возвращаем модель с ошибками
             return View("Sign_In", userModel);
@@ -164,30 +163,52 @@ namespace KursovayaKP.Controllers
 
         public IActionResult EditUserName(int id, string newUserName)
         {
-            Console.WriteLine(id);
-            Console.WriteLine(newUserName);
             try
             {
-                UserTable userTable = new UserTable(_dbOptionsUserTable);
-                userTable.EditUserName(id, newUserName);
-         
-
-                TableAnswerUserTest tableAnswerUserTest = new TableAnswerUserTest(_dbOptionsAnswerUserTest);
-                CategoryTable categoryTable = new CategoryTable(_dbOptionsCategoryTable);
-                UserModel? user = userTable.GetUser(id);
-
-                if (user != null)
+                string pattern = "^[a-zA-Zа-яА-Я]+$";
+                bool isValid = Regex.IsMatch(newUserName, pattern);
+                if ((isValid) && (newUserName.Length > 1))
                 {
-                    Console.WriteLine(user.Email);
-                    for (int i = 1; i < 5; i++)
+
+                    UserTable userTable = new UserTable(_dbOptionsUserTable);
+                    userTable.EditUserName(id, newUserName);
+                    Response.Cookies.Append("UserName", newUserName);
+
+                    TableAnswerUserTest tableAnswerUserTest = new TableAnswerUserTest(_dbOptionsAnswerUserTest);
+                    CategoryTable categoryTable = new CategoryTable(_dbOptionsCategoryTable);
+                    UserModel? user = userTable.GetUser(id);
+
+                    if (user != null)
                     {
-                        string? nameCategory = categoryTable.GetNameCategory(i);
-                        string resultExam = tableAnswerUserTest.ExamIsPassed(id, i);
-                        ViewBag.Result += nameCategory + ": " + resultExam + "<br />";
+                        for (int i = 1; i < 5; i++)
+                        {
+                            string? nameCategory = categoryTable.GetNameCategory(i);
+                            string resultExam = tableAnswerUserTest.ExamIsPassed(id, i);
+                            ViewBag.Result += nameCategory + ": " + resultExam + "<br />";
+                        }
+                        return RedirectToAction("Personal_office", user);
                     }
-                    return View("~/Views/User/Personal_office.cshtml", user);
+                    return View("~/Views/User/Personal_office.cshtml");
                 }
-                return View("~/Views/User/Personal_office.cshtml");
+
+                else
+                {
+                    TableAnswerUserTest tableAnswerUserTest = new TableAnswerUserTest(_dbOptionsAnswerUserTest);
+                    UserTable userTable = new UserTable(_dbOptionsUserTable);
+                    UserModel? user = userTable.GetUser(id);
+                    CategoryTable categoryTable = new CategoryTable(_dbOptionsCategoryTable);
+                    if (user != null)
+                    {
+                        for (int i = 1; i < 5; i++)
+                        {
+                            string? nameCategory = categoryTable.GetNameCategory(i);
+                            string resultExam = tableAnswerUserTest.ExamIsPassed(id, i);
+                            ViewBag.Result += nameCategory + ": " + resultExam + "<br />";
+                        }
+                        ModelState.AddModelError("UserName", "Неверное имя пользователя");
+                        return View("~/Views/User/Personal_office.cshtml", user);
+                    }
+                }
             }
             catch (Exception ex)
             {

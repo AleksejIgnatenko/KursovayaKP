@@ -11,3 +11,17 @@
         text-decoration: underline;
         text-underline-offset: 6px;
     }
+
+
+.text {
+    margin-right: 16px;
+}
+
+.image {
+    margin-bottom: 15px;
+    max-width: 100%;
+}
+
+.road-signs{
+    margin-top: 50px;
+}

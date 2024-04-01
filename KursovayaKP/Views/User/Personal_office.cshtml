@@ -21,11 +21,12 @@
                 <div class="input-group" style="width:min-content;">
                     <input class="input-user-name" name="newUserName" style="display: none;" value="@Model.UserName" />
                 </div>
+                <span asp-validation-for="UserName" style="color: red; font-size: 12px;"></span>
 
                 <label>Почта: @Model.Email</label>
                 <pre>@Html.Raw(ViewBag.Result)</pre>
 
-				<div class="button-container" style="margin-top: 0px;">
+                <div class="button-container" style="margin-top: 0px;">
                     <button class="image-button edit-user-name-button" style="background-image: url('/Images/Editing.png')" title="Изменить имя"></button>
                     <button asp-controller="User" asp-action="EditUserName" class="image-button confirm-edit-name-button" style="background-image: url('/Images/Checked.png'); display: none;" title="Изменить имя"></button>
                     <button class="image-button cancel-edit-name-button" style="background-image: url('/Images/Close.png'); display: none;" title="Отмена"></button>
