@@ -123,3 +123,18 @@ body {
 pre {
     font-family: inherit;
 }
+
+.image-button {
+    width: 24px;
+    height: 24px;
+    box-shadow: none;
+    border: none;
+    filter: brightness(50%);
+    border-radius: 50%;
+}
+
+    .image-button:hover {
+        filter: brightness(100%);
+        border-radius: 50%;
+    }
+

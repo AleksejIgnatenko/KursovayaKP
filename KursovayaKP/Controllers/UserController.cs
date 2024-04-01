@@ -162,5 +162,38 @@ namespace KursovayaKP.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult EditUserName(int id, string newUserName)
+        {
+            Console.WriteLine(id);
+            Console.WriteLine(newUserName);
+            try
+            {
+                UserTable userTable = new UserTable(_dbOptionsUserTable);
+                userTable.EditUserName(id, newUserName);
+         
+
+                TableAnswerUserTest tableAnswerUserTest = new TableAnswerUserTest(_dbOptionsAnswerUserTest);
+                CategoryTable categoryTable = new CategoryTable(_dbOptionsCategoryTable);
+                UserModel? user = userTable.GetUser(id);
+
+                if (user != null)
+                {
+                    Console.WriteLine(user.Email);
+                    for (int i = 1; i < 5; i++)
+                    {
+                        string? nameCategory = categoryTable.GetNameCategory(i);
+                        string resultExam = tableAnswerUserTest.ExamIsPassed(id, i);
+                        ViewBag.Result += nameCategory + ": " + resultExam + "<br />";
+                    }
+                    return View("~/Views/User/Personal_office.cshtml", user);
+                }
+                return View("~/Views/User/Personal_office.cshtml");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка изменения имени пользователя");
+            }
+            return View("~/Views/User/Personal_office.cshtml");
+        }
     }
 }

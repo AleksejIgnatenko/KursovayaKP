@@ -15,9 +15,26 @@
         <div class="login-container">
             <h1 class="header">Личный кабинет</h1>
             <form class="form">
-                <label>Имя: @Model.UserName</label>
+                <input type="hidden" name="id" value="@Model.IdUser" />
+
+                <div class="label-user-name"><label>Имя: @Model.UserName</label></div>
+                <div class="input-group" style="width:min-content;">
+                    <input class="input-user-name" name="newUserName" style="display: none;" value="@Model.UserName" />
+                </div>
+
                 <label>Почта: @Model.Email</label>
                 <pre>@Html.Raw(ViewBag.Result)</pre>
+
+				<div class="button-container" style="margin-top: 0px;">
+                    <button class="image-button edit-user-name-button" style="background-image: url('/Images/Editing.png')" title="Изменить имя"></button>
+                    <button asp-controller="User" asp-action="EditUserName" class="image-button confirm-edit-name-button" style="background-image: url('/Images/Checked.png'); display: none;" title="Изменить имя"></button>
+                    <button class="image-button cancel-edit-name-button" style="background-image: url('/Images/Close.png'); display: none;" title="Отмена"></button>
+
+                    <button class="image-button edit-user-password-button" style="background-image: url('/Images/EditPassword.png')" title="Изменить пароль"></button>
+                    <button asp-controller="Admin" asp-action="EditUserName" class="image-button confirm-edit-name-button" style="background-image: url('/Images/Checked.png'); display: none;" title="Изменить имя"></button>
+                    <button class="image-button cancel-edit-name-button" style="background-image: url('/Images/Close.png'); display: none;" title="Отмена"></button>
+                </div>
+
                 <button class="button" asp-area="" asp-controller="User" asp-action="Exit_in_account">Выйти из аккаунта</button>
                 <div class="text-center">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">На главную</a>
@@ -26,3 +43,82 @@
         </div>
     </div>
 </body>
+
+<script>
+    const editButtons = document.getElementsByClassName('edit-user-name-button');
+    const confirmEditNameButtons = document.getElementsByClassName('confirm-edit-name-button');
+    const cancelEditNameButtons = document.getElementsByClassName('cancel-edit-name-button');
+    const labelUserNames = document.getElementsByClassName('label-user-name');
+    const inputUserNames = document.getElementsByClassName('input-user-name');
+
+    const editUserPasswordButtons = document.getElementsByClassName('edit-user-password-button');
+
+    for (let i = 0; i < editButtons.length; i++) {
+        const editButton = editButtons[i];
+        const confirmEditNameButton = confirmEditNameButtons[i];
+        const cancelEditNameButton = cancelEditNameButtons[i];
+        const labelUserName = labelUserNames[i];
+        const inputUserName = inputUserNames[i];
+
+        const editUserPasswordButton = editUserPasswordButtons[i];
+
+        editButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            editButton.style.display = 'none';
+            confirmEditNameButton.style.display = 'inline-block';
+            cancelEditNameButton.style.display = 'inline-block';
+            labelUserName.style.display = 'none';
+            inputUserName.style.display = 'inline-block';
+
+            editUserPasswordButton.style.display = 'none';
+        });
+
+        cancelEditNameButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            editButton.style.display = 'inline-block';
+            confirmEditNameButton.style.display = 'none';
+            cancelEditNameButton.style.display = 'none';
+            labelUserName.style.display = 'inline-block';
+            inputUserName.style.display = 'none';
+
+            editUserPasswordButton.style.display = 'inline-block';
+        });
+    }
+</script>
+
+@* <script>
+    const editButtons = document.getElementsByClassName('edit-user-name-button');
+    const editButtons = document.getElementsByClassName('edit-button');
+
+    for (let i = 0; i < editButtons.length; i++) {
+        const editButton = editButtons[i];
+
+        editButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            const confirmEditNameButton = editButton.nextElementSibling;
+            const cancelEditNameButton = confirmEditNameButton.nextElementSibling;
+            const labelUserName = editButton.parentElement.querySelector('.label-user-name');
+            const inputUserName = editButton.parentElement.querySelector('.input-user-name');
+
+            editButton.style.display = 'none';
+            confirmEditNameButton.style.display = 'inline-block';
+            cancelEditNameButton.style.display = 'inline-block';
+            labelUserName.style.display = 'none';
+            inputUserName.style.display = 'inline-block';
+        });
+
+        editButton.nextElementSibling.addEventListener('click', function (event) {
+            event.preventDefault();
+            const confirmEditNameButton = editButton.nextElementSibling;
+            const cancelEditNameButton = confirmEditNameButton.nextElementSibling;
+            const labelUserName = editButton.parentElement.querySelector('.label-user-name');
+            const inputUserName = editButton.parentElement.querySelector('.input-user-name');
+
+            editButton.style.display = 'inline-block';
+            confirmEditNameButton.style.display = 'none';
+            cancelEditNameButton.style.display = 'none';
+            labelUserName.style.display = 'inline-block';
+            inputUserName.style.display = 'none';
+        });
+    }
+</script> *@
