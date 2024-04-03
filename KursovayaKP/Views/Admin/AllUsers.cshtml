@@ -33,8 +33,8 @@
                 <div><label>Имя: @user.UserName</label></div>
                 <label>Email: @user.Email</label><br>
                 <div><label>Роль: @user.Role</label></div>
-                <button asp-controller="Admin" asp-action="" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1211262049162625065/Editing.png?ex=66093e30&is=65f6c930&hm=49574bb9a091fa7328d40727f53de51d3b60317a50395d64324df4afeecc32cc&=&format=webp&quality=lossless')" title="Редактировать"></button>
-                <button onclick="initializePage('@user.IdUser')" class="image-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1213836616607731782/more-information.png?ex=66096171&is=65f6ec71&hm=5edbbc7caf4c7efa5de1f80332daf123e02ac09eed8fe86c672c7fb22c79fef0&=&format=webp&quality=lossless')" title="Подробнее"></button>
+                <button asp-controller="Admin" asp-action="" class="image-button" style="background-image: url('/Images/Editing.png')" title="Редактировать"></button>
+                <button onclick="initializePage('@user.IdUser')" class="image-button" style="background-image: url('/Images/More-information.png')" title="Подробнее"></button>
             </form>
         </div>
     }
