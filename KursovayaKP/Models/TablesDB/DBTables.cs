@@ -60,7 +60,7 @@ namespace KursovayaKP.Models.TablesDBModel
                     new CategoryModel { IdCategory = 1, NameCategory = "ПДД" },
                     new CategoryModel { IdCategory = 2, NameCategory = "Дорожные знаки" },
                     new CategoryModel { IdCategory = 3, NameCategory = "Медецинская помощь" },
-                    new CategoryModel { IdCategory = 4, NameCategory = "Устройство авто" }
+                    new CategoryModel { IdCategory = 4, NameCategory = "Неисправности" }
             );
 
             //Добавление записей в таблицу Test

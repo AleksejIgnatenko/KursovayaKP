@@ -37,7 +37,7 @@ app.UseRouting();
 app.UseAuthorization();
 
 // Проверка наличия пользователя в базе данных
-app.Use(async (context, next) =>
+/*app.Use(async (context, next) =>
 {
 	try
 	{
@@ -70,7 +70,7 @@ app.Use(async (context, next) =>
 		context.Response.Cookies.Delete("Role");
 		context.Response.Redirect("/Home/Index");
 	}
-});
+});*/
 
 // Проверка роли пользователя и обработка маршрута "/Admin/".
 app.Use(async (context, next) =>
