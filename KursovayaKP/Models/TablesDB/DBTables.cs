@@ -58,30 +58,37 @@ namespace KursovayaKP.Models.TablesDBModel
             //Добавление записей в таблицу CategoryModel
             modelBuilder.Entity<CategoryModel>().HasData(
                     new CategoryModel { IdCategory = 1, NameCategory = "ПДД" },
-                    new CategoryModel { IdCategory = 2, NameCategory = "Дорожные знаки" },
-                    new CategoryModel { IdCategory = 3, NameCategory = "Медецинская помощь" },
-                    new CategoryModel { IdCategory = 4, NameCategory = "Неисправности" }
-            );
+					new CategoryModel { IdCategory = 2, NameCategory = "Дорожные светофоры" },
+					new CategoryModel { IdCategory = 3, NameCategory = "Дорожные знаки" },
+					new CategoryModel { IdCategory = 4, NameCategory = "Дорожная разметка" },
+					new CategoryModel { IdCategory = 5, NameCategory = "Неисправности" },
+					new CategoryModel { IdCategory = 6, NameCategory = "Опознавательные знаки" },
+					new CategoryModel { IdCategory = 7, NameCategory = "Медецинская помощь" }
+			);
 
             //Добавление записей в таблицу Test
             modelBuilder.Entity<TestModel>().HasData(
                     new TestModel { IdTest = 1, IdCategory = 1, NameTest = "Тест 1" },
                     new TestModel { IdTest = 2, IdCategory = 2, NameTest = "Тест 2" },
                     new TestModel { IdTest = 3, IdCategory = 3, NameTest = "Тест 3" },
-                    new TestModel { IdTest = 4, IdCategory = 4, NameTest = "Тест 4" }
+                    new TestModel { IdTest = 4, IdCategory = 4, NameTest = "Тест 4" },
+					new TestModel { IdTest = 5, IdCategory = 5, NameTest = "Тест 4" },
+					new TestModel { IdTest = 6, IdCategory = 6, NameTest = "Тест 4" },
+					new TestModel { IdTest = 7, IdCategory = 7, NameTest = "Тест 4" }
 
-            );
+			);
 
             //Добавление записей в таблицу Quenstion
             modelBuilder.Entity<QuestionModel>().HasData(
-                new QuestionModel { IdQuestion = 1, IdTest = 1, QuestionText = "Вопрос 1", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
-                new QuestionModel { IdQuestion = 2, IdTest = 1, QuestionText = "Вопрос 2", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
-                new QuestionModel { IdQuestion = 3, IdTest = 1, QuestionText = "Вопрос 3", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
-                new QuestionModel { IdQuestion = 4, IdTest = 1, QuestionText = "Вопрос 4", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
-                new QuestionModel { IdQuestion = 5, IdTest = 2, QuestionText = "Вопрос 5", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
-                new QuestionModel { IdQuestion = 6, IdTest = 2, QuestionText = "Вопрос 6", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
-                new QuestionModel { IdQuestion = 7, IdTest = 2, QuestionText = "Вопрос 7", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
-                new QuestionModel { IdQuestion = 8, IdTest = 2, QuestionText = "Вопрос 8", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
+                new QuestionModel { IdQuestion = 1, IdTest = 1, QuestionText = "Вопрос Пдд", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
+                new QuestionModel { IdQuestion = 2, IdTest = 2, QuestionText = "Вопрос Дорожные светофоры", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
+                new QuestionModel { IdQuestion = 3, IdTest = 3, QuestionText = "Вопрос Дорожные знаки", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
+                new QuestionModel { IdQuestion = 4, IdTest = 4, QuestionText = "Вопрос Дорожная разметка", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
+                new QuestionModel { IdQuestion = 5, IdTest = 5, QuestionText = "Вопрос Неисправности", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
+                new QuestionModel { IdQuestion = 6, IdTest = 6, QuestionText = "Вопрос Опознавательные знаки", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
+                new QuestionModel { IdQuestion = 7, IdTest = 7, QuestionText = "Вопрос Медецинская помощь", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" }
+                
+/*                new QuestionModel { IdQuestion = 8, IdTest = 2, QuestionText = "Вопрос 8", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
                 new QuestionModel { IdQuestion = 9, IdTest = 3, QuestionText = "Вопрос 9", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
                 new QuestionModel { IdQuestion = 10, IdTest = 3, QuestionText = "Вопрос 10", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
                 new QuestionModel { IdQuestion = 11, IdTest = 3, QuestionText = "Вопрос 11", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
@@ -90,7 +97,7 @@ namespace KursovayaKP.Models.TablesDBModel
                 new QuestionModel { IdQuestion = 14, IdTest = 4, QuestionText = "Вопрос 14", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
                 new QuestionModel { IdQuestion = 15, IdTest = 4, QuestionText = "Вопрос 15", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
 
-                new QuestionModel { IdQuestion = 16, IdTest = 4, QuestionText = "Вопрос 16", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" }
+                new QuestionModel { IdQuestion = 16, IdTest = 4, QuestionText = "Вопрос 16", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" }*/
 
 /*                new QuestionModel { IdQuestion = 17, QuestionText = "Вопрос 17", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },
                 new QuestionModel { IdQuestion = 18, QuestionText = "Вопрос 18", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", CorrectAnswer = "4" },

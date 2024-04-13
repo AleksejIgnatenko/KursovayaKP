@@ -71,6 +71,21 @@ namespace KursovayaKP.Controllers
             return View("~/Views/Admin/AdminHome/AdminCarDevice.cshtml");
         }
 
+		public IActionResult RoadMarkings()
+		{
+			return View("~/Views/Admin/AdminHome/RoadMarkings.cshtml");
+		}
+
+		public IActionResult IdentificationMarks()
+		{
+			return View("~/Views/Admin/AdminHome/IdentificationMarks.cshtml");
+		}
+
+		public IActionResult TrafficLight()
+		{
+			return View("~/Views/Admin/AdminHome/TrafficLight.cshtml");
+		}
+
 		public IActionResult AddQuestions()
 		{
 			return View();
