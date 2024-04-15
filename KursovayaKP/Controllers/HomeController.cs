@@ -59,7 +59,22 @@ namespace KursovayaKP.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+		public IActionResult IdentificationMarks()
+		{
+			return View();
+		}
+        
+		public IActionResult RoadMarkings()
+		{
+			return View();
+		}    
+        
+		public IActionResult TrafficLight()
+		{
+			return View();
+		}
+
+		public IActionResult Privacy()
         {
             return View();
         }

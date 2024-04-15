@@ -31,61 +31,6 @@ namespace KursovayaKP.Controllers
             return View();
         }
 
-        public IActionResult AddQuestionTrafficRegulations()
-        {
-            return View("~/Views/Admin/AddQuestions/AddQuestionTrafficRegulations.cshtml");
-        }
-
-        public IActionResult AddQuestionRoadSigns()
-        {
-            return View("~/Views/Admin/AddQuestions/AddQuestionRoadSigns.cshtml");
-        }
-
-        public IActionResult AddQuestionMedicalCare()
-        {
-            return View("~/Views/Admin/AddQuestions/AddQuestionMedicalCare.cshtml");
-        }
-
-        public IActionResult AddQuestionCarDevice()
-        {
-            return View("~/Views/Admin/AddQuestions/AddQuestionCarDevice.cshtml");
-        }
-
-        public IActionResult AdminTrafficRegulations()
-        {
-            return View("~/Views/Admin/AdminHome/AdminTrafficRegulations.cshtml");
-        }
-
-        public IActionResult AdminRoadSigns()
-        {
-            return View("~/Views/Admin/AdminHome/AdminRoadSigns.cshtml");
-        }
-
-        public IActionResult AdminMedicalCare()
-        {
-            return View("~/Views/Admin/AdminHome/AdminMedicalCare.cshtml");
-        }
-
-        public IActionResult AdminCarDevice()
-        {
-            return View("~/Views/Admin/AdminHome/AdminCarDevice.cshtml");
-        }
-
-		public IActionResult RoadMarkings()
-		{
-			return View("~/Views/Admin/AdminHome/RoadMarkings.cshtml");
-		}
-
-		public IActionResult IdentificationMarks()
-		{
-			return View("~/Views/Admin/AdminHome/IdentificationMarks.cshtml");
-		}
-
-		public IActionResult TrafficLight()
-		{
-			return View("~/Views/Admin/AdminHome/TrafficLight.cshtml");
-		}
-
 		public IActionResult AddQuestions()
 		{
 			return View();
