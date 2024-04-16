@@ -19,7 +19,7 @@
 
                 <div class="label-user-name"><label>Имя: @Model.UserName</label></div>
                 <div class="input-group" style="width:min-content;">
-                    <input class="input-user-name" name="newUserName" style="display: none;" value="@Model.UserName" />
+                    <input class="input-user-name" name="newUserName" style="display:none;" value="@Model.UserName" />
                 </div>
                 <span asp-validation-for="UserName" style="color: red; font-size: 12px;"></span>
 
@@ -32,8 +32,8 @@
                     <button class="image-button cancel-edit-name-button" style="background-image: url('/Images/Close.png'); display: none;" title="Отмена"></button>
 
                     <button class="image-button edit-user-password-button" style="background-image: url('/Images/EditPassword.png')" title="Изменить пароль"></button>
-                    <button asp-controller="Admin" asp-action="EditUserName" class="image-button confirm-edit-name-button" style="background-image: url('/Images/Checked.png'); display: none;" title="Изменить имя"></button>
-                    <button class="image-button cancel-edit-name-button" style="background-image: url('/Images/Close.png'); display: none;" title="Отмена"></button>
+                    <button asp-controller="User" asp-action="" class="image-button confirm-edit-passord-button" style="background-image: url('/Images/Checked.png'); display: none;" title="Изменить пароль"></button>
+                    <button class="image-button cancel-edit-password-button" style="background-image: url('/Images/Close.png'); display: none;" title="Отмена"></button>
                 </div>
 
                 <button class="button" asp-area="" asp-controller="User" asp-action="Exit_in_account">Выйти из аккаунта</button>
@@ -53,6 +53,8 @@
     const inputUserNames = document.getElementsByClassName('input-user-name');
 
     const editUserPasswordButtons = document.getElementsByClassName('edit-user-password-button');
+    const confirmEditPassordButtons = document.getElementsByClassName('confirm-edit-passord-button');
+    const cancelEditPasswordButtons = document.getElementsByClassName('cancel-edit-password-button');
 
     for (let i = 0; i < editButtons.length; i++) {
         const editButton = editButtons[i];
@@ -62,6 +64,8 @@
         const inputUserName = inputUserNames[i];
 
         const editUserPasswordButton = editUserPasswordButtons[i];
+        const confirmEditPassordButton = confirmEditPassordButtons[i];
+        const cancelEditPasswordButton = cancelEditPasswordButtons[i];
 
         editButton.addEventListener('click', function (event) {
             event.preventDefault();
@@ -84,42 +88,23 @@
 
             editUserPasswordButton.style.display = 'inline-block';
         });
+
+        editUserPasswordButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            editButton.style.display = 'none';
+            confirmEditPassordButton.style.display = 'inline-block';
+            cancelEditPasswordButton.style.display = 'inline-block';
+
+            editUserPasswordButton.style.display = 'none';
+        });
+
+        cancelEditPasswordButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            editButton.style.display = 'inline-block';
+            confirmEditPassordButton.style.display = 'none';
+            cancelEditPasswordButton.style.display = 'none';
+
+            editUserPasswordButton.style.display = 'inline-block';
+        });
     }
 </script>
-
-@* <script>
-    const editButtons = document.getElementsByClassName('edit-user-name-button');
-    const editButtons = document.getElementsByClassName('edit-button');
-
-    for (let i = 0; i < editButtons.length; i++) {
-        const editButton = editButtons[i];
-
-        editButton.addEventListener('click', function (event) {
-            event.preventDefault();
-            const confirmEditNameButton = editButton.nextElementSibling;
-            const cancelEditNameButton = confirmEditNameButton.nextElementSibling;
-            const labelUserName = editButton.parentElement.querySelector('.label-user-name');
-            const inputUserName = editButton.parentElement.querySelector('.input-user-name');
-
-            editButton.style.display = 'none';
-            confirmEditNameButton.style.display = 'inline-block';
-            cancelEditNameButton.style.display = 'inline-block';
-            labelUserName.style.display = 'none';
-            inputUserName.style.display = 'inline-block';
-        });
-
-        editButton.nextElementSibling.addEventListener('click', function (event) {
-            event.preventDefault();
-            const confirmEditNameButton = editButton.nextElementSibling;
-            const cancelEditNameButton = confirmEditNameButton.nextElementSibling;
-            const labelUserName = editButton.parentElement.querySelector('.label-user-name');
-            const inputUserName = editButton.parentElement.querySelector('.input-user-name');
-
-            editButton.style.display = 'inline-block';
-            confirmEditNameButton.style.display = 'none';
-            cancelEditNameButton.style.display = 'none';
-            labelUserName.style.display = 'inline-block';
-            inputUserName.style.display = 'none';
-        });
-    }
-</script> *@

@@ -18,7 +18,7 @@ body {
     align-items: center;
     min-height: 83vh;
     min-width: 70vw;
-    background: linear-gradient(53deg, rgba(25,191,203,1) 6%, rgba(188,81,218,1) 61%);
+    /*background: linear-gradient(53deg, rgba(25,191,203,1) 6%, rgba(188,81,218,1) 61%);*/
 }
 
 .login-container {
@@ -50,7 +50,7 @@ body {
 
     .input-group input {
         font-size: .9rem;
-        padding: 7px;
+        /*padding: 7px;*/
         border: none;
         outline: none;
         border-bottom: 2px solid hsl(0, 0%, 83%);
@@ -121,7 +121,8 @@ body {
 }
 
 pre {
-    font-family: inherit;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
 }
 
 .image-button {
