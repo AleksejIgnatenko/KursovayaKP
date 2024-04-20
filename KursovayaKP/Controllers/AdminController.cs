@@ -141,8 +141,6 @@ namespace KursovayaKP.Controllers
 					return View(test);
 				}
 				return RedirectToAction("AllTests");
-
-
 			}
 			catch (Exception ex)
 			{
@@ -375,7 +373,10 @@ namespace KursovayaKP.Controllers
         {
             TestTable testTable = new TestTable(_dbOptionsTestTable);
             TestModel[] allTests = testTable.GetAllTest();
-            //Console.WriteLine(allTests[0].IdTest + " " + allTests[0].NameTest);
+            for (int i = 0; i < allTests.Length; i++)
+            {
+				Console.WriteLine(allTests[i].IdTest + " " + allTests[i].NameTest);
+			}
 			return allTests;
         }
 

@@ -72,9 +72,9 @@ namespace KursovayaKP.Models.TablesDBModel
                     new TestModel { IdTest = 2, IdCategory = 2, NameTest = "Тест 2" },
                     new TestModel { IdTest = 3, IdCategory = 3, NameTest = "Тест 3" },
                     new TestModel { IdTest = 4, IdCategory = 4, NameTest = "Тест 4" },
-					new TestModel { IdTest = 5, IdCategory = 5, NameTest = "Тест 4" },
-					new TestModel { IdTest = 6, IdCategory = 6, NameTest = "Тест 4" },
-					new TestModel { IdTest = 7, IdCategory = 7, NameTest = "Тест 4" }
+					new TestModel { IdTest = 5, IdCategory = 5, NameTest = "Тест 5" },
+					new TestModel { IdTest = 6, IdCategory = 6, NameTest = "Тест 6" },
+					new TestModel { IdTest = 7, IdCategory = 7, NameTest = "Тест 7" }
 
 			);
 
