@@ -309,28 +309,6 @@ namespace KursovayaKP.Controllers
             return RedirectToAction("AllTests");
         }
 
-        public IActionResult TestForUpdate(int testId)
-        {
-            try
-            {
-                TestTable testTable = new TestTable(_dbOptionsTestTable);
-                CategoryTable categoryTable = new CategoryTable(_dbOptionsCategoryTable);
-                TestModel? test = testTable.GetTest(testId);
-                if (test != null)
-                {
-                    CategoryModel[] categories = categoryTable.GetAllCategory();
-                    var model = (test, categories);
-                    return View(model);
-                }
-                return RedirectToAction("AllTests");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"{ex}");
-            }
-            return RedirectToAction("AllTests");
-        }
-
         [HttpPost]
         public IActionResult QuestionUpdate(QuestionModel question)
         {
@@ -339,8 +317,6 @@ namespace KursovayaKP.Controllers
                 TestTable testTable = new TestTable(_dbOptionsTestTable);
                 TestModel[] allTests = testTable.GetAllTest();
 
-                /*            Console.WriteLine(question.IdQuestion + " " + question.IdTest + " " + question.QuestionText + " " + question.Answer1 + " " +
-                            question.Answer2 + " " + question.Answer3 + " " + question.Answer4 + " " + question.CorrectAnswer);*/
                 if (ModelState.IsValid)
                 {
                     var answers = new[] { question.Answer1, question.Answer2, question.Answer3, question.Answer4 };
@@ -363,7 +339,30 @@ namespace KursovayaKP.Controllers
             {
                 _logger.LogError(ex, "Ошибка редактирования");
             }
+
             return View("~/Views/Admin/AdminIndex.cshtml");
+        }
+
+        public IActionResult TestForUpdate(int testId)
+        {
+            try
+            {
+                TestTable testTable = new TestTable(_dbOptionsTestTable);
+                CategoryTable categoryTable = new CategoryTable(_dbOptionsCategoryTable);
+                TestModel? test = testTable.GetTest(testId);
+                if (test != null)
+                {
+                    CategoryModel[] categories = categoryTable.GetAllCategory();
+                    var model = (test, categories);
+                    return View(model);
+                }
+                return RedirectToAction("AllTests");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex}");
+            }
+            return RedirectToAction("AllTests");
         }
 
         public IActionResult UpdateTest(TestModel test)

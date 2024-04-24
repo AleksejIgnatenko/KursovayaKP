@@ -18,7 +18,7 @@ body {
     align-items: center;
     min-height: 83vh;
     min-width: 70vw;
-    background: linear-gradient(53deg, rgba(25,191,203,1) 6%, rgba(188,81,218,1) 61%);
+/*    background: linear-gradient(53deg, rgba(25,191,203,1) 6%, rgba(188,81,218,1) 61%);*/
 }
 
 .addquestion-container {

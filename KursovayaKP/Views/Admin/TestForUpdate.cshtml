@@ -14,7 +14,7 @@
 <body>
     <div class="fullscreen-container">
         <div class="addquestion-container">
-            <h1 class="header">Добавление вопроса</h1>
+            <h1 class="header">Редактирование теста</h1>
             <form class="form" asp-controller="Admin" asp-action="UpdateTest" method="post">
                 <input asp-for="test.IdTest" type="hidden" name="test.IdTest" value="@Model.test.IdTest" />
                 <div class="input-group">
@@ -35,7 +35,7 @@
 
                 <button class="button">Сохранить изменения</button>
                 <div class="text-center">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AdminIndex">Назад</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AllTests">Назад</a>
                 </div>
             </form>
         </div>
