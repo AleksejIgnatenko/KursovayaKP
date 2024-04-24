@@ -1,11 +1,11 @@
-﻿@model TestModel
+﻿@model (TestModel test, CategoryModel[] categories)
 @{
     ViewData["Title"] = "Добавление теста";
 }
 
 @section Styles {
     <link rel="stylesheet" href="~/css/Add.css" asp-append-version="true" />
-    <script src="~/js/AddTest.js" asp-append-version="true"></script>
+@*     <script src="~/js/AddTest.js" asp-append-version="true"></script> *@
 }
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/fontawesome.min.css" integrity="sha512-RvQxwf+3zJuNwl4e0sZjQeX7kUa3o82bDETpgVCH2RiwYSZVDdFJ7N/woNigN/ldyOOoKw8584jM4plQdt8bhA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -16,18 +16,21 @@
         <div class="addquestion-container">
             <h1 class="header">Добавление вопроса</h1>
             <form class="form" asp-controller="Admin" asp-action="UpdateTest" method="post">
-                <input asp-for="IdTest" type="hidden" name="test.IdTest" value="@Model.IdTest" />
+                <input asp-for="test.IdTest" type="hidden" name="test.IdTest" value="@Model.test.IdTest" />
                 <div class="input-group">
                     <label for="category">Тест</label>
-                    <select asp-for="IdCategory" id="category" name="test.IdCategory" required>
-                        <option value=""></option>
+                    <select asp-for="test.IdCategory" id="category" name="test.IdCategory" required>
+                        @foreach (var category in Model.categories)
+                        {
+                            <option value="@category.IdCategory">@category.NameCategory</option>
+                        }
                     </select>
                 </div>
 
                 <div class="input-group">
                     <label for="nameTest">Название теста</label>
-                    <input type="text" id="nameTest" name="test.NameTest" placeholder="Введите название теста" required asp-for="NameTest" value="@Model.NameTest">
-                    <span asp-validation-for="NameTest" style="color: red; font-size: 12px; display: block; height: 12px;"></span>
+                    <input type="text" id="nameTest" name="test.NameTest" placeholder="Введите название теста" required asp-for="test.NameTest" value="@Model.test.NameTest">
+                    <span asp-validation-for="test.NameTest" style="color: red; font-size: 12px; display: block; height: 12px;"></span>
                 </div>
 
                 <button class="button">Сохранить изменения</button>

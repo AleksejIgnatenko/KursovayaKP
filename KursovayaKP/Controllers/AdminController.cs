@@ -131,45 +131,6 @@ namespace KursovayaKP.Controllers
 			return RedirectToAction("AllTests");
 		}
 
-		public IActionResult TestForUpdate(int testId)
-		{
-			try
-			{
-				TestTable testTable = new TestTable(_dbOptionsTestTable);
-				TestModel? test = testTable.GetTest(testId);
-				if (test != null)
-				{
-					return View(test);
-				}
-				return RedirectToAction("AllTests");
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError($"{ex}");
-			}
-			return RedirectToAction("AllTests");
-		}
-
-        public IActionResult UpdateTest(TestModel test)
-        {
-            Console.WriteLine($"ID теста {test.IdTest} {test.IdCategory} {test.NameTest}");
-            if (ModelState.IsValid)
-            {
-                Console.WriteLine(true);
-                try
-                {
-                    TestTable testTable = new TestTable(_dbOptionsTestTable);
-                    testTable.UpdateTest(test);
-                    return View("~/Views/Admin/TestForUpdate.cshtml", test);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError($"{ex}");
-                }
-            }
-            return View("~/Views/Admin/TestForUpdate.cshtml", test);
-        }
-
         public IActionResult TestQuestions(int testId)
         {
             Console.WriteLine($"ID теста {testId}");
@@ -331,22 +292,48 @@ namespace KursovayaKP.Controllers
 		[HttpPost]
 		public IActionResult QuestionForUpdate(int questionId)
 		{
-			QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
-            TestTable testTable = new TestTable(_dbOptionsTestTable);
-			QuestionModel? question = questionTable.GetQuestion(questionId);
-			if (question != null)
-			{
-                TestModel[] allTests = testTable.GetAllTest();
-                var model = (question, allTests); // Создание кортежа из test и categories
-                return View(model);
-			}
-			return View();
-		}
+            try
+            {
+                QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
+                TestTable testTable = new TestTable(_dbOptionsTestTable);
+                QuestionModel? question = questionTable.GetQuestion(questionId);
+                if (question != null)
+                {
+                    TestModel[] allTests = testTable.GetAllTest();
+                    var model = (question, allTests); // Создание кортежа из test и categories
+                    return View(model);
+                }
+                return RedirectToAction("AllTests");
+            }
+            catch (Exception ex) { _logger.LogError($"{ex}"); }
+            return RedirectToAction("AllTests");
+        }
+
+        public IActionResult TestForUpdate(int testId)
+        {
+            try
+            {
+                TestTable testTable = new TestTable(_dbOptionsTestTable);
+                CategoryTable categoryTable = new CategoryTable(_dbOptionsCategoryTable);
+                TestModel? test = testTable.GetTest(testId);
+                if (test != null)
+                {
+                    CategoryModel[] categories = categoryTable.GetAllCategory();
+                    var model = (test, categories);
+                    return View(model);
+                }
+                return RedirectToAction("AllTests");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex}");
+            }
+            return RedirectToAction("AllTests");
+        }
 
         [HttpPost]
         public IActionResult QuestionUpdate(QuestionModel question)
         {
-            Console.WriteLine(question.QuestionText);
             try
             {
                 TestTable testTable = new TestTable(_dbOptionsTestTable);
@@ -375,6 +362,27 @@ namespace KursovayaKP.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Ошибка редактирования");
+            }
+            return View("~/Views/Admin/AdminIndex.cshtml");
+        }
+
+        public IActionResult UpdateTest(TestModel test)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    TestTable testTable = new TestTable(_dbOptionsTestTable);
+                    CategoryTable categoryTable = new CategoryTable(_dbOptionsCategoryTable);
+                    testTable.UpdateTest(test);
+                    CategoryModel[] categories = categoryTable.GetAllCategory();
+                    var model = (test, categories);
+                    return View("~/Views/Admin/TestForUpdate.cshtml", model);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"{ex}");
+                }
             }
             return View("~/Views/Admin/AdminIndex.cshtml");
         }
