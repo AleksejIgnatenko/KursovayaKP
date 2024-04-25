@@ -289,58 +289,45 @@ namespace KursovayaKP.Controllers
 			return RedirectToAction("TestQuestions");
 		}
 
-		[HttpPost]
-		public IActionResult QuestionForUpdate(int questionId)
-		{
-            try
+        [HttpPost]
+        public IActionResult QuestionForUpdate(int questionId)
+        {
+            QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
+            QuestionModel? question = questionTable.GetQuestion(questionId);
+            if (question != null)
             {
-                QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
-                TestTable testTable = new TestTable(_dbOptionsTestTable);
-                QuestionModel? question = questionTable.GetQuestion(questionId);
-                if (question != null)
-                {
-                    TestModel[] allTests = testTable.GetAllTest();
-                    var model = (question, allTests); // Создание кортежа из test и categories
-                    return View(model);
-                }
-                return RedirectToAction("AllTests");
+                return View(question);
             }
-            catch (Exception ex) { _logger.LogError($"{ex}"); }
-            return RedirectToAction("AllTests");
+            return View();
         }
 
         [HttpPost]
         public IActionResult QuestionUpdate(QuestionModel question)
         {
-            try
+            /*            Console.WriteLine(question.IdQuestion + " " + question.IdTest + " " + question.QuestionText + " " + question.Answer1 + " " +
+                        question.Answer2 + " " + question.Answer3 + " " + question.Answer4 + " " + question.CorrectAnswer);*/
+            if (ModelState.IsValid)
             {
-                TestTable testTable = new TestTable(_dbOptionsTestTable);
-                TestModel[] allTests = testTable.GetAllTest();
+                var answers = new[] { question.Answer1, question.Answer2, question.Answer3, question.Answer4 };
+                var correctAnswer = answers.FirstOrDefault(a => a == question.CorrectAnswer);
 
-                if (ModelState.IsValid)
+                if (correctAnswer == null)
                 {
-                    var answers = new[] { question.Answer1, question.Answer2, question.Answer3, question.Answer4 };
-                    var correctAnswer = answers.FirstOrDefault(a => a == question.CorrectAnswer);
-
-                    if (correctAnswer == null)
-                    {
-                        ModelState.AddModelError("CorrectAnswer", "Выбранный правильный ответ не найден в списке ответов.");
-                        var model = (question, allTests);
-                        return View("~/Views/Admin/QuestionForUpdate.cshtml", model);
-                    }
-
+                    ModelState.AddModelError("CorrectAnswer", "Выбранный правильный ответ не найден в списке ответов.");
+                    return View("~/Views/Admin/QuestionForUpdate.cshtml", question);
+                }
+                try
+                {
                     QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
                     questionTable.UpdateQuestion(question);
-                    var model1 = (question, allTests);
-                    return View("~/Views/Admin/QuestionForUpdate.cshtml", model1);
+                    return View("~/Views/Admin/QuestionForUpdate.cshtml", question);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Ошибка редактирования");
                 }
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Ошибка редактирования");
-            }
-
-            return View("~/Views/Admin/AdminIndex.cshtml");
+            return View("~/Views/Admin/QuestionForUpdate.cshtml", question);
         }
 
         public IActionResult TestForUpdate(int testId)
@@ -391,11 +378,26 @@ namespace KursovayaKP.Controllers
         {
             TestTable testTable = new TestTable(_dbOptionsTestTable);
             TestModel[] allTests = testTable.GetAllTest();
-            for (int i = 0; i < allTests.Length; i++)
-            {
-				Console.WriteLine(allTests[i].IdTest + " " + allTests[i].NameTest);
-			}
 			return allTests;
+        }
+
+        [HttpPost]
+        public JsonResult GetAllTestsByIdQuestion(int questionID)
+        {
+            Console.WriteLine("Id вопрсоа " + questionID);
+            TestTable testTable = new TestTable(_dbOptionsTestTable);
+            QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
+            TestModel[] allTests = testTable.GetAllTest();
+            int idTestQuestion = questionTable.GetTestIDQuestionByQuestionId(questionID);
+            Console.WriteLine("ID теста " + idTestQuestion);
+            // Создаем объект с двумя свойствами для возврата в JavaScript
+            var result = new
+            {
+                Tests = allTests,
+                IdTestQuestion = idTestQuestion
+            };
+
+            return Json(result);
         }
 
         [HttpPost]

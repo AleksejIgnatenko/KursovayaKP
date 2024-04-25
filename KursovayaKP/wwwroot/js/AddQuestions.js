@@ -1,34 +1,36 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
+﻿
+document.addEventListener('DOMContentLoaded', function () {
     GetAllTests();
 });
 function GetAllTests() {
     // Выполняем AJAX-запрос на сервер
     $.ajax({
-        url: '/Admin/GetAllTests',
+        url: '/Admin/GetAllCategory',
         type: 'POST',
         contentType: 'application/x-www-form-urlencoded',
         dataType: 'json',
         success: function (result) {
             // Очищаем список перед добавлением элементов
-            $('#test').empty();
+            $('#category').empty();
+            console.log(result);
 
             // Преобразуем полученный массив в объекты TestModel
-            var testModels = result.map(function (test) {
+            var categoryModel = result.map(function (category) {
                 return {
-                    IdTest: parseInt(test.idTest, 10),
-                    NameTest: String(test.nameTest)
+                    idCategory: parseInt(category.idCategory, 10),
+                    nameCategory: String(category.nameCategory)
                 };
             });
 
             // Добавляем элементы списка на основе преобразованных объектов TestModel
-            testModels.forEach(function (test) {
-                $('#test').append('<option value="' + test.IdTest + '">' + test.NameTest + '</option>');
+            categoryModel.forEach(function (category) {
+                $('#category').append('<option value="' + category.idCategory + '">' + category.nameCategory + '</option>');
             });
 
-            // Обновляем скрытое поле при изменении выбора в select
-            $('#test').change(function () {
-                $('#selectedTest').val($(this).val());
-            });
+            /*            // Обновляем скрытое поле при изменении выбора в select
+                        $('#category').change(function () {
+                            $('#selectedTest').val($(this).val());
+                        });*/
         },
         error: function (error) {
             // Обрабатываем ошибку

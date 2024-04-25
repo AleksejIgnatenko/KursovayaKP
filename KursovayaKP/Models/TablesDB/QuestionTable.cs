@@ -88,5 +88,11 @@ namespace KursovayaKP.Models.TablesDBModel
             return randomQuestionsTest;
 
 		}
-	}
+
+        public int GetTestIDQuestionByQuestionId(int questionId)
+        {
+            return Question.Where(q => q.IdQuestion == questionId).Select(q => q.IdTest).FirstOrDefault();
+        }
+
+    }
 }
