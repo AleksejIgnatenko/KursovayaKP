@@ -29,13 +29,60 @@
         <div class="question" data-question-id="@user.IdUser">
             <form class="question-form" method="post">
                 <div><label>ID: №@user.IdUser</label></div>
-                <input type="hidden" name="questionId" value="@user.IdUser" />
-                <div><label>Имя: @user.UserName</label></div>
+                <input type="hidden" name="id" value="@user.IdUser" />
+
+                <div class="label-user-name"><label>Имя: @user.UserName</label></div>
+                <div class="input-group" style="width:min-content;">
+                    <input class="input-user-name" name="newUserName" style="display: none;" value="@user.UserName" />
+                </div>
+
                 <label>Email: @user.Email</label><br>
                 <div><label>Роль: @user.Role</label></div>
-                <button asp-controller="Admin" asp-action="" class="image-button" style="background-image: url('/Images/Editing.png')" title="Редактировать"></button>
-                <button onclick="initializePage('@user.IdUser')" class="image-button" style="background-image: url('/Images/More-information.png')" title="Подробнее"></button>
+                <button class="image-button edit-button" style="background-image: url('/Images/Editing.png')" title="Редактировать"></button>
+                <button asp-controller="Admin" asp-action="EditUserNameAdmin" class="image-button confirm-edit-name-button" style="background-image: url('/Images/Checked.png'); display: none;" title="Изменить имя"></button>
+                <button class="image-button cancel-edit-name-button" style="background-image: url('/Images/Close.png'); display: none;" title="Отмена"></button>
+                <span asp-validation-for="@user.UserName" style="color: red; font-size: 12px;"></span>
+
+                <button onclick="initializePage('@user.IdUser')" class="image-button more-detailed-button" style="background-image: url('/Images/More-information.png')" title="Подробнее"></button>
             </form>
         </div>
     }
 </div>
+
+<script>
+    const editButtons = document.getElementsByClassName('edit-button');
+    const confirmEditNameButtons = document.getElementsByClassName('confirm-edit-name-button');
+    const cancelEditNameButtons = document.getElementsByClassName('cancel-edit-name-button');
+    const labelUserNames = document.getElementsByClassName('label-user-name');
+    const inputUserNames = document.getElementsByClassName('input-user-name');
+    const moreDetailedButtons = document.getElementsByClassName('more-detailed-button');
+
+    for (let i = 0; i < editButtons.length; i++) {
+        const editButton = editButtons[i];
+        const confirmEditNameButton = confirmEditNameButtons[i];
+        const cancelEditNameButton = cancelEditNameButtons[i];
+        const labelUserName = labelUserNames[i];
+        const inputUserName = inputUserNames[i];
+        const moreDetailedButton = moreDetailedButtons[i];
+
+        editButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            editButton.style.display = 'none';
+            confirmEditNameButton.style.display = 'inline-block';
+            cancelEditNameButton.style.display = 'inline-block';
+            labelUserName.style.display = 'none';
+            inputUserName.style.display = 'inline-block';
+            moreDetailedButton.style.display = 'none';
+        });
+
+        cancelEditNameButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            editButton.style.display = 'inline-block';
+            confirmEditNameButton.style.display = 'none';
+            cancelEditNameButton.style.display = 'none';
+            labelUserName.style.display = 'block';
+            inputUserName.style.display = 'none';
+            moreDetailedButton.style.display = 'inline-block';
+        });
+    }
+</script>

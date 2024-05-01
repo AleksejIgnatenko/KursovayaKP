@@ -61,12 +61,12 @@ namespace KursovayaKP.Models.TablesDBModel
             }
         }
 
-        public void EditUserName(int userID, string newuserName)
+        public void EditUserName(int userID, string newUserName)
         {
             UserModel? user = Users.FirstOrDefault(u => u.IdUser == userID);
             if (user != null)
             {
-                user.UserName = newuserName;
+                user.UserName = newUserName;
                 SaveChanges();
             }
         }

@@ -4,6 +4,7 @@ using KursovayaKP.Models.TablesDBModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace KursovayaKP.Controllers
@@ -183,21 +184,64 @@ namespace KursovayaKP.Controllers
             return View("~/Views/Admin/Management.cshtml");
         }
 
-        public IActionResult EditUserName(int id, string userName)
+        public IActionResult EditUserName(int id, string newUserName)
         {
             try
             {
-                UserTable userTable = new UserTable(_dbOptionsUserTable);
-                userTable.EditUserName(id, userName);
+                string pattern = "^[a-zA-Zа-яА-Я]+$";
+                bool isValid = Regex.IsMatch(newUserName, pattern);
 
-                List<UserModel> allUsers = userTable.GetAllUsers();
-                return View("~/Views/Admin/Management.cshtml", allUsers);
+                if ((isValid) && (newUserName.Length > 1))
+                {
+                    UserTable userTable = new UserTable(_dbOptionsUserTable);
+                    userTable.EditUserName(id, newUserName);
+                    List<UserModel> allUsers = userTable.GetAllUsers();
+                    return View("~/Views/Admin/Management.cshtml", allUsers);
+                }
+                else
+                {
+                    ModelState.AddModelError("UserName", "Неверное имя пользователя");
+                    UserTable userTable = new UserTable(_dbOptionsUserTable);
+                    List<UserModel> allUsers = userTable.GetAllUsers();
+                    return View("~/Views/Admin/Management.cshtml", allUsers);
+                }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Ошибка получения всех пользователей");
             }
             return View("~/Views/Admin/Management.cshtml");
+        }
+
+        public IActionResult EditUserNameAdmin(int id, string newUserName)
+        {
+            Console.WriteLine(newUserName);
+            Console.WriteLine(id);
+            try
+            {
+                string pattern = "^[a-zA-Zа-яА-Я]+$";
+                bool isValid = Regex.IsMatch(newUserName, pattern);
+
+                if ((isValid) && (newUserName.Length > 1))
+                {
+                    UserTable userTable = new UserTable(_dbOptionsUserTable);
+                    userTable.EditUserName(id, newUserName);
+                    List<UserModel> allUsers = userTable.GetAllUsers();
+                    return View("~/Views/Admin/AllUsers.cshtml", allUsers);
+                }
+                else
+                {
+                    ModelState.AddModelError("UserName", "Неверное имя пользователя");
+                    UserTable userTable = new UserTable(_dbOptionsUserTable);
+                    List<UserModel> allUsers = userTable.GetAllUsers();
+                    return View("~/Views/Admin/AllUsers.cshtml", allUsers);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка получения всех пользователей");
+            }
+            return View("~/Views/Admin/AllUsers.cshtml");
         }
 
         public IActionResult AllQuestions(string topic)

@@ -35,7 +35,7 @@
 
                     <div class="label-user-name"><label>Имя: @user.UserName</label></div>
                     <div class="input-group" style="width:min-content;">
-                        <input class="input-user-name" name="userName" style="display: none;" value="@user.UserName" />
+                        <input class="input-user-name" name="newUserName" style="display: none;" value="@user.UserName" />
                     </div>
 
                     <label>Email: @user.Email</label><br>
@@ -43,6 +43,7 @@
                     <button class="image-button edit-button" style="background-image: url('/Images/Editing.png')" title="Редактировать"></button>
                     <button asp-controller="Admin" asp-action="EditUserName" class="image-button confirm-edit-name-button" style="background-image: url('/Images/Checked.png'); display: none;" title="Изменить имя"></button>
                     <button class="image-button cancel-edit-name-button" style="background-image: url('/Images/Close.png'); display: none;" title="Отмена"></button>
+                    <span asp-validation-for="@user.UserName" style="color: red; font-size: 12px;"></span>
 
                     <button onclick="initializePage('@user.IdUser')" class="image-button more-detailed-button" style="background-image: url('/Images/More-information.png')" title="Подробнее"></button>
 
@@ -53,8 +54,6 @@
                     <button type="button" class="image-button delete-admin-role-button" style="background-image: url('/Images/DeleteAdmin.png')" title="Забрать права Администратора"></button>
                     <button asp-controller="Admin" asp-action="DeleteAdminRole" class="image-button confirm-delete-admin-role-button" style="background-image: url('/Images/Checked.png'); display: none;" title="Забрать права Администратора" name="id" value="@user.IdUser"></button>
                     <button class="image-button cancel-deleteAdminRole-button" style="background-image: url('/Images/Close.png'); display: none;" title="Отмена"></button>
-
-                    @*                     <button asp-controller="Admin" asp-action="DeleteAdminRole" class="image-button delete-admin-role-button" style="background-image: url('https://media.discordapp.net/attachments/1160898526201516052/1222792690224332840/DeleteAdmin.png?ex=6617816f&is=66050c6f&hm=53914c41795a86be104be16f090fbddf59204d5ea8f1b201fd0b6e399e632721&=&format=webp&quality=lossless')" title="Забрать права Администратора" name="id" value="@user.IdUser"></button> *@
                 </form>
             </div>
         }

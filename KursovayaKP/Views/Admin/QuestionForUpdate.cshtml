@@ -18,6 +18,8 @@
             <form class="form" asp-controller="Admin" asp-action="QuestionUpdate" method="post">
                 <input asp-for="IdQuestion" type="hidden" name="IdQuestion" value="@Model.IdQuestion" />
 
+                <span asp-validation-for="CorrectAnswer" style="color: red; font-size: 12px; display: block; height: 12px; margin-bottom: 15px;"></span>
+
                 <select asp-for="IdTest" id="test" name="idTest" required>
                     <option value=""></option>
                 </select>
@@ -61,12 +63,11 @@
                 <div class="input-group">
                     <label for="CorrectAnswer">Правильный ответ</label>
                     <input type="text" id="correctAnswer" name="correctAnswer" placeholder="Введите правильеый ответ" required asp-for="CorrectAnswer" value="@Model.CorrectAnswer">
-                    <span asp-validation-for="CorrectAnswer" style="color: red; font-size: 12px; display: block; height: 12px;"></span>
                 </div>
 
                 <button class="button">Сохранить изменения</button>
                 <div class="text-center">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AllQuestions">Назад</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AllTests">Назад</a>
                 </div>
             </form>
         </div>
