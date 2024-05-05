@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 using static System.Net.Mime.MediaTypeNames;
 
+
 namespace KursovayaKP.Controllers
 {
     public class AdminController : Controller
@@ -493,16 +494,14 @@ namespace KursovayaKP.Controllers
         }
 
 
-        [HttpPost]
-        public ActionResult<double[]> GetDetailedUserInformation(int userId)
+        public ActionResult<Dictionary<int, int[]>> GetDetailedUserInformation(int userId)
         {
             Console.WriteLine("userId GetDetailedUserInformation" + userId);
             try
             {
-                double[] userResults = new double[4];
                 TableAnswerUserTest tableAnswerUserTest = new TableAnswerUserTest(_dbOptionsAnswerUserTest);
-                userResults = tableAnswerUserTest.GetRatingsTests(userId);
-				return Ok(userResults);
+                Dictionary<int, int[]> userResults = tableAnswerUserTest.GetRatingsTests(userId);
+                return Ok(userResults);
             }
             catch (Exception ex)
             {
@@ -511,6 +510,25 @@ namespace KursovayaKP.Controllers
                 return Ok();
             }
         }
+
+        /*        [HttpPost]
+                public ActionResult<double[]> GetDetailedUserInformation(int userId)
+                {
+                    Console.WriteLine("userId GetDetailedUserInformation" + userId);
+                    try
+                    {
+                        double[] userResults = new double[4];
+                        TableAnswerUserTest tableAnswerUserTest = new TableAnswerUserTest(_dbOptionsAnswerUserTest);
+                        userResults = tableAnswerUserTest.GetRatingsTests(userId);
+                        return Ok(userResults);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Логирование ошибки
+                        _logger.LogError(ex, "Ошибка получения результатов");
+                        return Ok();
+                    }
+                }*/
 
         [HttpPost]
         public IActionResult AddTest(TestModel testModel)

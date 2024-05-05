@@ -1,5 +1,6 @@
 ﻿using KursovayaKP.Models;
 using Microsoft.EntityFrameworkCore;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace KursovayaKP.Models.TablesDBModel
 {
@@ -27,39 +28,34 @@ namespace KursovayaKP.Models.TablesDBModel
             }
         }
 
-/*        public double GetRatingsTest(int userId, string nameTest)
-        {
-            int[] results = AnswerUserTest.Where(a => a.UserId == userId && a.NameTest == nameTest).Select(a => a.ResultTest).ToArray();
-            if (results.Length != 0)
-            {
-                double summ = results.Sum();
-                double result = summ / results.Length;
-                result = Math.Round(result, 2);
-                return result;
-                //List<AnswerUserTestModel> result = AnswerUserTest.Where(a => a.UserId == userId && a.NameTest == nameTest).ToList();
-            }
-            return -1;
-        }*/
+        /*        public double GetRatingsTest(int userId, string nameTest)
+                {
+                    int[] results = AnswerUserTest.Where(a => a.UserId == userId && a.NameTest == nameTest).Select(a => a.ResultTest).ToArray();
+                    if (results.Length != 0)
+                    {
+                        double summ = results.Sum();
+                        double result = summ / results.Length;
+                        result = Math.Round(result, 2);
+                        return result;
+                        //List<AnswerUserTestModel> result = AnswerUserTest.Where(a => a.UserId == userId && a.NameTest == nameTest).ToList();
+                    }
+                    return -1;
+                }*/
 
-        public double[] GetRatingsTests(int userID)
+        public Dictionary<int, int[]> GetRatingsTests(int userID)
         {
-            double[] ratings = new double[4];
-            for (int i = 1; i < 5; i++)
+            Dictionary<int, int[]> ratings = new Dictionary<int, int[]>();
+            for (int i = 1; i < 8; i++)
             {
                 int[] test = AnswerUserTest.Where(a => Tests.Any(t => t.IdTest == a.TestId && t.IdCategory == i)).Where(u => u.UserId == userID)
                                             .Select(a => a.ResultTest)
-                                            .ToArray();
+                                            .Take(5).ToArray();
 
-                if (test.Length == 0)
-                {
-                    ratings[i - 1] = 0;
-                }
-                else
-                {
-                    double average = test.Average();
-                    double roundedAverage = Math.Round(average, 2);
-                    ratings[i - 1] = roundedAverage;
-                }
+                ratings.Add(i, test);
+            }
+            foreach (var r in ratings)
+            {
+                Console.WriteLine($"Ключ: {r.Key}, Значение: {r.Value}");
             }
             return ratings;
         }
@@ -72,7 +68,7 @@ namespace KursovayaKP.Models.TablesDBModel
                                            .Select(a => a.ResultTest)
                                            .OrderByDescending(result => result)
                                            .FirstOrDefault();
-            if(lastResult > 8)
+            if (lastResult > 8)
             {
                 return "Экзамен сдан";
             }
