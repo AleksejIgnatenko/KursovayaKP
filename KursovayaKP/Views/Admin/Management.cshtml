@@ -11,6 +11,14 @@
 }
 
 <button id="settingsButton" style="color: black; border: none; background-color: white;">Расширенные настройки</button>
+<div id="toolsMenu" style="display: none; width: 500px">
+    <input id="searchInput" placeholder="Поиск" style="width:100%;" />
+    <div>
+@*         <button id="sortByNameButton" class="image-button" style="margin-top: 3px; background-image: url('/Images/From-a-to-z.png')" title="Сортировка в алфавитном порядке"></button> *@
+        <button id="sortByNumberButton" class="image-button" style="margin-top: 3px; background-image: url('/Images/Trafic.png')" title="Сортировка ID пользователя"></button>
+        <button id="cancellation" class="image-button" style="margin-top: 3px; background-image: url('/Images/Cancel.png')" title="Отмена сортировки"></button>
+    </div>
+</div>
 
 <div id="detailedInformation" style="display: none; width: 500px">
     <ul>
@@ -44,8 +52,8 @@
 
                     <label>Email: @user.Email</label><br>
                     <div><label>Роль: @user.Role</label></div>
-                    <button class="image-button edit-button" style="background-image: url('/Images/Editing.png')" title="Редактировать"></button>
-                    <button asp-controller="Admin" asp-action="EditUserName" class="image-button confirm-edit-name-button" style="background-image: url('/Images/Checked.png'); display: none;" title="Изменить имя"></button>
+                    <button class="image-button edit-button" style="background-image: url('/Images/Editing.png')" title="Изменить имя"></button>
+                    <button asp-controller="Admin" asp-action="EditUserName" class="image-button confirm-edit-name-button" style="background-image: url('/Images/Checked.png'); display: none;" title="Сохранить"></button>
                     <button class="image-button cancel-edit-name-button" style="background-image: url('/Images/Close.png'); display: none;" title="Отмена"></button>
                     <span asp-validation-for="@user.UserName" style="color: red; font-size: 12px;"></span>
 
