@@ -13,9 +13,9 @@
 @* <h1 id="title">Test Traffic Regulations</h1> *@
 
 <div id="question-container">
-<input type="hidden" id="testId" name="test.IdTest" value="@Model[0].IdTest" />
     @if (Model != null)
     {
+        <input type="hidden" id="testId" name="test.IdTest" value="@Model[0].IdTest" />
         @foreach (var question in Model)
         {
             <div class="question" data-question-id="@question.IdQuestion" data-correct-answer="@question.CorrectAnswer">

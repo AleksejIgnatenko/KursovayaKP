@@ -15,7 +15,7 @@
     <input id="searchInput" placeholder="Поиск" style="width:100%;" />
     <div>
 @*         <button id="sortByNameButton" class="image-button" style="margin-top: 3px; background-image: url('/Images/From-a-to-z.png')" title="Сортировка в алфавитном порядке"></button> *@
-        <button id="sortByNumberButton" class="image-button" style="margin-top: 3px; background-image: url('/Images/Trafic.png')" title="Сортировка ID пользователя"></button>
+        <button id="sortByNumberButton" class="image-button" style="margin-top: 3px; background-image: url('/Images/Trafic.png')" title="Сортировка по ID пользователя"></button>
         <button id="cancellation" class="image-button" style="margin-top: 3px; background-image: url('/Images/Cancel.png')" title="Отмена сортировки"></button>
     </div>
 </div>
@@ -53,19 +53,22 @@
                     <label>Email: @user.Email</label><br>
                     <div><label>Роль: @user.Role</label></div>
                     <button class="image-button edit-button" style="background-image: url('/Images/Editing.png')" title="Изменить имя"></button>
-                    <button asp-controller="Admin" asp-action="EditUserName" class="image-button confirm-edit-name-button" style="background-image: url('/Images/Checked.png'); display: none;" title="Сохранить"></button>
+                    <button asp-controller="Admin" asp-action="EditUserName" class="image-button confirm-edit-name-button" style="background-image: url('/Images/Checked.png'); display: none;" title="Подтвердить"></button>
                     <button class="image-button cancel-edit-name-button" style="background-image: url('/Images/Close.png'); display: none;" title="Отмена"></button>
                     <span asp-validation-for="@user.UserName" style="color: red; font-size: 12px;"></span>
 
                     <button onclick="initializePage('@user.IdUser')" class="image-button more-detailed-button" style="background-image: url('/Images/More-information.png')" title="Подробнее"></button>
 
-                    <button type="button" class="image-button set-admin-role-button" style="background-image: url('/Images/Admin-with-cogwheels.png')" title="Выдать права Администратора"></button>
-                    <button asp-controller="Admin" asp-action="SetAdminRole" class="image-button confirm-set-admin-role-button" style="background-image: url('/Images/Checked.png'); display: none;" title="Выдать права Администратора" name="id" value="@user.IdUser"></button>
-                    <button class="image-button cancel-setAdminRole-button" style="background-image: url('/Images/Close.png'); display: none;" title="Отмена"></button>
+                    @if (user.Role != "Manager")
+                    {
+                        <button type="button" class="image-button set-admin-role-button" style="background-image: url('/Images/Admin-with-cogwheels.png')" title="Выдать права Администратора"></button>
+                        <button asp-controller="Admin" asp-action="SetAdminRole" class="image-button confirm-set-admin-role-button" style="background-image: url('/Images/Checked.png'); display: none;" title="Выдать права Администратора" name="id" value="@user.IdUser"></button>
+                        <button class="image-button cancel-setAdminRole-button" style="background-image: url('/Images/Close.png'); display: none;" title="Отмена"></button>
 
-                    <button type="button" class="image-button delete-admin-role-button" style="background-image: url('/Images/DeleteAdmin.png')" title="Забрать права Администратора"></button>
-                    <button asp-controller="Admin" asp-action="DeleteAdminRole" class="image-button confirm-delete-admin-role-button" style="background-image: url('/Images/Checked.png'); display: none;" title="Забрать права Администратора" name="id" value="@user.IdUser"></button>
-                    <button class="image-button cancel-deleteAdminRole-button" style="background-image: url('/Images/Close.png'); display: none;" title="Отмена"></button>
+                        <button type="button" class="image-button delete-admin-role-button" style="background-image: url('/Images/DeleteAdmin.png')" title="Забрать права Администратора"></button>
+                        <button asp-controller="Admin" asp-action="DeleteAdminRole" class="image-button confirm-delete-admin-role-button" style="background-image: url('/Images/Checked.png'); display: none;" title="Забрать права Администратора" name="id" value="@user.IdUser"></button>
+                        <button class="image-button cancel-deleteAdminRole-button" style="background-image: url('/Images/Close.png'); display: none;" title="Отмена"></button>
+                    }
                 </form>
             </div>
         }

@@ -44,7 +44,7 @@
 						<label for="answer2">@question.Answer2</label><br>
 						<label for="answer3">@question.Answer3</label><br>
 						<label for="answer4">@question.Answer4</label><br>
-						<label for="answer4">Правильный ответ @question.CorrectAnswer</label><br>
+						<label for="answer4" style="margin-top: 15px;">Правильный ответ: @question.CorrectAnswer</label><br>
 						<button class="image-button delete-button" style="background-image: url('/Images/Delete.png')" title="Удалить"></button>
 						<button asp-controller="Admin" asp-action="DeleteQuestion" class="image-button confirm-delete-button" style="background-image: url('/Images/Checked.png'); display: none;" title="Подтвердить удаление" data-id="@question.IdQuestion"></button>
 						<button class="image-button cancel-delete-button" style="background-image: url('/Images/Close.png'); display: none;" title="Отменить удаление"></button>

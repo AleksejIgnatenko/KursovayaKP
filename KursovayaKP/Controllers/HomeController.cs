@@ -91,7 +91,13 @@ namespace KursovayaKP.Controllers
                     TestTable testTable = new TestTable(_dbOptionsTestTable);
                     int randomTestId = testTable.GetRandomTestId(categoryID);
                     QuestionTable questionTable = new QuestionTable(_dbOptionsQuestionTable);
-                    List<QuestionModel> questions = questionTable.GetRandomQuestionsTest(randomTestId);
+                    List<QuestionModel>? questions = questionTable.GetRandomQuestionsTest(randomTestId);
+                    
+                    if(questions.Count != 10) 
+                    {
+                        questions = null;
+                    }
+
                     CategoryTable categoryTable = new CategoryTable(_dbOptionsCategoryTable);
                     string? testName = categoryTable.GetNameCategory(categoryID);
                     ViewData["Title"] = $"Тест по теме \"{testName}\"";
